@@ -49,16 +49,6 @@
     links.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ links.classList.remove('open'); }); });
   }
 
-  // cursor glow (desktop only, hero pages only)
-  var glow = document.getElementById('cursorGlow');
-  var hero = document.querySelector('.hero');
-  if(hero && glow && window.matchMedia('(pointer:fine)').matches){
-    hero.addEventListener('mousemove', function(e){
-      var r = hero.getBoundingClientRect();
-      glow.style.transform = 'translate(' + (e.clientX - r.left - 300) + 'px,' + (e.clientY - r.top - 300) + 'px)';
-    });
-  }
-
   // reveal on scroll
   var revealEls = document.querySelectorAll('.reveal');
   var io = new IntersectionObserver(function(entries){
