@@ -24,7 +24,18 @@
 
   /* ---- state ---- */
   function load(){
-    try{ var v = JSON.parse(localStorage.getItem(KEY)); return Array.isArray(v) ? v : []; }
+    // Whitelist every field against the known catalog: cart data later flows
+    // into innerHTML, so nothing outside these fixed values may pass through.
+    try{
+      var v = JSON.parse(localStorage.getItem(KEY));
+      if(!Array.isArray(v)) return [];
+      return v.filter(function(i){
+        return i && PRODUCTS[i.sleeve] && COLORS[i.color] && SIZES.indexOf(i.size) !== -1;
+      }).map(function(i){
+        return { sleeve:i.sleeve, color:i.color, size:i.size,
+                 qty: Math.min(10, Math.max(1, parseInt(i.qty, 10) || 1)) };
+      });
+    }
     catch(e){ return []; }
   }
   function save(c){ try{ localStorage.setItem(KEY, JSON.stringify(c)); }catch(e){} }
