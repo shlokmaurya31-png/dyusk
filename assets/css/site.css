@@ -100,6 +100,9 @@
   .logo{ display:flex; align-items:center; gap:14px; }
   .logo .mark{ height:32px; width:auto; display:block; transition:filter 0.4s ease; }
   .logo .word{ height:15px; width:auto; display:block; transition:filter 0.4s ease; }
+  /* Odoo adds a derived placeholder background-color behind lazy images, which
+     shows through our transparent logo PNGs as a cream box — force it off. */
+  .logo img, .footer-logo, #preloader img{ background:transparent !important; }
   .logo .tagline{
     font-family:'Inter',sans-serif; font-size:0.68rem; text-transform:lowercase; letter-spacing:0.02em;
     color:var(--paper-dim); padding-left:14px; margin-left:2px; border-left:1px solid var(--line); white-space:nowrap;
