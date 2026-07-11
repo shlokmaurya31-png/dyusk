@@ -373,6 +373,58 @@
     }
   });
 
+  /* ---- checkout: push the local bag into a real Odoo order ---- */
+  // On the live store the porter injects window.DYUSK_VARIANTS
+  // ({'full-black-M': {id, tmpl}, ...}). Each bag line is added to the Odoo
+  // cart via the /shop/cart/add JSON route (session-based, same origin),
+  // then the shopper lands on Odoo's native /shop/cart to pay.
+  function odooRpc(url, params){
+    return fetch(url, {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ jsonrpc: '2.0', method: 'call', params: params })
+    }).then(function(r){
+      if(!r.ok) throw new Error('http ' + r.status);
+      return r.json();
+    }).then(function(j){
+      if(j.error) throw new Error('rpc error');
+      return j.result;
+    });
+  }
+  document.addEventListener('click', function(e){
+    var co = e.target.closest('.checkout-btn');
+    if(!co) return;
+    e.preventDefault();
+    if(!cart.length) return;
+    var map = window.DYUSK_VARIANTS;
+    if(!map){ toast('Checkout is available on the live store'); return; }
+    if(co.dataset.busy) return;
+    co.dataset.busy = '1';
+    var label = co.textContent;
+    co.textContent = 'Preparing checkout…';
+    var chain = Promise.resolve();
+    cart.forEach(function(i){
+      var v = map[i.sleeve + '-' + i.color + '-' + i.size];
+      if(!v) return;
+      chain = chain.then(function(){
+        return odooRpc('/shop/cart/add', {
+          product_template_id: v.tmpl,
+          product_id: v.id,
+          quantity: i.qty
+        });
+      });
+    });
+    chain.then(function(){
+      cart = []; save(cart);
+      window.location.href = '/shop/cart';
+    }).catch(function(){
+      delete co.dataset.busy;
+      co.textContent = label;
+      toast('Could not reach checkout — try again');
+    });
+  });
+
   /* ---- newsletter / drop signup (client-side confirm) ---- */
   document.querySelectorAll('.nl-form').forEach(function(f){
     f.addEventListener('submit', function(e){

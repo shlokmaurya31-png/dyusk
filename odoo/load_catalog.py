@@ -26,6 +26,9 @@ COLORS = [
     ("Arctic", "#e8e8e5", "white"),
 ]
 
+# matches the site's size run (commerce.js SIZES)
+SIZES = ["S", "M", "L", "XL", "XXL"]
+
 PRODUCTS = [
     {
         "prefix": "full",
@@ -113,6 +116,20 @@ def main():
             f"color '{cname}'")
         color_val_ids[cname] = vid
 
+    # 1b. Size attribute + values --------------------------------------------------
+    print("Size attribute:")
+    size_attr = find_or_create(
+        Attr, [("name", "=", "Size")],
+        {"name": "Size", "display_type": "radio", "create_variant": "always"},
+        "attribute 'Size'")
+    size_val_ids = {}
+    for sname in SIZES:
+        vid = find_or_create(
+            AttrVal, [("name", "=", sname), ("attribute_id", "=", size_attr)],
+            {"name": sname, "attribute_id": size_attr},
+            f"size '{sname}'")
+        size_val_ids[sname] = vid
+
     # 2. Products -----------------------------------------------------------------
     for p in PRODUCTS:
         print(f"\nProduct: {p['name']}")
@@ -130,7 +147,7 @@ def main():
             "website_published": True, "is_published": True,
             "description_sale": p["desc"], "website_description": spec_html(p)}))
 
-        # 3. Attach Color attribute line -> variants auto-generate ----------------
+        # 3. Attach Color + Size attribute lines -> variants auto-generate --------
         tmpl = Tmpl.browse(tmpl_id)
         has_color_line = any(l.attribute_id.id == color_attr for l in tmpl.attribute_line_ids)
         if not has_color_line:
@@ -141,6 +158,15 @@ def main():
             print("  + attached Color variants (Onyx / Steel / Arctic)")
         else:
             print("  = Color line already attached")
+        has_size_line = any(l.attribute_id.id == size_attr for l in tmpl.attribute_line_ids)
+        if not has_size_line:
+            Tmpl.write([tmpl_id], {"attribute_line_ids": [(0, 0, {
+                "attribute_id": size_attr,
+                "value_ids": [(6, 0, list(size_val_ids.values()))],
+            })]})
+            print("  + attached Size variants (S / M / L / XL / XXL)")
+        else:
+            print("  = Size line already attached")
 
         # 4. Per-color front image on each variant --------------------------------
         variant_ids = Prod.search([("product_tmpl_id", "=", tmpl_id)])

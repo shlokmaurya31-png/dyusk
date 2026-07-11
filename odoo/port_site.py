@@ -101,7 +101,34 @@ def upload_binaries(o):
     return url_map
 
 
-def build_js(url_map):
+def fetch_variants(o):
+    """Map the site's sleeve-color-size keys to Odoo product variant ids so the
+    front-end cart can be pushed into a real Odoo order at checkout."""
+    Prod = o.env["product.product"]
+    Tmpl = o.env["product.template"]
+    tok = {"Onyx": "black", "Steel": "steel", "Arctic": "white"}
+    names = {"Full Sleeve Compression": "full", "Half Sleeve Compression": "half"}
+    out = {}
+    for tname, sleeve in names.items():
+        tids = Tmpl.search([("name", "=", tname)], limit=1)
+        if not tids:
+            continue
+        tid = tids[0]
+        for v in Prod.browse(Prod.search([("product_tmpl_id", "=", tid)])):
+            color = size = None
+            for ptav in v.product_template_attribute_value_ids:
+                an = ptav.attribute_id.name
+                if an == "Color":
+                    color = tok.get(ptav.name)
+                elif an == "Size":
+                    size = ptav.name
+            if color and size:
+                out[f"{sleeve}-{color}-{size}"] = {"id": v.id, "tmpl": tid}
+    print(f"  variants mapped: {len(out)}")
+    return out
+
+
+def build_js(url_map, variants=None):
     with open(os.path.join(SITE, "assets", "js", "site.js"), encoding="utf-8") as fh:
         js = fh.read()
     # rewrite product image path -> lookup table
@@ -125,6 +152,10 @@ def build_js(url_map):
             key = rel.split("/")[-1][:-4]  # strip dir + .png
             entries.append(f"'{key}':'{url}'")
     table = "window.DYUSK_IMG = {" + ",".join(entries) + "};\n"
+    if variants:
+        ventries = ",".join(
+            f"'{k}':{{id:{v['id']},tmpl:{v['tmpl']}}}" for k, v in variants.items())
+        table += "window.DYUSK_VARIANTS = {" + ventries + "};\n"
     # theme-init, run early (cream default; dark/red restored from storage)
     prefix = ("try{var _t=localStorage.getItem('dyusk-theme');"
               "if(_t==='dark'||_t==='red'){"
@@ -212,8 +243,10 @@ def main():
     url_map = upload_images(o)
     print("Uploading binaries...")
     url_map.update(upload_binaries(o))
+    print("Mapping product variants...")
+    variants = fetch_variants(o)
     css = build_css()
-    js = build_js(url_map)
+    js = build_js(url_map, variants)
     print("\nBuilding pages...")
     for page in PAGES:
         with open(os.path.join(SITE, page["src"]), encoding="utf-8") as fh:
