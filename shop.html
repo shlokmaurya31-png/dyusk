@@ -8,7 +8,7 @@
 (function(){
   try{
     var t = localStorage.getItem('dyusk-theme');
-    if(t === 'dark' || t === 'red'){
+    if(t === 'dark' || t === 'red' || t === 'gold'){
       document.documentElement.setAttribute('data-theme', t);
     }
   }catch(e){}
@@ -41,6 +41,7 @@
   <button class="theme-dot" data-set="dark" type="button" aria-label="Dark theme"></button>
   <button class="theme-dot" data-set="cream" type="button" aria-label="Cream theme"></button>
   <button class="theme-dot" data-set="red" type="button" aria-label="Red theme"></button>
+  <button class="theme-dot" data-set="gold" type="button" aria-label="Gold theme"></button>
 </div>
 
 <section class="shop-head">
