@@ -53,7 +53,23 @@ To preview on a phone on the same Wi-Fi, open `http://<your-lan-ip>:8791`.
 
 **Vercel:** import the repo, set **Framework Preset: Other**, leave build command empty. Attach the domain under Project → Settings → Domains. Every push to `main` redeploys automatically.
 
-**Planned:** migration to Odoo (website module/theme) once the storefront needs real commerce — cart, inventory, payments.
+## Odoo migration (in progress)
+
+The storefront is moving to **Odoo Online** (database `dyusk` at https://dyusk.odoo.com) for real commerce — cart, inventory, Razorpay payments. All migration tooling and docs live in [`odoo/`](odoo/):
+
+| File | Purpose |
+|---|---|
+| `odoo/MIGRATION_PLAN.md` | The full phased plan (catalog → design → payments → go-live) and open decisions |
+| `odoo/ODOO_NOTES.md` | How Odoo Online fits the stack, API auth, useful models, CLI examples |
+| `odoo/BRAND_PALETTE.md` | The 5-color DYUSK palette and its mapping to Odoo theme slots |
+| `odoo/odoo_tool.py` | CLI to read/write Odoo data (models / read / write) |
+| `odoo/set_palette.py` | Applies the brand palette to Odoo's website theme — **done, live** |
+| `odoo/port_site.py` | Ports these static pages into Odoo as website pages — **done, live** |
+| `odoo/load_catalog.py` | Creates products + color variants + photos in Odoo eCommerce — ready, not yet run |
+
+**Status:** DNS for `www.dyusk.com` already points at Odoo (CNAME live). The three pages are staged at `/dyusk`, `/product-full-sleeve`, `/product-half-sleeve` on dyusk.odoo.com with the full design intact. Blocked on a paid Odoo subscription for the custom domain + live checkout.
+
+**Setup for teammates:** copy `odoo/.env.example` → `odoo/.env`, fill in your own Odoo login + API key (Odoo → My Profile → Account Security → New API Key), then `pip install odoorpc python-dotenv`. Never commit `.env`.
 
 ## Design tokens
 

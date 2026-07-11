@@ -1,0 +1,12 @@
+# Secrets — never commit Odoo credentials
+.env
+odoo/.env
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# OS noise
+.DS_Store
+Thumbs.db
