@@ -127,7 +127,7 @@ def build_js(url_map):
     table = "window.DYUSK_IMG = {" + ",".join(entries) + "};\n"
     # theme-init, run early (cream default; dark/red restored from storage)
     prefix = ("try{var _t=localStorage.getItem('dyusk-theme');"
-              "if(_t==='dark'||_t==='red'||_t==='gold'){"
+              "if(_t==='dark'||_t==='red'){"
               "document.documentElement.setAttribute('data-theme',_t);}}catch(e){}\n")
     return table + prefix + js + "\n;\n" + cjs
 

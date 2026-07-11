@@ -21,7 +21,7 @@
 
   // theme switcher — cream (default) / dark / red
   function applyTheme(t){
-    if(t === 'dark' || t === 'red' || t === 'gold'){
+    if(t === 'dark' || t === 'red'){
       document.documentElement.setAttribute('data-theme', t);
     } else {
       document.documentElement.removeAttribute('data-theme');
