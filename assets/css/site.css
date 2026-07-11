@@ -98,25 +98,26 @@
     border-bottom:1px solid var(--line);
   }
   .logo{ display:flex; align-items:center; gap:14px; }
-  .logo .mark{ height:26px; width:auto; display:block; transition:filter 0.4s ease; }
+  .logo .mark{ height:32px; width:auto; display:block; transition:filter 0.4s ease; }
   .logo .word{ height:15px; width:auto; display:block; transition:filter 0.4s ease; }
   .logo .tagline{
     font-family:'Inter',sans-serif; font-size:0.68rem; text-transform:lowercase; letter-spacing:0.02em;
     color:var(--paper-dim); padding-left:14px; margin-left:2px; border-left:1px solid var(--line); white-space:nowrap;
   }
   @media (max-width:700px){ .logo .tagline{ display:none; } }
-  nav ul{ display:flex; gap:clamp(18px,3vw,42px); list-style:none; }
-  nav ul li a{
+  .nav-links ul{ display:flex; gap:clamp(18px,3vw,42px); list-style:none; margin:0; padding:0; }
+  .nav-links ul li{ list-style:none; }
+  .nav-links ul li a{
     font-size:0.78rem; text-transform:uppercase; letter-spacing:0.08em; font-weight:500;
     position:relative; padding-bottom:4px; color:var(--paper-dim);
     transition:color 0.3s ease;
   }
-  nav ul li a::after{
+  .nav-links ul li a::after{
     content:''; position:absolute; left:0; bottom:0; width:0; height:1px; background:var(--paper);
     transition:width 0.35s var(--ease);
   }
-  nav ul li a:hover{ color:var(--paper); }
-  nav ul li a:hover::after{ width:100%; }
+  .nav-links ul li a:hover{ color:var(--paper); }
+  .nav-links ul li a:hover::after{ width:100%; }
   .nav-links{ display:flex; align-items:center; gap:clamp(18px,3vw,42px); }
   .nav-cta{
     border:1px solid var(--line); padding:9px 18px; border-radius:100px;
@@ -452,7 +453,7 @@
     .nav-links{ position:fixed; inset:0 0 0 auto; width:78vw; max-width:340px; background:var(--ink-2); flex-direction:column;
       align-items:flex-start; padding:110px 34px 40px; gap:34px; transform:translateX(100%); transition:transform 0.5s var(--ease); border-left:1px solid var(--line); }
     .nav-links.open{ transform:translateX(0); }
-    nav ul{ flex-direction:column; gap:22px; }
+    .nav-links ul{ flex-direction:column; gap:22px; }
     .nav-burger{ display:flex; padding:12px 0 12px 12px; }
     /* nav-links leaves the flex flow when it becomes the drawer, so re-anchor the toggle to the right edge */
     .theme-toggle{ margin-left:auto; margin-right:20px; }

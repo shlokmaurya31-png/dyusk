@@ -65,16 +65,18 @@ def upload_images(o):
         name = f"dyusk_{rel.replace('/', '_')}"
         with open(path, "rb") as fh:
             data = base64.b64encode(fh.read()).decode()
-        existing = Att.search([("name", "=", name)], limit=1)
+        # NOTE: on Odoo 19 the writable binary field is `raw` (base64 string),
+        # not `datas` — writing `datas` silently stores nothing (file_size 0),
+        # which makes /web/image serve the placeholder. Recreate fresh each run
+        # so bytes land and the URL busts any cached copy.
+        existing = Att.search([("name", "=", name)])
         if existing:
-            aid = existing[0]
-            Att.write([aid], {"datas": data, "public": True, "mimetype": "image/png"})
-        else:
-            aid = Att.create({"name": name, "datas": data, "public": True,
-                              "mimetype": "image/png", "res_model": "ir.ui.view",
-                              "res_id": 0})
+            Att.unlink(existing)
+        aid = Att.create({"name": name, "raw": data, "public": True,
+                          "mimetype": "image/png"})
+        size = Att.read([aid], ["file_size"])[0]["file_size"]
         url_map[rel] = f"/web/image/{aid}"
-        print(f"  img {rel} -> /web/image/{aid}")
+        print(f"  img {rel} -> /web/image/{aid} ({size} bytes)")
     return url_map
 
 
