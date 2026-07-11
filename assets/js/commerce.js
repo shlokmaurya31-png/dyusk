@@ -74,7 +74,7 @@
   /* ---- toast ---- */
   var toastEl, toastT;
   function toast(msg){
-    if(!toastEl){ toastEl = document.createElement('div'); toastEl.className = 'toast'; document.body.appendChild(toastEl); }
+    if(!toastEl){ toastEl = document.createElement('div'); toastEl.className = 'dtoast'; document.body.appendChild(toastEl); }
     toastEl.textContent = msg;
     toastEl.classList.add('on');
     clearTimeout(toastT);

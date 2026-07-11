@@ -27,9 +27,7 @@ from dotenv import load_dotenv
 
 SITE = r"D:\Dyusk\Dyusk j\website j\dyusk-website"
 FONT_IMPORT = ("@import url('https://fonts.googleapis.com/css2?"
-               "family=Big+Shoulders+Display:wght@500;700;900&"
-               "family=Inter:wght@400;500;600;700&"
-               "family=JetBrains+Mono:wght@400;500&display=swap');\n")
+               "family=Archivo:wght@400;500;700;900&display=swap');\n")
 
 PAGES = [
     {"src": "index.html", "url": "/dyusk", "key": "dyusk.home", "name": "DYUSK Home"},
@@ -127,10 +125,10 @@ def build_js(url_map):
             key = rel.split("/")[-1][:-4]  # strip dir + .png
             entries.append(f"'{key}':'{url}'")
     table = "window.DYUSK_IMG = {" + ",".join(entries) + "};\n"
-    # theme-init + default fit mode, run early
-    prefix = ("try{if(localStorage.getItem('dyusk-theme')==='light'){"
-              "document.documentElement.setAttribute('data-theme','light');}}catch(e){}\n"
-              "try{document.body.setAttribute('data-mode','full');}catch(e){}\n")
+    # theme-init, run early (cream default; dark/red restored from storage)
+    prefix = ("try{var _t=localStorage.getItem('dyusk-theme');"
+              "if(_t==='dark'||_t==='red'){"
+              "document.documentElement.setAttribute('data-theme',_t);}}catch(e){}\n")
     return table + prefix + js + "\n;\n" + cjs
 
 
@@ -168,19 +166,13 @@ def clean_body(html, url_map):
     # self-close void elements for XML (QWeb)
     body = re.sub(r"<img\b([^>]*?)\s*/?>", r"<img\1/>", body)
     body = re.sub(r"<input\b([^>]*?)\s*/?>", r"<input\1/>", body)
+    body = re.sub(r"<br\b([^>]*?)\s*/?>", r"<br\1/>", body)
+    body = re.sub(r"<hr\b([^>]*?)\s*/?>", r"<hr\1/>", body)
     return body.strip()
 
 
-MODEL_VIEWER_SCRIPT = ('<script type="module" '
-                        'src="https://unpkg.com/@google/model-viewer@3.5.0/dist/model-viewer.min.js">'
-                        '</script>\n')
-# pages that embed a <model-viewer> element need the module script — <head> tags
-# aren't ported (only <body> is extracted), so this is injected into the arch directly.
-PAGES_WITH_MODEL_VIEWER = {"dyusk.home"}
-
-
 def make_arch(page, css, js, body):
-    head_extra = MODEL_VIEWER_SCRIPT if page["key"] in PAGES_WITH_MODEL_VIEWER else ""
+    head_extra = ""
     return (
         f'<t name="{page["name"]}" t-name="{page["key"]}">\n'
         f'  <t t-call="website.layout">\n'

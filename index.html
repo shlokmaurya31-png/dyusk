@@ -7,345 +7,135 @@
 <script>
 (function(){
   try{
-    if(localStorage.getItem('dyusk-theme') === 'light'){
-      document.documentElement.setAttribute('data-theme','light');
+    var t = localStorage.getItem('dyusk-theme');
+    if(t === 'dark' || t === 'red'){
+      document.documentElement.setAttribute('data-theme', t);
     }
   }catch(e){}
 })();
 </script>
-<meta name="description" content="DYUSK compression wear. Full Sleeve and Half Sleeve. Engineered pressure for the way your body moves.">
+<meta name="description" content="DYUSK compression wear. Full Sleeve and Half Sleeve in Onyx, Steel and Arctic. Engineered pressure for the way your body moves.">
 <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
-<link rel="icon" href="assets/favicon-512.png" sizes="512x512" type="image/png">
 <link rel="apple-touch-icon" href="assets/favicon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/site.css">
-<script type="module" src="https://unpkg.com/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
 </head>
-<body data-mode="full">
-
-<div class="grain"></div>
-
-<div class="announce">
-  <div class="announce-track" id="announceTrack">
-    <span class="announce-msg">Free shipping on orders over ₹2,999</span>
-    <span class="announce-msg">Compression System 01 — now in Onyx, Steel &amp; Arctic</span>
-    <span class="announce-msg">Easy 7-day returns · Built for the way you move</span>
-  </div>
-</div>
+<body>
 
 <div id="preloader">
-  <div class="pre-inner">
-    <img src="assets/mark-white.png" alt="" class="pre-mark">
-    <img src="assets/wordmark-cream.png" alt="DYUSK" class="pre-word">
-    <p class="pre-tagline mono">outwork yesterday.</p>
-  </div>
-  <div class="bar"><i></i></div>
+  <span class="pre-word">DYUSK<sup>&#174;</sup></span>
+  <span class="pre-count">000</span>
 </div>
 
 <header id="siteHeader">
-  <a href="#top" class="logo">
-    <img src="assets/mark-white.png" alt="DYUSK mark" class="mark">
-    <img src="assets/wordmark-cream.png" alt="DYUSK" class="word">
-    <span class="tagline">outwork yesterday.</span>
+  <a href="index.html" class="logo">
+    <span class="brand">DYUSK&#174;</span>
+    <span class="tagline">Outwork Yesterday</span>
   </a>
-  <div class="nav-links" id="navLinks">
+  <nav aria-label="Main">
     <ul>
-      <li><a href="shop.html">Shop</a></li>
-      <li><a href="#compare">Compression</a></li>
-      <li><a href="#technology">Technology</a></li>
-      <li><a href="#lineup">Lineup</a></li>
-      <li><a href="#footer">Contact</a></li>
+      <li><a class="link-hover on" href="shop.html">Shop</a></li>
+      <li><button class="cart-btn link-hover" type="button" aria-label="Open bag">Bag (<span class="cart-count">0</span>)</button></li>
     </ul>
-    <a href="shop.html" class="nav-cta">Shop Now</a>
-  </div>
-  <div class="header-actions">
-    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light theme" aria-pressed="false">
-      <span class="tt-knob" aria-hidden="true"></span>
-      <span class="tt-icon tt-moon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 14.7A8.6 8.6 0 0 1 9.3 3.5a0.9 0.9 0 0 0-1.1-1.2A10.4 10.4 0 1 0 21.7 15.8a0.9 0.9 0 0 0-1.2-1.1Z"/></svg>
-      </span>
-      <span class="tt-icon tt-sun" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="4.2"/>
-          <line x1="12" y1="2.5" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="21.5"/>
-          <line x1="4.2" y1="4.2" x2="6" y2="6"/><line x1="18" y1="18" x2="19.8" y2="19.8"/>
-          <line x1="2.5" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="21.5" y2="12"/>
-          <line x1="4.2" y1="19.8" x2="6" y2="18"/><line x1="18" y1="6" x2="19.8" y2="4.2"/>
-        </svg>
-      </span>
-    </button>
-    <button class="cart-btn" type="button" aria-label="Open bag">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-      <span class="cart-count">0</span>
-    </button>
-  </div>
-  <div class="nav-burger" id="navBurger"><span></span><span></span><span></span></div>
+  </nav>
 </header>
 
-<section class="hero" id="top">
-  <div class="hero-bg"><img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1600&auto=format&fit=crop&q=70" alt="Athlete training hard in the gym" fetchpriority="high"></div>
-  <span class="eyebrow"><i></i> Outwork Yesterday.</span>
-  <h1 class="headline">
-    <span class="line"><span>Engineered</span></span>
-    <span class="line"><span>for <span class="accent-word">pressure.</span></span></span>
-  </h1>
-  <div class="hero-sub">
-    <p>Two silhouettes, one standard. DYUSK compression is built layer by layer around how the body actually loads under motion — not how a garment looks on a hanger.</p>
-    <div class="hero-cta">
-      <a href="shop.html" class="btn solid">Shop The Drop</a>
-      <a href="#compare" class="btn ghost">Compare Fits</a>
-    </div>
-  </div>
-  <div class="scroll-cue">Scroll <div class="track"><i></i></div></div>
-</section>
-
-<div class="marquee">
-  <div class="marquee-track">
-    <span>Outwork Yesterday. <i></i></span>
-    <span>Second Skin Fit <i></i></span>
-    <span>Full Sleeve <i></i></span>
-    <span>Half Sleeve <i></i></span>
-    <span>4-Way Stretch <i></i></span>
-    <span>Zero Chafe Seams <i></i></span>
-    <span>Outwork Yesterday. <i></i></span>
-    <span>Second Skin Fit <i></i></span>
-    <span>Full Sleeve <i></i></span>
-    <span>Half Sleeve <i></i></span>
-    <span>4-Way Stretch <i></i></span>
-    <span>Zero Chafe Seams <i></i></span>
-  </div>
+<div id="theme-switcher" aria-label="Theme">
+  <button class="theme-dot" data-set="dark" type="button" aria-label="Dark theme"></button>
+  <button class="theme-dot" data-set="cream" type="button" aria-label="Cream theme"></button>
+  <button class="theme-dot" data-set="red" type="button" aria-label="Red theme"></button>
 </div>
 
-<section class="compare-wrap" id="compare">
-  <div class="section-head reveal">
-    <div>
-      <span class="section-tag">01 — Choose Your Fit</span>
-      <h2>Full coverage or free range. Same pressure standard.</h2>
+<section class="hero-brand" id="top">
+  <div class="wordmark">DYUSK<sup>&#174;</sup></div>
+  <div class="rule-5"></div>
+  <div class="hero-grid">
+    <div class="hg-brand"><h1>Dyusk</h1></div>
+    <div class="hg-why">
+      <h2>Why</h2>
+      <p>Compression built by lifters who got tired of guessing. Two silhouettes, three colourways, one pressure standard &#8212; every panel graded around how the body actually loads under motion.</p>
     </div>
-    <p>Toggle between our two launch silhouettes, or scroll — the fit updates as you read.</p>
-  </div>
-
-  <div class="mode-toggle reveal">
-    <button class="active" data-jump="full" id="btnFull">Full Sleeve</button>
-    <button data-jump="half" id="btnHalf">Half Sleeve</button>
-  </div>
-
-  <div class="compare-grid">
-    <div class="compare-visual" id="compareVisual">
-      <span class="tag mono" id="visualTag">Full Sleeve — 01</span>
-      <div class="garment" id="garmentFull">
-        <img class="compare-photo" src="assets/products/full-front-black.png" alt="DYUSK Full Sleeve compression shirt, Onyx">
-      </div>
-      <div class="garment hide" id="garmentHalf">
-        <img class="compare-photo" src="assets/products/half-front-black.png" alt="DYUSK Half Sleeve compression shirt, Onyx">
-      </div>
-      <div class="price display" id="visualPrice">₹2,499 <small>Full Sleeve — Onyx</small></div>
+    <div class="hg-links">
+      <a class="link-hover" href="shop.html">Shop the drop</a>
+      <a class="link-hover" href="#footer">Shipping &amp; Returns</a>
     </div>
-
-    <div class="spec-side">
-      <div class="spec-block" data-mode="full">
-        <span class="kicker mono">Full Sleeve — 01</span>
-        <h3>Total Arm Compression</h3>
-        <p>Sleeve-to-cuff pressure that stays consistent through full range of motion — built for cold starts, long sessions, and joints that need to be told what to do.</p>
-        <div class="spec-list">
-          <div class="spec-item"><span class="num">240<small style="font-size:1rem;">gsm</small></span><span class="label">Core Fabric Weight</span></div>
-          <div class="spec-item"><span class="num">92%</span><span class="label">4-Way Stretch Recovery</span></div>
-          <div class="spec-item"><span class="num">6</span><span class="label">Flatlock Seam Zones</span></div>
-          <div class="spec-item"><span class="num">3.1x</span><span class="label">Moisture Transfer Rate</span></div>
-        </div>
-      </div>
-      <div class="spec-block" data-mode="half">
-        <span class="kicker mono">Half Sleeve — 02</span>
-        <h3>Open Arm, Full Core</h3>
-        <p>Same core-to-shoulder compression, cropped at the cuff for heat-heavy sessions and lifts that want a free wrist and open forearm.</p>
-        <div class="spec-list">
-          <div class="spec-item"><span class="num">210<small style="font-size:1rem;">gsm</small></span><span class="label">Core Fabric Weight</span></div>
-          <div class="spec-item"><span class="num">89%</span><span class="label">4-Way Stretch Recovery</span></div>
-          <div class="spec-item"><span class="num">4</span><span class="label">Flatlock Seam Zones</span></div>
-          <div class="spec-item"><span class="num">3.6x</span><span class="label">Moisture Transfer Rate</span></div>
-        </div>
-      </div>
-    </div>
+    <div class="hg-copy">&#169; 2026</div>
   </div>
 </section>
 
-<section class="model-showcase">
-  <div class="section-head reveal">
-    <div>
-      <span class="section-tag">In The Lab</span>
-      <h2>See the build, from every angle.</h2>
+<section class="pgrid" id="lineup">
+  <a href="product-full-sleeve.html?color=black" class="pcard reveal">
+    <div class="media">
+      <img class="ph-front" src="assets/products/full-front-black.png" alt="DYUSK Full Sleeve compression shirt, Onyx, front view">
+      <img class="ph-back" src="assets/products/full-back-black.png" alt="DYUSK Full Sleeve compression shirt, Onyx, back view" loading="lazy">
     </div>
-    <p>A 3D scan of the Full Sleeve construction, straight off the production floor. Drag to rotate, scroll to zoom.</p>
-  </div>
-  <div class="model-stage reveal">
-    <model-viewer
-      src="assets/3d/dyusk-showcase.glb"
-      poster="assets/products/full-front-black.png"
-      loading="lazy" reveal="auto"
-      camera-controls="camera-controls" auto-rotate="auto-rotate" disable-pan="disable-pan"
-      shadow-intensity="1.1" exposure="1"
-      camera-orbit="10deg 80deg 2.3m"
-      min-camera-orbit="auto 55deg auto" max-camera-orbit="auto 100deg auto"
-      min-field-of-view="25deg" max-field-of-view="45deg"
-      alt="Interactive 3D scan of the DYUSK Full Sleeve compression shirt"
-      style="width:100%;height:100%;background:transparent;">
-    </model-viewer>
-    <span class="model-hint mono">Drag to rotate</span>
-  </div>
+    <div class="prow"><p>Full Sleeve &#8212; Onyx</p><p>&#8377;2,499</p></div>
+    <div class="cat"><i></i><span>Compression</span></div>
+  </a>
+  <a href="product-half-sleeve.html?color=black" class="pcard reveal">
+    <div class="media">
+      <img class="ph-front" src="assets/products/half-front-black.png" alt="DYUSK Half Sleeve compression shirt, Onyx, front view">
+      <img class="ph-back" src="assets/products/half-back-black.png" alt="DYUSK Half Sleeve compression shirt, Onyx, back view" loading="lazy">
+    </div>
+    <div class="prow"><p>Half Sleeve &#8212; Onyx</p><p>&#8377;2,199</p></div>
+    <div class="cat"><i></i><span>Compression</span></div>
+  </a>
+  <a href="product-full-sleeve.html?color=steel" class="pcard reveal">
+    <div class="media">
+      <img class="ph-front" src="assets/products/full-front-steel.png" alt="DYUSK Full Sleeve compression shirt, Steel, front view">
+      <img class="ph-back" src="assets/products/full-back-steel.png" alt="DYUSK Full Sleeve compression shirt, Steel, back view" loading="lazy">
+    </div>
+    <div class="prow"><p>Full Sleeve &#8212; Steel</p><p>&#8377;2,499</p></div>
+    <div class="cat"><i></i><span>Compression</span></div>
+  </a>
+  <a href="product-half-sleeve.html?color=steel" class="pcard reveal">
+    <div class="media">
+      <img class="ph-front" src="assets/products/half-front-steel.png" alt="DYUSK Half Sleeve compression shirt, Steel, front view">
+      <img class="ph-back" src="assets/products/half-back-steel.png" alt="DYUSK Half Sleeve compression shirt, Steel, back view" loading="lazy">
+    </div>
+    <div class="prow"><p>Half Sleeve &#8212; Steel</p><p>&#8377;2,199</p></div>
+    <div class="cat"><i></i><span>Compression</span></div>
+  </a>
 </section>
 
-<section class="pmap" id="technology">
-  <div class="section-head reveal">
-    <div>
-      <span class="section-tag">02 — Pressure Map</span>
-      <h2>Every zone earns its compression.</h2>
+<section class="pgrid-loose">
+  <a href="product-full-sleeve.html?color=white" class="pcard g-a reveal">
+    <div class="media">
+      <img class="ph-front" src="assets/products/full-front-white.png" alt="DYUSK Full Sleeve compression shirt, Arctic, front view">
+      <img class="ph-back" src="assets/products/full-back-white.png" alt="DYUSK Full Sleeve compression shirt, Arctic, back view" loading="lazy">
     </div>
-    <p>Nothing on a DYUSK garment is decorative. Each panel is graded for a specific job the body does under load.</p>
-  </div>
-  <div class="pmap-grid">
-    <div class="pmap-figure photo reveal">
-      <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=900&auto=format&fit=crop&q=70" alt="Athlete mid-session, compression working across the body" loading="lazy">
+    <div class="prow"><p>Full Sleeve &#8212; Arctic</p><p>&#8377;2,499</p></div>
+    <div class="cat"><i></i><span>Compression</span></div>
+  </a>
+  <a href="product-half-sleeve.html?color=white" class="pcard g-b reveal reveal-d1">
+    <div class="media">
+      <img class="ph-front" src="assets/products/half-front-white.png" alt="DYUSK Half Sleeve compression shirt, Arctic, front view">
+      <img class="ph-back" src="assets/products/half-back-white.png" alt="DYUSK Half Sleeve compression shirt, Arctic, back view" loading="lazy">
     </div>
-    <ul class="zone-list reveal">
-      <li><span class="idx mono">01</span><div class="zt"><h4>Shoulder Drive</h4><p>Directional stretch panelling that moves with rotation instead of resisting it — for pressing, throwing, and overhead work.</p></div></li>
-      <li><span class="idx mono">02</span><div class="zt"><h4>Core Stability</h4><p>Graduated mid-density compression through the torso, tuned to support posture without restricting the diaphragm.</p></div></li>
-      <li><span class="idx mono">03</span><div class="zt"><h4>Lat Compression</h4><p>Higher-density side panels reduce muscle oscillation on lateral movement and change of direction.</p></div></li>
-      <li><span class="idx mono">04</span><div class="zt"><h4>Cuff Lock</h4><p>Silicone-free grip binding keeps the sleeve or hem in place through a full session — no mid-set adjustment.</p></div></li>
-    </ul>
-  </div>
+    <div class="prow"><p>Half Sleeve &#8212; Arctic</p><p>&#8377;2,199</p></div>
+    <div class="cat"><i></i><span>Compression</span></div>
+  </a>
 </section>
 
-<section class="engineered-for" id="engineered">
-  <div class="section-head reveal">
-    <div>
-      <span class="section-tag">03 — Engineered For</span>
-      <h2>Every session earns its compression.</h2>
-    </div>
-    <p>One garment, three jobs. Hover a discipline to see DYUSK on the move.</p>
-  </div>
-  <div class="eng-list reveal">
-    <div class="eng-item">
-      <h3 class="display">Strength</h3>
-      <div class="eng-photos">
-        <div class="eng-photo eng-photo-back"><img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="Barbell and weight plates for strength training" loading="lazy"></div>
-        <div class="eng-photo eng-photo-front"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="Dumbbell rack in a strength training gym" loading="lazy"></div>
-      </div>
-    </div>
-    <div class="eng-item">
-      <h3 class="display">Endurance</h3>
-      <div class="eng-photos">
-        <div class="eng-photo eng-photo-back"><img src="https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="Runner on a road during an endurance session" loading="lazy"></div>
-        <div class="eng-photo eng-photo-front"><img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="Running shoes on a track" loading="lazy"></div>
-      </div>
-    </div>
-    <div class="eng-item">
-      <h3 class="display">Recovery</h3>
-      <div class="eng-photos">
-        <div class="eng-photo eng-photo-back"><img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="Stretching session for muscle recovery" loading="lazy"></div>
-        <div class="eng-photo eng-photo-front"><img src="https://images.unsplash.com/photo-1600881333168-2ef49b341f30?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" alt="Calm recovery and wellness setting" loading="lazy"></div>
-      </div>
-    </div>
-  </div>
+<section class="cta-band" id="technology">
+  <span class="section-tag reveal">Compression System 01</span>
+  <h2 class="reveal">Every zone earns its compression. <span class="dim">Nothing here is decorative.</span></h2>
 </section>
 
-<section class="stats-section">
-  <div class="stats-grid reveal">
-    <div class="stat"><div class="count"><span class="c-num" data-target="92">0</span><span class="suffix">%</span></div><div class="slabel">Stretch Recovery</div></div>
-    <div class="stat"><div class="count"><span class="c-num" data-target="6">0</span><span class="suffix">pt</span></div><div class="slabel">Flatlock Seam System</div></div>
-    <div class="stat"><div class="count"><span class="c-num" data-target="240">0</span><span class="suffix">gsm</span></div><div class="slabel">Core Fabric Weight</div></div>
-    <div class="stat"><div class="count"><span class="c-num" data-target="2">0</span><span class="suffix">fits</span></div><div class="slabel">Launch Silhouettes</div></div>
-  </div>
-</section>
-
-<section class="built-for">
-  <div class="section-head reveal">
-    <div>
-      <span class="section-tag">04 — Built For</span>
-      <h2>One compression standard. Every discipline.</h2>
-    </div>
-    <p>From cold starts to competition — DYUSK moves with whatever session you put it through.</p>
-  </div>
-  <div class="bf-carousel reveal" id="bfCarousel">
-    <div class="bf-track" id="bfTrack">
-      <div class="bf-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l6 6-6 6"/><path d="M13 6l6 6-6 6" opacity="0.5"/></svg><span>Running</span></div>
-      <div class="bf-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="2" y1="12" x2="22" y2="12"/><rect x="4" y="8" width="3" height="8" rx="1"/><rect x="17" y="8" width="3" height="8" rx="1"/></svg><span>Lifting</span></div>
-      <div class="bf-card"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg><span>HIIT</span></div>
-      <div class="bf-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 12V8a3 3 0 0 1 6 0v1a3 3 0 0 1 3 3v2a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4v-2a2 2 0 0 1 2-2Z"/></svg><span>Boxing</span></div>
-      <div class="bf-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="17" r="3.2"/><circle cx="18" cy="17" r="3.2"/><path d="M6 17l4-9h4l4 9M10 8h3M6 17h6l3-6"/></svg><span>Cycling</span></div>
-      <div class="bf-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 8a3 3 0 0 1 6 0"/><rect x="6" y="8" width="12" height="12" rx="5"/></svg><span>CrossFit</span></div>
-      <div class="bf-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="5" y1="4" x2="5" y2="20"/><line x1="19" y1="4" x2="19" y2="20"/><line x1="5" y1="9" x2="19" y2="9"/></svg><span>Calisthenics</span></div>
-      <div class="bf-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="7" width="18" height="10" rx="5"/><line x1="12" y1="7" x2="12" y2="17" stroke-dasharray="1 3"/></svg><span>Track &amp; Field</span></div>
-      <div class="bf-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="9" cy="9" r="5"/><circle cx="15" cy="15" r="5"/></svg><span>Combat Sports</span></div>
-      <div class="bf-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l2-7 4 14 3-10 2 3h5"/></svg><span>Recovery</span></div>
-      <div class="bf-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l6 6-6 6"/><path d="M13 6l6 6-6 6" opacity="0.5"/></svg><span>Running</span></div>
-      <div class="bf-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="2" y1="12" x2="22" y2="12"/><rect x="4" y="8" width="3" height="8" rx="1"/><rect x="17" y="8" width="3" height="8" rx="1"/></svg><span>Lifting</span></div>
-    </div>
-  </div>
-</section>
-
-<section class="lineup" id="lineup">
-  <div class="section-head reveal">
-    <div>
-      <span class="section-tag">05 — The Lineup</span>
-      <h2>Two fits. Zero compromise.</h2>
-    </div>
-    <p>Available now in Onyx. More colourways dropping with Compression System 02.</p>
-  </div>
-  <div class="lineup-grid">
-    <a href="product-full-sleeve.html?color=black" class="product-card card-full reveal" data-sleeve="full">
-      <div class="glow"></div>
-      <div class="pc-top"><span class="pc-tag mono">Full Sleeve</span><span class="pc-tag mono pc-color-label">Onyx</span></div>
-      <div class="pc-art">
-        <img class="pc-photo" src="assets/products/full-front-black.png" alt="DYUSK Full Sleeve compression shirt, Onyx, front view">
-        <button class="pc-flip" type="button" aria-label="Show back view">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15.5-6.5L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.5 6.5L3 16"/><path d="M3 21v-5h5"/></svg>
-        </button>
-      </div>
-      <div class="pc-swatches">
-        <button class="pc-swatch active" type="button" data-color="black" style="--sw:#111112" aria-label="Onyx"></button>
-        <button class="pc-swatch" type="button" data-color="steel" style="--sw:#4b4d50" aria-label="Steel"></button>
-        <button class="pc-swatch" type="button" data-color="white" style="--sw:#e8e8e5" aria-label="Arctic"></button>
-      </div>
-      <div class="pc-bottom">
-        <div><h3>Full Sleeve Compression</h3><span class="pc-price display">₹2,499</span></div>
-        <span class="pc-link">View <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 19L19 5M19 5H8M19 5V16" stroke="currentColor" stroke-width="2"/></svg></span>
-      </div>
-    </a>
-    <a href="product-half-sleeve.html?color=black" class="product-card card-half reveal reveal-d1" data-sleeve="half">
-      <div class="glow"></div>
-      <div class="pc-top"><span class="pc-tag mono">Half Sleeve</span><span class="pc-tag mono pc-color-label">Onyx</span></div>
-      <div class="pc-art">
-        <img class="pc-photo" src="assets/products/half-front-black.png" alt="DYUSK Half Sleeve compression shirt, Onyx, front view">
-        <button class="pc-flip" type="button" aria-label="Show back view">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15.5-6.5L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.5 6.5L3 16"/><path d="M3 21v-5h5"/></svg>
-        </button>
-      </div>
-      <div class="pc-swatches">
-        <button class="pc-swatch active" type="button" data-color="black" style="--sw:#111112" aria-label="Onyx"></button>
-        <button class="pc-swatch" type="button" data-color="steel" style="--sw:#4b4d50" aria-label="Steel"></button>
-        <button class="pc-swatch" type="button" data-color="white" style="--sw:#e8e8e5" aria-label="Arctic"></button>
-      </div>
-      <div class="pc-bottom">
-        <div><h3>Half Sleeve Compression</h3><span class="pc-price display">₹2,199</span></div>
-        <span class="pc-link">View <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 19L19 5M19 5H8M19 5V16" stroke="currentColor" stroke-width="2"/></svg></span>
-      </div>
-    </a>
-  </div>
-</section>
+<div class="spec-strip reveal">
+  <div class="cell"><div class="num">240<small>gsm</small></div><span class="label">Core Fabric Weight</span></div>
+  <div class="cell"><div class="num">92<small>%</small></div><span class="label">4-Way Stretch Recovery</span></div>
+  <div class="cell"><div class="num">6<small>pt</small></div><span class="label">Flatlock Seam System</span></div>
+  <div class="cell"><div class="num">3.1<small>&#215;</small></div><span class="label">Moisture Transfer Rate</span></div>
+</div>
 
 <section class="trust-band">
-  <div class="tb-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><path d="M16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg><span>Free shipping over ₹2,999</span></div>
+  <div class="tb-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><path d="M16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg><span>Free shipping over &#8377;2,999</span></div>
   <div class="tb-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg><span>7-day easy returns</span></div>
   <div class="tb-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.5 8 8 11 4.5-3 8-6 8-11V5Z"/><path d="M9 12l2 2 4-4"/></svg><span>Engineered in India</span></div>
   <div class="tb-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>Secure checkout</span></div>
-</section>
-
-<section class="cta-band">
-  <span class="section-tag reveal" style="display:block; text-align:center;">Compression System 01</span>
-  <h2 class="reveal">Put the pressure where it belongs.</h2>
-  <a href="shop.html" class="btn solid reveal">Shop The Drop</a>
 </section>
 
 <section class="newsletter">
@@ -353,7 +143,7 @@
     <div class="nl-copy">
       <span class="section-tag">The Next Drop</span>
       <h2>Be first through the door.</h2>
-      <p>New colourways and Compression System 02 drop to the list before anyone else. No spam — just early access and the occasional training edit.</p>
+      <p>New colourways and Compression System 02 drop to the list before anyone else. No spam &#8212; just early access and the occasional training edit.</p>
     </div>
     <form class="nl-form" novalidate="novalidate">
       <input type="email" required="required" placeholder="you@email.com" aria-label="Email address">
@@ -363,27 +153,42 @@
 </section>
 
 <footer id="footer">
-  <div class="footer-top">
-    <div class="footer-cols">
-      <div class="footer-col">
-        <h5>Shop</h5>
-        <ul><li><a href="shop.html">Shop All</a></li><li><a href="product-full-sleeve.html">Full Sleeve</a></li><li><a href="product-half-sleeve.html">Half Sleeve</a></li></ul>
-      </div>
-      <div class="footer-col">
-        <h5>Company</h5>
-        <ul><li><a href="#technology">Technology</a></li><li><a href="#">About</a></li><li><a href="#">Contact</a></li></ul>
-      </div>
-      <div class="footer-col">
-        <h5>Follow</h5>
-        <ul><li><a href="#">Instagram</a></li><li><a href="#">Strava</a></li></ul>
-      </div>
+  <div class="rule-5"></div>
+  <div class="f-head">
+    <div class="f-statement">
+      <p>Made to be worn hard.</p>
+      <p class="dim">Washed. Repeated. Outworked.</p>
     </div>
+    <div class="f-year">&#169;26</div>
   </div>
-  <img src="assets/wordmark-cream.png" alt="DYUSK" class="footer-logo">
-  <p class="footer-slogan mono">Outwork Yesterday.</p>
-  <div class="footer-bottom">
-    <p>© 2026 DYUSK. Engineered pressure, worn daily.</p>
-    <p class="mono">Onyx / Compression System 01</p>
+  <p class="f-desc">DYUSK is engineered pressure &#8212; compression wear built layer by layer around how the body loads under motion, not how a garment looks on a hanger.</p>
+  <div class="rule-2"></div>
+  <div class="f-cols">
+    <div class="f-col">
+      <span class="f-brand">DYUSK&#174;</span>
+      <span>All rights reserved &#169; 2026</span>
+    </div>
+    <div class="f-col">
+      <span class="kicker">Studio</span>
+      Engineered in India<br>
+      Compression System 01
+    </div>
+    <div class="f-col">
+      <span class="kicker">Shop</span>
+      <ul>
+        <li><a class="link-hover" href="shop.html">Shop All</a></li>
+        <li><a class="link-hover" href="product-full-sleeve.html">Full Sleeve</a></li>
+        <li><a class="link-hover" href="product-half-sleeve.html">Half Sleeve</a></li>
+      </ul>
+    </div>
+    <div class="f-col">
+      <span class="kicker">Follow</span>
+      <ul>
+        <li><a class="link-hover" href="#" rel="noopener">Instagram</a></li>
+        <li><a class="link-hover" href="#" rel="noopener">Strava</a></li>
+        <li><a class="link-hover" href="#footer">Let&#8217;s talk</a></li>
+      </ul>
+    </div>
   </div>
 </footer>
 
@@ -398,9 +203,9 @@
   <div class="ship-bar" id="shipBar"><p></p><div class="ship-track"><i></i></div></div>
   <div class="cart-items" id="cartItems"></div>
   <div class="cart-foot" id="cartFoot">
-    <div class="cart-sub"><span>Subtotal</span><strong id="cartSub">₹0</strong></div>
+    <div class="cart-sub"><span>Subtotal</span><strong id="cartSub">&#8377;0</strong></div>
     <p class="cart-note">Shipping &amp; taxes calculated at checkout.</p>
-    <a href="#" class="btn checkout-btn">Checkout</a>
+    <a href="#" class="btn solid checkout-btn">Checkout</a>
   </div>
 </aside>
 

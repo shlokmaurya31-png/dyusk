@@ -7,8 +7,9 @@
 <script>
 (function(){
   try{
-    if(localStorage.getItem('dyusk-theme') === 'light'){
-      document.documentElement.setAttribute('data-theme','light');
+    var t = localStorage.getItem('dyusk-theme');
+    if(t === 'dark' || t === 'red'){
+      document.documentElement.setAttribute('data-theme', t);
     }
   }catch(e){}
 })();
@@ -18,59 +19,29 @@
 <link rel="apple-touch-icon" href="assets/favicon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/site.css">
 </head>
 <body>
 
-<div class="grain"></div>
-
-<div class="announce">
-  <div class="announce-track" id="announceTrack">
-    <span class="announce-msg">Free shipping on orders over ₹2,999</span>
-    <span class="announce-msg">Dispatched in 24–48h · Easy 7-day returns</span>
-    <span class="announce-msg">Compression System 01 — now in Onyx, Steel &amp; Arctic</span>
-  </div>
-</div>
-
 <header id="siteHeader">
-  <a href="index.html#top" class="logo">
-    <img src="assets/mark-white.png" alt="DYUSK mark" class="mark">
-    <img src="assets/wordmark-cream.png" alt="DYUSK" class="word">
-    <span class="tagline">outwork yesterday.</span>
+  <a href="index.html" class="logo">
+    <span class="brand">DYUSK&#174;</span>
+    <span class="tagline">Outwork Yesterday</span>
   </a>
-  <div class="nav-links" id="navLinks">
+  <nav aria-label="Main">
     <ul>
-      <li><a href="shop.html">Shop</a></li>
-      <li><a href="index.html#compare">Compression</a></li>
-      <li><a href="index.html#technology">Technology</a></li>
-      <li><a href="index.html#footer">Contact</a></li>
+      <li><a class="link-hover" href="shop.html">Shop</a></li>
+      <li><button class="cart-btn link-hover" type="button" aria-label="Open bag">Bag (<span class="cart-count">0</span>)</button></li>
     </ul>
-    <a href="shop.html" class="nav-cta">Shop Now</a>
-  </div>
-  <div class="header-actions">
-    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light theme" aria-pressed="false">
-      <span class="tt-knob" aria-hidden="true"></span>
-      <span class="tt-icon tt-moon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 14.7A8.6 8.6 0 0 1 9.3 3.5a0.9 0.9 0 0 0-1.1-1.2A10.4 10.4 0 1 0 21.7 15.8a0.9 0.9 0 0 0-1.2-1.1Z"/></svg>
-      </span>
-      <span class="tt-icon tt-sun" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="4.2"/>
-          <line x1="12" y1="2.5" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="21.5"/>
-          <line x1="4.2" y1="4.2" x2="6" y2="6"/><line x1="18" y1="18" x2="19.8" y2="19.8"/>
-          <line x1="2.5" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="21.5" y2="12"/>
-          <line x1="4.2" y1="19.8" x2="6" y2="18"/><line x1="18" y1="6" x2="19.8" y2="4.2"/>
-        </svg>
-      </span>
-    </button>
-    <button class="cart-btn" type="button" aria-label="Open bag">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-      <span class="cart-count">0</span>
-    </button>
-  </div>
-  <div class="nav-burger" id="navBurger"><span></span><span></span><span></span></div>
+  </nav>
 </header>
+
+<div id="theme-switcher" aria-label="Theme">
+  <button class="theme-dot" data-set="dark" type="button" aria-label="Dark theme"></button>
+  <button class="theme-dot" data-set="cream" type="button" aria-label="Cream theme"></button>
+  <button class="theme-dot" data-set="red" type="button" aria-label="Red theme"></button>
+</div>
 
 <section class="product-detail" data-pdp="half">
   <a href="shop.html" class="back-link mono">&larr; Back to Shop</a>
@@ -161,7 +132,7 @@
 </section>
 
 <div class="modal-scrim" id="sizeGuide">
-  <div class="modal" role="dialog" aria-label="Size guide">
+  <div class="sg-modal" role="dialog" aria-label="Size guide">
     <div class="modal-top">
       <h3>Size Guide</h3>
       <button class="cart-close" type="button" data-guide-close="1" aria-label="Close size guide">
@@ -248,27 +219,42 @@
 </section>
 
 <footer id="footer">
-  <div class="footer-top">
-    <div class="footer-cols">
-      <div class="footer-col">
-        <h5>Shop</h5>
-        <ul><li><a href="shop.html">Shop All</a></li><li><a href="product-full-sleeve.html">Full Sleeve</a></li><li><a href="product-half-sleeve.html">Half Sleeve</a></li></ul>
-      </div>
-      <div class="footer-col">
-        <h5>Company</h5>
-        <ul><li><a href="index.html#technology">Technology</a></li><li><a href="#">About</a></li><li><a href="#">Contact</a></li></ul>
-      </div>
-      <div class="footer-col">
-        <h5>Follow</h5>
-        <ul><li><a href="#">Instagram</a></li><li><a href="#">Strava</a></li></ul>
-      </div>
+  <div class="rule-5"></div>
+  <div class="f-head">
+    <div class="f-statement">
+      <p>Made to be worn hard.</p>
+      <p class="dim">Washed. Repeated. Outworked.</p>
     </div>
+    <div class="f-year">&#169;26</div>
   </div>
-  <img src="assets/wordmark-cream.png" alt="DYUSK" class="footer-logo">
-  <p class="footer-slogan mono">Outwork Yesterday.</p>
-  <div class="footer-bottom">
-    <p>© 2026 DYUSK. Engineered pressure, worn daily.</p>
-    <p class="mono">Half Sleeve / Compression System 01</p>
+  <p class="f-desc">DYUSK is engineered pressure &#8212; compression wear built layer by layer around how the body loads under motion, not how a garment looks on a hanger.</p>
+  <div class="rule-2"></div>
+  <div class="f-cols">
+    <div class="f-col">
+      <span class="f-brand">DYUSK&#174;</span>
+      <span>All rights reserved &#169; 2026</span>
+    </div>
+    <div class="f-col">
+      <span class="kicker">Studio</span>
+      Engineered in India<br>
+      Compression System 01
+    </div>
+    <div class="f-col">
+      <span class="kicker">Shop</span>
+      <ul>
+        <li><a class="link-hover" href="shop.html">Shop All</a></li>
+        <li><a class="link-hover" href="product-full-sleeve.html">Full Sleeve</a></li>
+        <li><a class="link-hover" href="product-half-sleeve.html">Half Sleeve</a></li>
+      </ul>
+    </div>
+    <div class="f-col">
+      <span class="kicker">Follow</span>
+      <ul>
+        <li><a class="link-hover" href="#" rel="noopener">Instagram</a></li>
+        <li><a class="link-hover" href="#" rel="noopener">Strava</a></li>
+        <li><a class="link-hover" href="#footer">Let&#8217;s talk</a></li>
+      </ul>
+    </div>
   </div>
 </footer>
 
