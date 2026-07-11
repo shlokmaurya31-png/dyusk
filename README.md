@@ -9,10 +9,22 @@ Marketing site for DYUSK compression wear. Static HTML/CSS/JS — no build step,
 | Page | Purpose |
 |---|---|
 | `index.html` | Landing page — hero, fit comparison, pressure map, lineup |
-| `product-full-sleeve.html` | Full Sleeve product detail (₹2,499) |
-| `product-half-sleeve.html` | Half Sleeve product detail (₹2,199) |
+| `shop.html` | Collection page — filterable product grid, quick-add |
+| `product-full-sleeve.html` | Full Sleeve product detail (₹2,499) — gallery, size/colour, add to cart |
+| `product-half-sleeve.html` | Half Sleeve product detail (₹2,199) — gallery, size/colour, add to cart |
 
-Lineup cards link to the product pages and carry the selected colorway via `?color=` (e.g. `product-full-sleeve.html?color=steel`).
+Lineup and shop cards link to the product pages and carry the selected colorway via `?color=` (e.g. `product-full-sleeve.html?color=steel`).
+
+## Commerce
+
+`assets/js/commerce.js` runs on every page and powers the storefront:
+
+- **Cart** — a slide-out drawer with line items, quantity steppers, a free-shipping progress bar (₹2,999 threshold) and subtotal. State persists in `localStorage` (`dyusk-cart`), so the bag survives navigation.
+- **Announcement bar** — rotating messages; slides away on scroll while the header docks to the top.
+- **Shop page** — filter by fit and colour, sort by price, and quick-add a size without leaving the grid.
+- **Product pages** — colour + size selection (S–XXL), size guide, quantity, and an Add to Bag that opens the cart.
+
+The cart/checkout is client-side today (for design + demo). When the paid Odoo plan is live, checkout swaps to Odoo's real `website_sale` cart — the storefront UI stays as-is.
 
 ## Structure
 
@@ -67,7 +79,7 @@ The storefront is moving to **Odoo Online** (database `dyusk` at https://dyusk.o
 | `odoo/port_site.py` | Ports these static pages into Odoo as website pages — **done, live** |
 | `odoo/load_catalog.py` | Creates products + color variants + photos in Odoo eCommerce — ready, not yet run |
 
-**Status:** DNS for `www.dyusk.com` already points at Odoo (CNAME live). The three pages are staged at `/dyusk`, `/product-full-sleeve`, `/product-half-sleeve` on dyusk.odoo.com with the full design intact. Blocked on a paid Odoo subscription for the custom domain + live checkout.
+**Status:** DNS for `www.dyusk.com` already points at Odoo (CNAME live). Four pages are staged on dyusk.odoo.com with the full design + commerce layer intact: `/dyusk`, `/shop-all`, `/product-full-sleeve`, `/product-half-sleeve`. Blocked on a paid Odoo subscription for the custom domain + native Odoo checkout.
 
 **Setup for teammates:** copy `odoo/.env.example` → `odoo/.env`, fill in your own Odoo login + API key (Odoo → My Profile → Account Security → New API Key), then `pip install odoorpc python-dotenv`. Never commit `.env`.
 

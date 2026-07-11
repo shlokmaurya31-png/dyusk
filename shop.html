@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop — DYUSK Compression</title>
+<script>
+(function(){
+  try{
+    if(localStorage.getItem('dyusk-theme') === 'light'){
+      document.documentElement.setAttribute('data-theme','light');
+    }
+  }catch(e){}
+})();
+</script>
+<meta name="description" content="Shop DYUSK compression wear — Full Sleeve and Half Sleeve in Onyx, Steel and Arctic. Engineered pressure, made for the way you move.">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+
+<div class="grain"></div>
+
+<div class="announce">
+  <div class="announce-track" id="announceTrack">
+    <span class="announce-msg">Free shipping on orders over ₹2,999</span>
+    <span class="announce-msg">Compression System 01 — now in Onyx, Steel &amp; Arctic</span>
+    <span class="announce-msg">Easy 7-day returns · Built for the way you move</span>
+  </div>
+</div>
+
+<header id="siteHeader">
+  <a href="index.html#top" class="logo">
+    <img src="assets/mark-white.png" alt="DYUSK mark" class="mark">
+    <img src="assets/wordmark-cream.png" alt="DYUSK" class="word">
+    <span class="tagline">outwork yesterday.</span>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <ul>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="index.html#compare">Compression</a></li>
+      <li><a href="index.html#technology">Technology</a></li>
+      <li><a href="index.html#footer">Contact</a></li>
+    </ul>
+    <a href="index.html#compare" class="nav-cta">Compare Fits</a>
+  </div>
+  <div class="header-actions">
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light theme" aria-pressed="false">
+      <span class="tt-knob" aria-hidden="true"></span>
+      <span class="tt-icon tt-moon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 14.7A8.6 8.6 0 0 1 9.3 3.5a0.9 0.9 0 0 0-1.1-1.2A10.4 10.4 0 1 0 21.7 15.8a0.9 0.9 0 0 0-1.2-1.1Z"/></svg>
+      </span>
+      <span class="tt-icon tt-sun" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4.2"/>
+          <line x1="12" y1="2.5" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="21.5"/>
+          <line x1="4.2" y1="4.2" x2="6" y2="6"/><line x1="18" y1="18" x2="19.8" y2="19.8"/>
+          <line x1="2.5" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="21.5" y2="12"/>
+          <line x1="4.2" y1="19.8" x2="6" y2="18"/><line x1="18" y1="6" x2="19.8" y2="4.2"/>
+        </svg>
+      </span>
+    </button>
+    <button class="cart-btn" type="button" aria-label="Open bag">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <span class="cart-count">0</span>
+    </button>
+  </div>
+  <div class="nav-burger" id="navBurger"><span></span><span></span><span></span></div>
+</header>
+
+<section class="shop-head">
+  <span class="section-tag">Compression System 01</span>
+  <h1>Shop All</h1>
+  <p>Two silhouettes, three colourways. Every piece graded for the pressure your body actually loads under motion — engineered, not decorative.</p>
+</section>
+
+<div class="shop-bar">
+  <div class="shop-filters">
+    <div class="filter-group" role="group" aria-label="Filter by fit">
+      <button class="filter-chip active" data-filter="fit" data-value="all">All</button>
+      <button class="filter-chip" data-filter="fit" data-value="full">Full Sleeve</button>
+      <button class="filter-chip" data-filter="fit" data-value="half">Half Sleeve</button>
+    </div>
+    <div class="filter-group" role="group" aria-label="Filter by colour">
+      <button class="filter-chip active" data-filter="color" data-value="all">All Colours</button>
+      <button class="filter-chip" data-filter="color" data-value="black">Onyx</button>
+      <button class="filter-chip" data-filter="color" data-value="steel">Steel</button>
+      <button class="filter-chip" data-filter="color" data-value="white">Arctic</button>
+    </div>
+  </div>
+  <div class="shop-sort">
+    <span class="shop-count" id="shopCount">6 styles</span>
+    <label for="shopSort">Sort</label>
+    <select id="shopSort">
+      <option value="featured">Featured</option>
+      <option value="price-asc">Price: Low to High</option>
+      <option value="price-desc">Price: High to Low</option>
+    </select>
+  </div>
+</div>
+
+<section class="shop-grid" id="shopGrid" style="padding:0;">
+  <article class="shop-tile" data-fit="full" data-color="black" data-sleeve="full" data-price="2499" data-order="1">
+    <div class="st-media">
+      <img class="st-front" src="assets/products/full-front-black.png" alt="DYUSK Full Sleeve compression shirt, Onyx, front view">
+      <img class="st-back" src="assets/products/full-back-black.png" alt="DYUSK Full Sleeve compression shirt, Onyx, back view" loading="lazy">
+      <span class="st-badge">Onyx</span>
+      <div class="st-quick"><button type="button" class="st-quick-add">Quick Add +</button></div>
+    </div>
+    <a class="st-body" href="product-full-sleeve.html?color=black">
+      <div class="st-row"><h3>Full Sleeve</h3><span class="st-price">₹2,499</span></div>
+      <span class="st-meta">Compression · Onyx</span>
+    </a>
+  </article>
+
+  <article class="shop-tile" data-fit="half" data-color="black" data-sleeve="half" data-price="2199" data-order="2">
+    <div class="st-media">
+      <img class="st-front" src="assets/products/half-front-black.png" alt="DYUSK Half Sleeve compression shirt, Onyx, front view">
+      <img class="st-back" src="assets/products/half-back-black.png" alt="DYUSK Half Sleeve compression shirt, Onyx, back view" loading="lazy">
+      <span class="st-badge">Onyx</span>
+      <div class="st-quick"><button type="button" class="st-quick-add">Quick Add +</button></div>
+    </div>
+    <a class="st-body" href="product-half-sleeve.html?color=black">
+      <div class="st-row"><h3>Half Sleeve</h3><span class="st-price">₹2,199</span></div>
+      <span class="st-meta">Compression · Onyx</span>
+    </a>
+  </article>
+
+  <article class="shop-tile" data-fit="full" data-color="steel" data-sleeve="full" data-price="2499" data-order="3">
+    <div class="st-media">
+      <img class="st-front" src="assets/products/full-front-steel.png" alt="DYUSK Full Sleeve compression shirt, Steel, front view">
+      <img class="st-back" src="assets/products/full-back-steel.png" alt="DYUSK Full Sleeve compression shirt, Steel, back view" loading="lazy">
+      <span class="st-badge">Steel</span>
+      <div class="st-quick"><button type="button" class="st-quick-add">Quick Add +</button></div>
+    </div>
+    <a class="st-body" href="product-full-sleeve.html?color=steel">
+      <div class="st-row"><h3>Full Sleeve</h3><span class="st-price">₹2,499</span></div>
+      <span class="st-meta">Compression · Steel</span>
+    </a>
+  </article>
+
+  <article class="shop-tile" data-fit="half" data-color="steel" data-sleeve="half" data-price="2199" data-order="4">
+    <div class="st-media">
+      <img class="st-front" src="assets/products/half-front-steel.png" alt="DYUSK Half Sleeve compression shirt, Steel, front view">
+      <img class="st-back" src="assets/products/half-back-steel.png" alt="DYUSK Half Sleeve compression shirt, Steel, back view" loading="lazy">
+      <span class="st-badge">Steel</span>
+      <div class="st-quick"><button type="button" class="st-quick-add">Quick Add +</button></div>
+    </div>
+    <a class="st-body" href="product-half-sleeve.html?color=steel">
+      <div class="st-row"><h3>Half Sleeve</h3><span class="st-price">₹2,199</span></div>
+      <span class="st-meta">Compression · Steel</span>
+    </a>
+  </article>
+
+  <article class="shop-tile" data-fit="full" data-color="white" data-sleeve="full" data-price="2499" data-order="5">
+    <div class="st-media">
+      <img class="st-front" src="assets/products/full-front-white.png" alt="DYUSK Full Sleeve compression shirt, Arctic, front view">
+      <img class="st-back" src="assets/products/full-back-white.png" alt="DYUSK Full Sleeve compression shirt, Arctic, back view" loading="lazy">
+      <span class="st-badge">Arctic</span>
+      <div class="st-quick"><button type="button" class="st-quick-add">Quick Add +</button></div>
+    </div>
+    <a class="st-body" href="product-full-sleeve.html?color=white">
+      <div class="st-row"><h3>Full Sleeve</h3><span class="st-price">₹2,499</span></div>
+      <span class="st-meta">Compression · Arctic</span>
+    </a>
+  </article>
+
+  <article class="shop-tile" data-fit="half" data-color="white" data-sleeve="half" data-price="2199" data-order="6">
+    <div class="st-media">
+      <img class="st-front" src="assets/products/half-front-white.png" alt="DYUSK Half Sleeve compression shirt, Arctic, front view">
+      <img class="st-back" src="assets/products/half-back-white.png" alt="DYUSK Half Sleeve compression shirt, Arctic, back view" loading="lazy">
+      <span class="st-badge">Arctic</span>
+      <div class="st-quick"><button type="button" class="st-quick-add">Quick Add +</button></div>
+    </div>
+    <a class="st-body" href="product-half-sleeve.html?color=white">
+      <div class="st-row"><h3>Half Sleeve</h3><span class="st-price">₹2,199</span></div>
+      <span class="st-meta">Compression · Arctic</span>
+    </a>
+  </article>
+</section>
+
+<section class="cta-band">
+  <span class="section-tag reveal" style="display:block; text-align:center;">Not sure which fit?</span>
+  <h2 class="reveal">Same pressure standard. Your call on coverage.</h2>
+  <a href="index.html#compare" class="btn solid reveal">Compare Full &amp; Half</a>
+</section>
+
+<footer id="footer">
+  <div class="footer-top">
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h5>Shop</h5>
+        <ul><li><a href="shop.html">Shop All</a></li><li><a href="product-full-sleeve.html">Full Sleeve</a></li><li><a href="product-half-sleeve.html">Half Sleeve</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul><li><a href="index.html#technology">Technology</a></li><li><a href="#">About</a></li><li><a href="#">Contact</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h5>Follow</h5>
+        <ul><li><a href="#">Instagram</a></li><li><a href="#">Strava</a></li></ul>
+      </div>
+    </div>
+  </div>
+  <img src="assets/wordmark-cream.png" alt="DYUSK" class="footer-logo">
+  <p class="footer-slogan mono">Outwork Yesterday.</p>
+  <div class="footer-bottom">
+    <p>© 2026 DYUSK. Engineered pressure, worn daily.</p>
+    <p class="mono">Compression System 01</p>
+  </div>
+</footer>
+
+<div class="cart-scrim" id="cartScrim"></div>
+<aside class="cart-drawer" id="cartDrawer" aria-label="Shopping bag">
+  <div class="cart-top">
+    <h2>Your Bag</h2>
+    <button class="cart-close" type="button" aria-label="Close bag">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="ship-bar" id="shipBar"><p></p><div class="ship-track"><i></i></div></div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-foot" id="cartFoot">
+    <div class="cart-sub"><span>Subtotal</span><strong id="cartSub">₹0</strong></div>
+    <p class="cart-note">Shipping &amp; taxes calculated at checkout.</p>
+    <a href="#" class="btn checkout-btn">Checkout</a>
+  </div>
+</aside>
+
+<script src="assets/js/site.js"></script>
+<script src="assets/js/commerce.js"></script>
+</body>
+</html>

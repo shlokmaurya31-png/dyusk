@@ -33,6 +33,7 @@ FONT_IMPORT = ("@import url('https://fonts.googleapis.com/css2?"
 
 PAGES = [
     {"src": "index.html", "url": "/dyusk", "key": "dyusk.home", "name": "DYUSK Home"},
+    {"src": "shop.html", "url": "/shop-all", "key": "dyusk.shop", "name": "DYUSK Shop"},
     {"src": "product-full-sleeve.html", "url": "/product-full-sleeve",
      "key": "dyusk.product_full", "name": "DYUSK Full Sleeve"},
     {"src": "product-half-sleeve.html", "url": "/product-half-sleeve",
@@ -88,6 +89,12 @@ def build_js(url_map):
     js = js.replace(
         "card.setAttribute('href', 'product-' + sleeve + '-sleeve.html?color=' + state.color);",
         "card.setAttribute('href', '/product-' + sleeve + '-sleeve?color=' + state.color);")
+
+    # commerce layer (cart, drawer, shop, PDP controls) — uses window.DYUSK_IMG
+    with open(os.path.join(SITE, "assets", "js", "commerce.js"), encoding="utf-8") as fh:
+        cjs = fh.read()
+    cjs = cjs.replace('href="shop.html"', 'href="/shop-all"')
+
     # image lookup table (keys like full-front-black)
     entries = []
     for rel, url in url_map.items():
@@ -99,7 +106,7 @@ def build_js(url_map):
     prefix = ("try{if(localStorage.getItem('dyusk-theme')==='light'){"
               "document.documentElement.setAttribute('data-theme','light');}}catch(e){}\n"
               "try{document.body.setAttribute('data-mode','full');}catch(e){}\n")
-    return table + prefix + js
+    return table + prefix + js + "\n;\n" + cjs
 
 
 def build_css():
@@ -115,7 +122,8 @@ AMP_OK = re.compile(r"&(?!(amp|lt|gt|quot|apos|#\d+|#x[0-9a-fA-F]+);)")
 def clean_body(html, url_map):
     """Extract <body> inner HTML, rewrite URLs/links, make it XML-valid."""
     body = re.search(r"<body[^>]*>(.*)</body>", html, re.S).group(1)
-    body = re.sub(r'<script[^>]*src=["\']assets/js/site\.js["\'][^>]*>\s*</script>', "", body)
+    # strip external asset scripts (their content is inlined by build_js); keep inline <script> blocks
+    body = re.sub(r'<script[^>]*src=["\']assets/js/[^"\']+["\'][^>]*>\s*</script>', "", body)
 
     # asset URLs
     for rel, url in url_map.items():
@@ -124,6 +132,7 @@ def clean_body(html, url_map):
     # internal links
     body = body.replace("product-full-sleeve.html", "/product-full-sleeve")
     body = body.replace("product-half-sleeve.html", "/product-half-sleeve")
+    body = body.replace("shop.html", "/shop-all")
     body = body.replace("index.html", "/dyusk")
 
     # named entities -> numeric (before generic & escaping)
