@@ -78,7 +78,7 @@ Defined as CSS custom properties in `assets/css/site.css`:
 | Token | Dark | Role |
 |---|---|---|
 | `--ink` | `#242423` | Background |
-| `--paper` | `#e8eddf` | Text |
+| `--paper` | `#ffffff` | Text |
 | `--pressure` | `#f5cb5c` | Accent (Full Sleeve mode) |
 | `--flux` | `#cfdbd5` | Accent (Half Sleeve mode) |
 

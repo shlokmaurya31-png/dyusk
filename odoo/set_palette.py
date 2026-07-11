@@ -13,7 +13,7 @@ VALUES = {
     "o-color-1": "#f5cb5c",  # Pressure  — accent / CTA
     "o-color-2": "#333533",  # Slate     — secondary
     "o-color-3": "#cfdbd5",  # Flux      — light
-    "o-color-4": "#e8eddf",  # Paper     — lightest
+    "o-color-4": "#ffffff",  # Paper     — lightest
     "o-color-5": "#242423",  # Ink       — darkest
 }
 
