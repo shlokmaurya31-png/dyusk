@@ -116,8 +116,8 @@
     border-bottom:1px solid var(--line);
   }
   .logo{ display:flex; align-items:center; gap:14px; }
-  .logo .mark{ height:26px; width:auto; display:block; }
-  .logo .word{ height:15px; width:auto; display:block; }
+  .logo .mark{ height:26px; width:auto; display:block; transition:filter 0.4s ease; }
+  .logo .word{ height:15px; width:auto; display:block; transition:filter 0.4s ease; }
   .logo .tagline{
     font-family:'JetBrains Mono',monospace; font-size:0.68rem; text-transform:lowercase; letter-spacing:0.02em;
     color:var(--paper-dim); padding-left:14px; margin-left:2px; border-left:1px solid var(--line); white-space:nowrap;
@@ -383,8 +383,8 @@
   /* ---------- lineup cards ---------- */
   .lineup-grid{ display:grid; grid-template-columns:1fr 1fr; gap:28px; }
   .product-card{
-    position:relative; border:1px solid var(--line); border-radius:22px; padding:40px; min-height:520px;
-    display:flex; flex-direction:column; justify-content:space-between; overflow:hidden;
+    position:relative; border:1px solid var(--line); border-radius:22px; padding:28px;
+    display:flex; flex-direction:column; gap:22px; overflow:hidden;
     transition:transform 0.5s var(--ease), border-color 0.5s ease;
   }
   .product-card:hover{ transform:translateY(-8px); }
@@ -396,9 +396,24 @@
   .card-half .glow{ background:radial-gradient(circle at 80% 10%, var(--flux-dim), transparent 60%); }
   .product-card .pc-top{ display:flex; justify-content:space-between; align-items:flex-start; z-index:1; }
   .product-card .pc-tag{ font-family:'JetBrains Mono',monospace; font-size:0.72rem; text-transform:uppercase; padding:7px 14px; border:1px solid var(--line); border-radius:100px; }
-  .product-card .pc-art{ align-self:center; flex:1; display:flex; align-items:center; justify-content:center; z-index:1; }
-  .product-card .pc-art svg{ width:60%; height:auto; transition:transform 0.6s var(--ease); }
-  .product-card:hover .pc-art svg{ transform:translateY(-10px) scale(1.03); }
+  .product-card .pc-art{ position:relative; z-index:1; border-radius:14px; overflow:hidden; aspect-ratio:3/2; background:var(--ink-2); }
+  .product-card .pc-photo{ width:100%; height:100%; object-fit:cover; display:block; }
+  .product-card .pc-flip{
+    position:absolute; bottom:12px; right:12px; width:38px; height:38px; border-radius:50%;
+    border:1px solid var(--line); background:var(--overlay-bg-soft); backdrop-filter:blur(6px);
+    display:flex; align-items:center; justify-content:center; color:var(--paper); cursor:pointer;
+    transition:transform 0.5s var(--ease), border-color 0.3s ease;
+  }
+  .product-card .pc-flip:hover{ border-color:var(--accent); transform:rotate(180deg); }
+  .product-card .pc-flip svg{ width:16px; height:16px; }
+  .product-card .pc-swatches{ display:flex; gap:10px; z-index:1; }
+  .product-card .pc-swatch{
+    width:26px; height:26px; border-radius:50%; border:2px solid transparent; cursor:pointer; padding:0;
+    background:var(--sw); box-shadow:inset 0 0 0 1px rgba(255,255,255,0.15);
+    transition:border-color 0.3s ease, transform 0.3s var(--ease);
+  }
+  .product-card .pc-swatch:hover{ transform:scale(1.12); }
+  .product-card .pc-swatch.active{ border-color:var(--accent); }
   .product-card h3{ font-size:clamp(1.6rem,3vw,2.3rem); font-weight:900; text-transform:uppercase; z-index:1; margin-bottom:10px; }
   .product-card .pc-bottom{ display:flex; justify-content:space-between; align-items:flex-end; z-index:1; }
   .product-card .pc-price{ font-family:'Big Shoulders Display',sans-serif; font-weight:900; font-size:1.6rem; }
@@ -420,7 +435,14 @@
   .footer-col ul li a:hover{ color:var(--paper); }
   .footer-bottom{ display:flex; justify-content:space-between; align-items:center; padding-top:26px; border-top:1px solid var(--line); flex-wrap:wrap; gap:14px; }
   .footer-bottom p{ font-size:0.78rem; color:var(--paper-dim); }
-  .footer-logo{ width:min(560px,80vw); height:auto; display:block; opacity:0.95; }
+  .footer-logo{ width:min(560px,80vw); height:auto; display:block; opacity:0.95; transition:filter 0.4s ease; }
+  :root[data-theme="light"] .logo .mark,
+  :root[data-theme="light"] .logo .word,
+  :root[data-theme="light"] .footer-logo,
+  :root[data-theme="light"] #preloader .pre-mark,
+  :root[data-theme="light"] #preloader .pre-word{
+    filter: invert(1);
+  }
   .footer-slogan{ font-size:0.85rem; text-transform:lowercase; letter-spacing:0.03em; color:var(--accent); margin-top:18px; margin-bottom:50px; transition:color 0.5s ease; }
 
   /* ---------- responsive ---------- */
@@ -697,26 +719,40 @@
     <p>Available now in Onyx. More colourways dropping with Compression System 02.</p>
   </div>
   <div class="lineup-grid">
-    <a href="#" class="product-card card-full reveal">
+    <a href="#" class="product-card card-full reveal" data-sleeve="full">
       <div class="glow"></div>
-      <div class="pc-top"><span class="pc-tag mono">Full Sleeve</span><span class="pc-tag mono">Onyx</span></div>
+      <div class="pc-top"><span class="pc-tag mono">Full Sleeve</span><span class="pc-tag mono pc-color-label">Onyx</span></div>
       <div class="pc-art">
-        <svg viewBox="0 0 300 380" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M110 40 C110 24 128 12 150 12 C172 12 190 24 190 40 L196 46 L246 76 L232 118 L198 100 L198 340 C198 352 178 362 150 362 C122 362 102 352 102 340 L102 100 L68 118 L54 76 L104 46 Z" stroke="var(--pressure)" stroke-width="1.4" stroke-linejoin="round"/>
-        </svg>
+        <img class="pc-photo" src="assets/products/full-front-black.png" alt="DYUSK Full Sleeve compression shirt, Onyx, front view">
+        <button class="pc-flip" type="button" aria-label="Show back view">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15.5-6.5L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.5 6.5L3 16"/><path d="M3 21v-5h5"/></svg>
+        </button>
+      </div>
+      <div class="pc-swatches">
+        <button class="pc-swatch active" type="button" data-color="black" style="--sw:#111112" aria-label="Onyx"></button>
+        <button class="pc-swatch" type="button" data-color="charcoal" style="--sw:#4b4d50" aria-label="Charcoal"></button>
+        <button class="pc-swatch" type="button" data-color="white" style="--sw:#e8e8e5" aria-label="Arctic"></button>
+        <button class="pc-swatch" type="button" data-color="navy" style="--sw:#1b2333" aria-label="Navy"></button>
       </div>
       <div class="pc-bottom">
         <div><h3>Full Sleeve Compression</h3><span class="pc-price display">₹2,499</span></div>
         <span class="pc-link">View <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 19L19 5M19 5H8M19 5V16" stroke="currentColor" stroke-width="2"/></svg></span>
       </div>
     </a>
-    <a href="#" class="product-card card-half reveal reveal-d1">
+    <a href="#" class="product-card card-half reveal reveal-d1" data-sleeve="half">
       <div class="glow"></div>
-      <div class="pc-top"><span class="pc-tag mono">Half Sleeve</span><span class="pc-tag mono">Onyx</span></div>
+      <div class="pc-top"><span class="pc-tag mono">Half Sleeve</span><span class="pc-tag mono pc-color-label">Onyx</span></div>
       <div class="pc-art">
-        <svg viewBox="0 0 300 380" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M110 40 C110 24 128 12 150 12 C172 12 190 24 190 40 L196 46 L238 66 L226 104 L198 90 L198 340 C198 352 178 362 150 362 C122 362 102 352 102 340 L102 90 L74 104 L62 66 L104 46 Z" stroke="var(--flux)" stroke-width="1.4" stroke-linejoin="round"/>
-        </svg>
+        <img class="pc-photo" src="assets/products/half-front-black.png" alt="DYUSK Half Sleeve compression shirt, Onyx, front view">
+        <button class="pc-flip" type="button" aria-label="Show back view">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15.5-6.5L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.5 6.5L3 16"/><path d="M3 21v-5h5"/></svg>
+        </button>
+      </div>
+      <div class="pc-swatches">
+        <button class="pc-swatch active" type="button" data-color="black" style="--sw:#111112" aria-label="Onyx"></button>
+        <button class="pc-swatch" type="button" data-color="charcoal" style="--sw:#4b4d50" aria-label="Charcoal"></button>
+        <button class="pc-swatch" type="button" data-color="white" style="--sw:#e8e8e5" aria-label="Arctic"></button>
+        <button class="pc-swatch" type="button" data-color="navy" style="--sw:#1b2333" aria-label="Navy"></button>
       </div>
       <div class="pc-bottom">
         <div><h3>Half Sleeve Compression</h3><span class="pc-price display">₹2,199</span></div>
@@ -842,6 +878,42 @@
   }, {threshold:0.4});
   var statsGrid = document.querySelector('.stats-grid');
   if(statsGrid) statsIO.observe(statsGrid);
+
+  // product card color / front-back interactivity
+  (function(){
+    var names = { black:'Onyx', charcoal:'Charcoal', white:'Arctic', navy:'Navy' };
+    document.querySelectorAll('.product-card[data-sleeve]').forEach(function(card){
+      var sleeve = card.getAttribute('data-sleeve');
+      var photo = card.querySelector('.pc-photo');
+      var label = card.querySelector('.pc-color-label');
+      var flipBtn = card.querySelector('.pc-flip');
+      var swatches = card.querySelectorAll('.pc-swatch');
+      var state = { color: 'black', view: 'front' };
+      var sleeveLabel = sleeve === 'full' ? 'Full Sleeve' : 'Half Sleeve';
+
+      function render(){
+        photo.src = 'assets/products/' + sleeve + '-' + state.view + '-' + state.color + '.png';
+        photo.alt = 'DYUSK ' + sleeveLabel + ' compression shirt, ' + names[state.color] + ', ' + state.view + ' view';
+        label.textContent = names[state.color];
+      }
+
+      swatches.forEach(function(sw){
+        sw.addEventListener('click', function(e){
+          e.preventDefault(); e.stopPropagation();
+          state.color = sw.getAttribute('data-color');
+          swatches.forEach(function(s){ s.classList.remove('active'); });
+          sw.classList.add('active');
+          render();
+        });
+      });
+
+      flipBtn.addEventListener('click', function(e){
+        e.preventDefault(); e.stopPropagation();
+        state.view = state.view === 'front' ? 'back' : 'front';
+        render();
+      });
+    });
+  })();
 
   // built-for carousel autoplay
   (function(){
