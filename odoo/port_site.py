@@ -140,8 +140,9 @@ def clean_body(html, url_map):
         body = body.replace(k, v)
     # escape stray & (e.g. inside unsplash query strings) but keep valid entities
     body = AMP_OK.sub("&amp;", body)
-    # self-close <img ...>
+    # self-close void elements for XML (QWeb)
     body = re.sub(r"<img\b([^>]*?)\s*/?>", r"<img\1/>", body)
+    body = re.sub(r"<input\b([^>]*?)\s*/?>", r"<input\1/>", body)
     return body.strip()
 
 

@@ -258,13 +258,29 @@
       pdp.querySelector('[data-qty-inc]').addEventListener('click', function(){ state.qty = Math.min(10, state.qty + 1); qtyVal.textContent = state.qty; });
     }
 
-    if(addBtn){
-      addBtn.addEventListener('click', function(){
-        if(!state.size){ if(hint) hint.textContent = 'Select a size first'; return; }
-        addItem(sleeve, state.color, state.size, state.qty);
-        toast('Added to bag');
-        openCart();
-      });
+    function doAdd(){
+      if(!state.size){
+        if(hint) hint.textContent = 'Select a size first';
+        var sw = pdp.querySelector('.pd-sizes');
+        if(sw) sw.scrollIntoView({behavior:'smooth', block:'center'});
+        return;
+      }
+      addItem(sleeve, state.color, state.size, state.qty);
+      toast('Added to bag');
+      openCart();
+    }
+    if(addBtn) addBtn.addEventListener('click', doAdd);
+
+    // mobile sticky buy bar — shows once the main Add button scrolls away
+    var sticky = document.querySelector('.pd-sticky');
+    var actions = pdp.querySelector('.pd-actions');
+    if(sticky && actions && 'IntersectionObserver' in window){
+      var sObs = new IntersectionObserver(function(es){
+        es.forEach(function(en){ sticky.classList.toggle('show', !en.isIntersecting); });
+      }, {threshold:0, rootMargin:'-40px 0px 0px 0px'});
+      sObs.observe(actions);
+      var sAdd = sticky.querySelector('.sticky-add');
+      if(sAdd) sAdd.addEventListener('click', doAdd);
     }
 
     if(colorName) colorName.textContent = COLORS[state.color];
@@ -320,31 +336,44 @@
       });
     }
 
-    // quick add: reveal size chips inline, then add
-    grid.addEventListener('click', function(e){
-      var qa = e.target.closest('.st-quick-add');
-      if(qa){
-        var quick = qa.closest('.st-quick');
-        var tile = qa.closest('.shop-tile');
-        quick.innerHTML = SIZES.map(function(s){
-          return '<button type="button" class="st-size" data-qsize="' + s + '">' + s + '</button>';
-        }).join('');
-        return;
-      }
-      var sz = e.target.closest('.st-size');
-      if(sz){
-        var tile2 = sz.closest('.shop-tile');
-        addItem(tile2.getAttribute('data-sleeve'), tile2.getAttribute('data-color'), sz.getAttribute('data-qsize'), 1);
-        toast('Added — ' + tile2.getAttribute('data-color'));
-        openCart();
-        // reset the quick bar back to the button
-        var quick2 = sz.closest('.st-quick');
-        quick2.innerHTML = '<button type="button" class="st-quick-add">Quick Add +</button>';
-      }
-    });
-
     apply();
   })();
+
+  /* ---- quick-add for any .shop-tile (shop grid + cross-sell rows) ---- */
+  document.addEventListener('click', function(e){
+    var qa = e.target.closest('.st-quick-add');
+    if(qa){
+      e.preventDefault();
+      var quick = qa.closest('.st-quick');
+      quick.innerHTML = SIZES.map(function(s){
+        return '<button type="button" class="st-size" data-qsize="' + s + '">' + s + '</button>';
+      }).join('');
+      return;
+    }
+    var sz = e.target.closest('.st-size');
+    if(sz){
+      e.preventDefault();
+      var tile = sz.closest('.shop-tile'); if(!tile) return;
+      addItem(tile.getAttribute('data-sleeve'), tile.getAttribute('data-color'), sz.getAttribute('data-qsize'), 1);
+      toast('Added — ' + (COLORS[tile.getAttribute('data-color')] || ''));
+      openCart();
+      var quick2 = sz.closest('.st-quick');
+      quick2.innerHTML = '<button type="button" class="st-quick-add">Quick Add +</button>';
+    }
+  });
+
+  /* ---- newsletter / drop signup (client-side confirm) ---- */
+  document.querySelectorAll('.nl-form').forEach(function(f){
+    f.addEventListener('submit', function(e){
+      e.preventDefault();
+      var wrap = f.parentNode;
+      f.style.display = 'none';
+      var ok = document.createElement('p');
+      ok.className = 'nl-ok';
+      ok.textContent = "You're on the list — first access to the next drop is yours.";
+      wrap.appendChild(ok);
+    });
+  });
 
   /* ---- init ---- */
   syncBadge(false);
