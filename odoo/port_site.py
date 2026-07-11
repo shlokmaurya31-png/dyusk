@@ -80,6 +80,29 @@ def upload_images(o):
     return url_map
 
 
+def upload_binaries(o):
+    """Upload non-image binary assets (e.g. .glb) via /web/content, not /web/image
+    (which applies image-specific processing and would mangle a model file)."""
+    files = [("assets/3d/dyusk-showcase.glb", "model/gltf-binary")]
+    Att = o.env["ir.attachment"]
+    url_map = {}
+    for rel, mimetype in files:
+        path = os.path.join(SITE, *rel.split("/"))
+        if not os.path.exists(path):
+            continue
+        name = f"dyusk_{rel.replace('/', '_')}"
+        with open(path, "rb") as fh:
+            data = base64.b64encode(fh.read()).decode()
+        existing = Att.search([("name", "=", name)])
+        if existing:
+            Att.unlink(existing)
+        aid = Att.create({"name": name, "raw": data, "public": True, "mimetype": mimetype})
+        size = Att.read([aid], ["file_size"])[0]["file_size"]
+        url_map[rel] = f"/web/content/{aid}"
+        print(f"  bin {rel} -> /web/content/{aid} ({size} bytes)")
+    return url_map
+
+
 def build_js(url_map):
     with open(os.path.join(SITE, "assets", "js", "site.js"), encoding="utf-8") as fh:
         js = fh.read()
@@ -148,11 +171,21 @@ def clean_body(html, url_map):
     return body.strip()
 
 
+MODEL_VIEWER_SCRIPT = ('<script type="module" '
+                        'src="https://unpkg.com/@google/model-viewer@3.5.0/dist/model-viewer.min.js">'
+                        '</script>\n')
+# pages that embed a <model-viewer> element need the module script — <head> tags
+# aren't ported (only <body> is extracted), so this is injected into the arch directly.
+PAGES_WITH_MODEL_VIEWER = {"dyusk.home"}
+
+
 def make_arch(page, css, js, body):
+    head_extra = MODEL_VIEWER_SCRIPT if page["key"] in PAGES_WITH_MODEL_VIEWER else ""
     return (
         f'<t name="{page["name"]}" t-name="{page["key"]}">\n'
         f'  <t t-call="website.layout">\n'
         f'    <div id="wrap" class="oe_structure">\n'
+        f'      {head_extra}'
         f'      <style type="text/css"><![CDATA[\n{css}\n]]></style>\n'
         f'{body}\n'
         f'      <script type="text/javascript"><![CDATA[\n{js}\n]]></script>\n'
@@ -185,6 +218,8 @@ def main():
     o = connect()
     print("Uploading images...")
     url_map = upload_images(o)
+    print("Uploading binaries...")
+    url_map.update(upload_binaries(o))
     css = build_css()
     js = build_js(url_map)
     print("\nBuilding pages...")

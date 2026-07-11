@@ -21,6 +21,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/site.css">
+<script type="module" src="https://unpkg.com/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
 </head>
 <body data-mode="full">
 
@@ -167,6 +168,31 @@
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="model-showcase">
+  <div class="section-head reveal">
+    <div>
+      <span class="section-tag">In The Lab</span>
+      <h2>See the build, from every angle.</h2>
+    </div>
+    <p>A 3D scan of the Full Sleeve construction, straight off the production floor. Drag to rotate, scroll to zoom.</p>
+  </div>
+  <div class="model-stage reveal">
+    <model-viewer
+      src="assets/3d/dyusk-showcase.glb"
+      poster="assets/products/full-front-black.png"
+      loading="lazy" reveal="auto"
+      camera-controls="camera-controls" auto-rotate="auto-rotate" disable-pan="disable-pan"
+      shadow-intensity="1.1" exposure="1"
+      camera-orbit="10deg 80deg 2.3m"
+      min-camera-orbit="auto 55deg auto" max-camera-orbit="auto 100deg auto"
+      min-field-of-view="25deg" max-field-of-view="45deg"
+      alt="Interactive 3D scan of the DYUSK Full Sleeve compression shirt"
+      style="width:100%;height:100%;background:transparent;">
+    </model-viewer>
+    <span class="model-hint mono">Drag to rotate</span>
   </div>
 </section>
 
