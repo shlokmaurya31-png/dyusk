@@ -173,12 +173,13 @@
 
     function build(){
       if(window.innerWidth < 900){ built = false; return; }
-      var quote = rect('.script-quote'), art = rect('.art-band'),
+      var m = rect('.hg-brand img'), why = rect('.hg-why'),
+          quote = rect('.script-quote'), art = rect('.art-band'),
           nl = rect('.newsletter'), fy = rect('.f-year');
       var t = [];
       for(var i = 1; i <= 6; i++) t.push(rect('.sc-item.t' + i + ' .media'));
-      if(!quote || !art || !nl || !fy ||
-         t.some(function(x){ return !x || !x.h; })) return;
+      if(!m || !why || !quote || !art || !nl || !fy ||
+         t.some(function(x){ return !x || !x.h; }) || m.h < 40) return;
 
       var W = document.documentElement.clientWidth;
       var P = [];
@@ -194,58 +195,74 @@
       var A = []; // label anchors — one per page word, in markup order
       function mark(x, y){ A.push([x, y]); pt(x, y); }
 
-      // out of the top product, then down through all six in order
-      pt(t[0].cx + 30, t[0].cy);
-      pt(t[0].right - 20, t[0].top + t[0].h*0.35);
-      pt(t[0].right + 80, t[0].top + t[0].h*0.5);
-      // कहानी rides the arc across to product 2
-      mark((t[0].right + t[1].left)/2 + 20, t[0].top + t[0].h*0.6);
-      pt(t[1].left + 25, t[1].cy - 40);
+      // out of the sewing machine, coiling loose across the top band
+      pt(m.right - 30, m.top + m.h*0.55);
+      pt(m.right + 40, m.bottom + 20);
+      var heroY = (Math.max(why.bottom, m.bottom) + t[0].top)/2 + 10;
+      coil(W*0.34, heroY - 20, 52, 1);
+      coil(W*0.47, heroY + 15, 60, 1);
+      coil(W*0.60, heroY - 15, 52, 1);
+      pt(W*0.86, heroY + 30);
+      // hook down under the first product's right edge
+      pt(t[0].right - 25, t[0].top + t[0].h*0.35);
+      pt(t[0].right + 70, t[0].top + t[0].h*0.55);
+      // कहानी rides the arc across to product 2, one curl on the way
+      mark((t[0].right + t[1].left)/2 + 20, t[0].top + t[0].h*0.62);
+      coil(t[1].left - 45, t[1].cy - 150, 36, 1);
+      pt(t[1].left + 25, t[1].cy);
       pt(t[1].cx - 40, t[1].bottom - 15);
       pt(t[1].left - 60, t[1].bottom + 80);
-      // swing back with a full coil, out to the left margin
-      coil(W*0.36, (t[1].bottom + t[2].top)/2 + 30, 55, -1);
-      pt(W*0.09, t[2].top + 30);
+      // double coil on the way back to the left margin
+      coil(W*0.42, (t[1].bottom + t[2].top)/2, 55, -1);
+      coil(W*0.24, (t[1].bottom + t[2].top)/2 + 55, 55, -1);
+      pt(W*0.07, t[2].top + 60);
       // About Us rides the descending run back in to product 3
-      mark((W*0.09 + t[2].left)/2 + 20, t[2].top + 85);
-      pt(t[2].left + 25, t[2].top + 130);
+      mark((W*0.07 + t[2].left)/2 + 30, t[2].top + 110);
+      pt(t[2].left + 25, t[2].top + 155);
       pt(t[2].cx + 40, t[2].bottom - 15);
       pt(t[2].right + 60, t[2].bottom + 55);
-      // Artisans carries on out to the right margin
+      // Artisans carries on out to a curl at the right margin
       mark((t[2].right + W*0.88)/2, t[2].bottom + 105);
-      pt(W*0.88, t[2].bottom + 160);
-      // coil on the way back down to product 4
-      coil(W*0.52, (t[2].bottom + 160 + t[3].top)/2 + 20, 55, -1);
+      coil(W*0.86, t[2].bottom + 190, 48, 1);
+      // wavy double-coil return across the page to product 4
+      coil(W*0.55, (t[2].bottom + 190 + t[3].top)/2 + 20, 55, -1);
+      coil(W*0.33, (t[2].bottom + 190 + t[3].top)/2 + 70, 48, -1);
       pt(t[3].cx - 30, t[3].top + 20);
       pt(t[3].right - 18, t[3].cy + 10);
       // Philanthropy rides a gentle sag across to product 5
       mark((t[3].right + t[4].left)/2, t[3].cy + 100);
       pt(t[4].left + 25, t[4].bottom - t[4].h*0.32);
       pt(t[4].cx, t[4].bottom - 20);
-      pt(t[4].cx - 80, t[4].bottom + 80);
-      // sweep below product 4's caption to a coil in the left margin
+      // curl below product 5's caption, sweep under product 4's caption
+      coil(t[4].left + 40, t[4].bottom + 115, 42, -1);
       pt(W*0.45, t[3].bottom + 130);
-      coil(W*0.07, t[5].top - 30, 45, -1);
+      // stacked double curl in the left margin
+      coil(W*0.0625, t[5].top - 75, 40, -1);
+      coil(W*0.0625, t[5].top + 35, 38, -1);
       // Contact Us rides the run in to product 6
-      mark((W*0.07 + t[5].left)/2, t[5].top + 30);
-      pt(t[5].left + 25, t[5].top + t[5].h*0.4);
+      mark((W*0.0625 + t[5].left)/2 + 20, t[5].top + 55);
+      pt(t[5].left + 25, t[5].top + t[5].h*0.45);
       pt(t[5].cx + 30, t[5].bottom - 15);
-      pt(t[5].right + 60, t[5].bottom + 60);
-      // wide rounded run: down the right margin, smile under the quote
-      pt(W*0.88, (t[5].bottom + quote.top)/2 + 20);
+      pt(t[5].right + 60, t[5].bottom + 50);
+      // curl in the open right half, then down the margin to the quote
+      coil(W*0.78, (t[5].bottom + quote.top)/2, 55, 1);
+      pt(W*0.88, quote.top + 10);
       pt(W*0.85, quote.bottom + 30);
       pt(quote.cx, quote.bottom + 75);
-      pt(W*0.14, (quote.bottom + art.top)/2 + 10);
+      // curl low on the left before slipping behind the art band
+      coil(W*0.18, (quote.bottom + art.top)/2 + 30, 48, -1);
       pt(W*0.5, art.top + art.h*0.55);
       pt(W - 70, (art.bottom + nl.top)/2 + 20);
       // cut through the newsletter's column gap
       pt(W*0.56, nl.cy);
-      pt(W*0.52, nl.bottom + 50);
-      // drop through the blank corridor left of the ©26 and end beneath it
-      pt(fy.left - 70, (nl.bottom + fy.top)/2 + 30);
-      pt(fy.left - 85, fy.cy);
-      pt(fy.cx - 60, fy.bottom + 45);
-      pt(fy.cx - 8, fy.bottom + 14);
+      pt(W*0.52, nl.bottom + 40);
+      // one last curl above the footer rule, then down the free right
+      // margin past the ©26 and hook in to end beneath it
+      coil(W - 130, (nl.bottom + fy.top)/2 - 10, 38, 1);
+      pt(W - 45, fy.top + 80);
+      pt(W - 52, fy.cy + 40);
+      pt(fy.cx + 70, fy.bottom + 55);
+      pt(fy.cx - 8, fy.bottom + 16);
 
       var d = spline(P);
       for(var j = 0; j < ropePaths.length; j++) ropePaths[j].setAttribute('d', d);

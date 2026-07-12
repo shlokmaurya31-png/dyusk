@@ -61,7 +61,7 @@ def upload_images(o):
     Att = o.env["ir.attachment"]
     files = ["assets/mark-white.png", "assets/wordmark-cream.png",
              "assets/ornament-corner.png", "assets/machine-sketch.png",
-             "assets/border-side.png"]
+             "assets/border-side.png", "assets/rickshaw.jpg"]
     prod_dir = os.path.join(SITE, "assets", "products")
     for fn in sorted(os.listdir(prod_dir)):
         if fn.endswith(".png"):
@@ -86,8 +86,9 @@ def upload_images(o):
         existing = Att.search([("name", "=", name)])
         if existing:
             Att.unlink(existing)
+        mimetype = "image/jpeg" if rel.endswith((".jpg", ".jpeg")) else "image/png"
         aid = Att.create({"name": name, "raw": data, "public": True,
-                          "mimetype": "image/png"})
+                          "mimetype": mimetype})
         size = Att.read([aid], ["file_size"])[0]["file_size"]
         url_map[rel] = f"/web/image/{aid}"
         print(f"  img {rel} -> /web/image/{aid} ({size} bytes)")

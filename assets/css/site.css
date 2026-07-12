@@ -354,12 +354,13 @@ html[data-theme="red"] .cta-band .btn.solid:hover{ background:transparent; color
   border-top:2px solid currentColor; padding-top:2rem;
   display:grid; gap:2rem;
 }
-@media (min-width:900px){ .nl-inner{ grid-template-columns:1.2fr 1fr; align-items:end; } }
+@media (min-width:900px){ .nl-inner{ grid-template-columns:1.2fr 1fr; align-items:center; } }
 .nl-copy h2{
   font-size:clamp(2rem,4.5vw,4rem); font-weight:900; letter-spacing:-.045em; line-height:.95;
 }
 .nl-copy p{ margin-top:1rem; max-width:46ch; }
-.nl-form{ display:flex; gap:0; border:2px solid var(--fg); }
+.nl-art{ width:min(100%,400px); height:auto; justify-self:end; }
+.nl-form{ display:flex; gap:0; border:2px solid var(--fg); margin-top:2.5rem; max-width:560px; }
 .nl-form input{
   flex:1; min-width:0; padding:.9em 1.2em;
   background:transparent; font-size:.9rem;
