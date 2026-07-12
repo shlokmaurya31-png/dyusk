@@ -185,6 +185,10 @@ html[data-theme="red"] .theme-dot[data-set="red"]{ box-shadow:inset 0 0 0 1.5px 
 .hg-brand{ grid-column:span 3; }
 .hg-why{ grid-column:span 5; }
 .hg-why p{ font-size:.875rem; font-weight:700; line-height:1.15; letter-spacing:-.025em; }
+.hg-shop{
+  margin-top:1.4rem; display:flex; flex-direction:column; gap:.75rem;
+  align-items:flex-start; text-transform:uppercase;
+}
 .hg-links{ grid-column:span 4; display:flex; flex-direction:column; gap:.75rem; align-items:flex-start; text-transform:uppercase; }
 .hg-copy{ grid-column:span 4; text-align:right; }
 @media (min-width:768px){
@@ -298,13 +302,14 @@ html[data-theme="red"] .cta-band .btn.solid:hover{ background:transparent; color
 .art-marquee{
   overflow:hidden;
   border-top:2px solid currentColor; border-bottom:2px solid currentColor;
-  padding:1.5rem 0;
+  /* padding leaves exactly the headroom a 1.4x-scaled panel needs */
+  padding:3.75rem 0;
 }
 .art-track{
-  display:flex; gap:1.5rem; width:max-content; will-change:transform;
+  display:flex; align-items:center; gap:1.5rem; width:max-content; will-change:transform;
 }
 .art-track img{
-  height:min(52vw,340px); width:auto; aspect-ratio:3/4;
+  height:min(46vw,300px); width:auto; aspect-ratio:3/4;
   object-fit:cover; background:var(--tile); flex:none;
 }
 @media (prefers-reduced-motion:reduce){
@@ -770,11 +775,13 @@ html[data-theme="red"] .f-col .f-mark{ filter:none; }
 }
 .cs-block{ font-weight:700; letter-spacing:-.01em; line-height:1.6; }
 
-/* art cell hover zoom (image scales inside its fixed frame) */
-.art-cell{ overflow:hidden; flex:none; background:var(--tile); }
-.art-cell img{ transition:transform .7s var(--ease-out); }
+/* art cell hover: the whole panel grows 1.4x over its neighbours,
+   reverting when the pointer leaves */
+.art-cell{ flex:none; position:relative; }
+.art-cell:hover{ z-index:2; }
+.art-cell img{ transition:transform .5s var(--ease-out); }
 @media (hover:hover){
-  .art-cell:hover img{ transform:scale(1.5); }
+  .art-cell:hover img{ transform:scale(1.4); }
 }
 
 /* footer corner ornament */
