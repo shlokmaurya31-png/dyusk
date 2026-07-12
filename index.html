@@ -36,12 +36,30 @@
     <span class="tagline">Outwork Yesterday</span>
   </a>
   <nav aria-label="Main">
-    <ul>
-      <li><a class="link-hover on" href="shop.html">Shop</a></li>
+    <ul class="nav-links">
+      <li><a class="link-hover" href="shop.html">Shop</a></li>
+      <li><a class="link-hover" href="kahani.html" lang="hi">कहानी</a></li>
+      <li><a class="link-hover" href="about.html">About</a></li>
+      <li><a class="link-hover" href="artisans.html">Artisans</a></li>
+      <li><a class="link-hover" href="philanthropy.html">Philanthropy</a></li>
+      <li><a class="link-hover" href="contact.html">Contact</a></li>
       <li><button class="cart-btn link-hover" type="button" aria-label="Open bag">Bag (<span class="cart-count">0</span>)</button></li>
     </ul>
+    <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
   </nav>
 </header>
+
+<div id="mobileMenu" class="mobile-menu" aria-hidden="true">
+  <nav aria-label="Menu links">
+    <a href="shop.html">Shop</a>
+    <a href="kahani.html" lang="hi">कहानी</a>
+    <a href="about.html">About Us</a>
+    <a href="artisans.html">Artisans</a>
+    <a href="philanthropy.html">Philanthropy</a>
+    <a href="contact.html">Contact Us</a>
+    <button class="cart-btn mm-bag" type="button" aria-label="Open bag">Bag (<span class="cart-count">0</span>)</button>
+  </nav>
+</div>
 
 <div id="theme-switcher" aria-label="Theme">
   <button class="theme-dot" data-set="dark" type="button" aria-label="Dark theme"></button>

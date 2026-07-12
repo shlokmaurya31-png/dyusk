@@ -412,8 +412,44 @@
     var lastY = 0;
     window.addEventListener('scroll', function(){
       var y = window.scrollY;
+      // never hide the header while the mobile menu is open (its X lives there)
+      if(document.body.classList.contains('menu-open')){ header.style.transform=''; lastY=y; return; }
       header.style.transform = (y > 160 && y > lastY) ? 'translateY(-110%)' : '';
       lastY = y;
     }, {passive:true});
   }
+
+  // mobile menu open/close
+  (function(){
+    var toggle = document.querySelector('.nav-toggle');
+    var menu = document.getElementById('mobileMenu');
+    if(!toggle || !menu) return;
+    function setOpen(open){
+      document.body.classList.toggle('menu-open', open);
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+    }
+    toggle.addEventListener('click', function(){
+      setOpen(!document.body.classList.contains('menu-open'));
+    });
+    // any tap inside the menu (link or bag) closes the overlay
+    menu.querySelectorAll('a,.mm-bag').forEach(function(el){
+      el.addEventListener('click', function(){ setOpen(false); });
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape') setOpen(false);
+    });
+    // close if we grow past the desktop breakpoint mid-open
+    window.addEventListener('resize', function(){
+      if(window.innerWidth >= 1000) setOpen(false);
+    });
+  })();
+
+  // mark the current page's links active in both navs
+  (function(){
+    var here = (location.pathname.split('/').pop() || '').toLowerCase() || 'index.html';
+    document.querySelectorAll('#siteHeader .nav-links a, #mobileMenu a').forEach(function(a){
+      if((a.getAttribute('href') || '').toLowerCase() === here) a.classList.add('on');
+    });
+  })();
 })();
