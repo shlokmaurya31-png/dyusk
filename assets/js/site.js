@@ -84,6 +84,50 @@
     requestAnimationFrame(frame);
   })();
 
+  // contact form — creates a CRM lead in the Odoo backend via website_form
+  (function(){
+    var form = document.getElementById('contactForm');
+    if(!form) return;
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var hint = form.querySelector('.cf-hint');
+      var btn = form.querySelector('button[type="submit"]');
+      var name = (form.contact_name.value || '').trim();
+      var email = (form.email_from.value || '').trim();
+      var msg = (form.description.value || '').trim();
+      if(!name || !email.includes('@') || !msg){
+        if(hint) hint.textContent = 'Please fill name, email and message.';
+        return;
+      }
+      // on the live store website.layout defines odoo.csrf_token; in a static
+      // preview there is no backend at all, so fall back to plain email there
+      if(location.protocol === 'file:'){
+        window.location.href = 'mailto:shlok@dyusk.com?subject=' +
+          encodeURIComponent('Website enquiry — ' + name) +
+          '&body=' + encodeURIComponent(msg);
+        return;
+      }
+      var token = (window.odoo && window.odoo.csrf_token) || '';
+      var fd = new FormData(form);
+      fd.append('name', 'Website enquiry — ' + name);
+      if(token) fd.append('csrf_token', token);
+      btn.disabled = true; btn.textContent = 'Sending…';
+      fetch('/website/form/crm.lead', { method:'POST', body: fd, credentials:'same-origin' })
+        .then(function(r){ return r.json(); })
+        .then(function(res){
+          if(res && (res.id || (res.result && res.result.id))){
+            form.reset();
+            btn.textContent = 'Sent';
+            if(hint) hint.textContent = 'Got it — we reply within 24 hours.';
+          } else { throw new Error('rejected'); }
+        })
+        .catch(function(){
+          btn.disabled = false; btn.textContent = 'Send Message';
+          if(hint) hint.textContent = 'Could not send — email shlok@dyusk.com instead.';
+        });
+    });
+  })();
+
   // header hides on scroll down, returns on scroll up
   var header = document.getElementById('siteHeader');
   if(header){

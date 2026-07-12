@@ -36,6 +36,12 @@ PAGES = [
      "key": "dyusk.product_full", "name": "DYUSK Full Sleeve"},
     {"src": "product-half-sleeve.html", "url": "/product-half-sleeve",
      "key": "dyusk.product_half", "name": "DYUSK Half Sleeve"},
+    {"src": "kahani.html", "url": "/kahani", "key": "dyusk.kahani", "name": "DYUSK Kahani"},
+    {"src": "about.html", "url": "/about-us", "key": "dyusk.about", "name": "DYUSK About Us"},
+    {"src": "artisans.html", "url": "/artisans", "key": "dyusk.artisans", "name": "DYUSK Artisans"},
+    {"src": "philanthropy.html", "url": "/philanthropy",
+     "key": "dyusk.philanthropy", "name": "DYUSK Philanthropy"},
+    {"src": "contact.html", "url": "/contact-us", "key": "dyusk.contact", "name": "DYUSK Contact"},
 ]
 
 
@@ -51,7 +57,8 @@ def connect():
 def upload_images(o):
     """Upload every png under assets/, return {site_relative_path: /web/image/<id>}."""
     Att = o.env["ir.attachment"]
-    files = ["assets/mark-white.png", "assets/wordmark-cream.png"]
+    files = ["assets/mark-white.png", "assets/wordmark-cream.png",
+             "assets/ornament-corner.png"]
     prod_dir = os.path.join(SITE, "assets", "products")
     for fn in sorted(os.listdir(prod_dir)):
         if fn.endswith(".png"):
@@ -194,6 +201,11 @@ def clean_body(html, url_map):
     body = body.replace("product-half-sleeve.html", "/product-half-sleeve")
     body = body.replace("shop.html", "/shop-all")
     body = body.replace("index.html", "/dyusk")
+    body = body.replace("kahani.html", "/kahani")
+    body = body.replace("about.html", "/about-us")
+    body = body.replace("artisans.html", "/artisans")
+    body = body.replace("philanthropy.html", "/philanthropy")
+    body = body.replace("contact.html", "/contact-us")
 
     # named entities -> numeric (before generic & escaping)
     for k, v in NAMED.items():

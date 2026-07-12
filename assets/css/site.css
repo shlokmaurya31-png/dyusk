@@ -707,3 +707,79 @@ html[data-theme="red"] .f-col .f-mark{ filter:none; }
   padding:.9em 1.6em; transition:transform .4s var(--ease-out);
 }
 .dtoast.on{ transform:translate(-50%,0); }
+
+
+/* ============================================================
+   CONTENT PAGES (kahani / about / artisans / philanthropy / contact)
+   ============================================================ */
+.page-head{ padding:8.5rem var(--gut) 0; margin-bottom:3.5rem; }
+.page-head h1{
+  font-size:clamp(3rem,10vw,9rem); font-weight:900;
+  letter-spacing:-.05em; line-height:.9; margin-bottom:1.2rem; text-wrap:balance;
+}
+.page-head p{ max-width:52ch; letter-spacing:-.01em; font-size:1.05rem; }
+.page-head .section-tag{ margin-bottom:.6rem; }
+
+.story{ padding:0 var(--gut); margin-bottom:8.5rem; display:grid; gap:3rem; }
+.story-row{ border-top:1px solid currentColor; padding-top:1.4rem; display:grid; gap:1rem; }
+@media (min-width:768px){
+  .story-row{ grid-template-columns:minmax(0,4fr) minmax(0,8fr); gap:1.5rem; }
+}
+.sr-kicker{
+  font-size:.6875rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em;
+}
+.sr-body h2{
+  font-size:clamp(1.6rem,3.2vw,2.6rem); font-weight:900;
+  letter-spacing:-.04em; line-height:1; margin-bottom:.8rem; text-wrap:balance;
+}
+.sr-body p{ max-width:62ch; letter-spacing:-.01em; }
+
+.founder{ padding:0 var(--gut); margin-bottom:5rem; }
+.f-quote{
+  font-size:clamp(1.8rem,4.5vw,3.8rem); font-weight:900;
+  letter-spacing:-.045em; line-height:1.05; max-width:24ch; text-wrap:balance;
+}
+.f-attrib{
+  margin-top:1.2rem; font-size:.75rem; font-weight:700;
+  text-transform:uppercase; letter-spacing:.08em; color:var(--muted);
+}
+
+/* contact */
+.contact-grid{
+  padding:0 var(--gut); margin-bottom:8.5rem;
+  display:grid; gap:3rem;
+}
+@media (min-width:900px){ .contact-grid{ grid-template-columns:minmax(0,7fr) minmax(0,4fr); gap:4rem; } }
+.contact-form{ max-width:640px; }
+.cf-field{ margin-bottom:1.4rem; }
+.cf-field label{
+  display:block; font-size:.6875rem; font-weight:700;
+  text-transform:uppercase; letter-spacing:.08em; margin-bottom:.5rem;
+}
+.cf-field .opt{ color:var(--muted); text-transform:none; letter-spacing:0; }
+.cf-field input,.cf-field textarea{
+  width:100%; padding:.85em 1em; background:transparent;
+  border:2px solid var(--fg); font-size:.95rem; resize:vertical;
+}
+.cf-field input::placeholder,.cf-field textarea::placeholder{ color:var(--muted); }
+.cf-hint{ margin-top:.8rem; font-size:.8rem; font-weight:700; }
+.contact-side{ display:flex; flex-direction:column; gap:2rem; }
+.cs-block .kicker{
+  display:block; font-size:.6875rem; font-weight:700; text-transform:uppercase;
+  letter-spacing:.08em; color:var(--muted); margin-bottom:.5rem;
+}
+.cs-block{ font-weight:700; letter-spacing:-.01em; line-height:1.6; }
+
+/* art cell hover zoom (image scales inside its fixed frame) */
+.art-cell{ overflow:hidden; flex:none; background:var(--tile); }
+.art-cell img{ transition:transform .7s var(--ease-out); }
+@media (hover:hover){
+  .art-cell:hover img{ transform:scale(1.5); }
+}
+
+/* footer corner ornament */
+footer#footer{ position:relative; overflow:hidden; padding-bottom:clamp(7rem,20vw,13rem); }
+.f-ornament{
+  position:absolute; right:0; bottom:0; z-index:0; pointer-events:none;
+  width:min(52vw,430px); height:auto;
+}
