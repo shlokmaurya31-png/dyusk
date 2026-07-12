@@ -98,8 +98,11 @@ body.no-scroll{ overflow:hidden; }
   display:flex; align-items:center; justify-content:space-between;
   padding:26px var(--gut);
   color:#000;
-  transition:transform .5s var(--ease-out);
+  transition:transform .5s var(--ease-out),color .4s ease;
 }
+/* white text on the dark + red themes, black on the cream theme */
+html[data-theme="dark"] #siteHeader,
+html[data-theme="red"] #siteHeader{ color:#fff; }
 /* logo mark lives OUTSIDE the blend-mode header so it never color-shifts
    over page content — tinted per theme instead */
 .brand-mark{
@@ -108,9 +111,12 @@ body.no-scroll{ overflow:hidden; }
 }
 .brand-mark img{
   height:42px; width:auto;
-  filter:brightness(0); /* white source -> ink; header bar is always white */
+  filter:brightness(0); /* white source -> ink on the cream theme */
   transition:filter .4s ease;
 }
+/* keep the mark white (its source colour) on the dark + red themes */
+html[data-theme="dark"] .brand-mark img,
+html[data-theme="red"] .brand-mark img{ filter:none; }
 #siteHeader .logo{ display:flex; align-items:center; gap:10px; margin-left:44px; }
 #siteHeader .logo .brand{
   font-size:1.4rem; font-weight:900; letter-spacing:-.04em; line-height:1;
@@ -145,6 +151,8 @@ body.no-scroll{ overflow:hidden; }
   transition:transform .3s var(--ease-out), opacity .2s ease, width .3s var(--ease-out);
 }
 .nav-toggle span:nth-child(2){ width:20px; }
+html[data-theme="dark"] .nav-toggle span,
+html[data-theme="red"] .nav-toggle span{ background:#fff; }
 /* tablets keep the theme dots up top — nudge the toggle left to clear them */
 @media (min-width:768px) and (max-width:999px){ .nav-toggle{ margin-right:88px; } }
 @media (min-width:1000px){ .nav-toggle{ display:none; } }
