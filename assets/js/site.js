@@ -184,12 +184,16 @@
       var W = document.documentElement.clientWidth;
       var P = [];
       function pt(x, y){ P.push([x, y]); }
-      // one clean full circle; enters and leaves at the top so the path
-      // keeps flowing. dir=1 for rightward travel, dir=-1 for leftward.
+      // a cursive rope curl: the thread comes in along its travel line,
+      // climbs over the top, and crosses itself once at the base — the
+      // way a loose loop of real rope sits. (cx,cy) is the visual centre,
+      // r the loop radius; dir=1 for rightward travel, -1 for leftward.
+      var CURL = [[-1.9,0.3],[-0.5,0.0],[0.55,-0.25],[0.95,-0.85],
+                  [0.35,-1.75],[-0.75,-1.45],[-0.95,-0.55],[-0.2,0.18],
+                  [0.9,0.35],[2.0,0.45]];
       function coil(cx, cy, r, dir){
-        for(var k = 0; k <= 8; k++){
-          var a = -Math.PI/2 + dir * (k/8) * Math.PI * 2;
-          pt(cx + Math.cos(a)*r, cy + Math.sin(a)*r);
+        for(var k = 0; k < CURL.length; k++){
+          pt(cx + dir * CURL[k][0] * r, cy + (CURL[k][1] + 0.65) * r);
         }
       }
       var A = []; // label anchors — one per page word, in markup order
@@ -199,9 +203,9 @@
       pt(m.right - 30, m.top + m.h*0.55);
       pt(m.right + 40, m.bottom + 20);
       var heroY = (Math.max(why.bottom, m.bottom) + t[0].top)/2 + 10;
-      coil(W*0.34, heroY - 20, 52, 1);
-      coil(W*0.47, heroY + 15, 60, 1);
-      coil(W*0.60, heroY - 15, 52, 1);
+      coil(W*0.32, heroY - 15, 46, 1);
+      coil(W*0.47, heroY + 15, 52, 1);
+      coil(W*0.62, heroY - 10, 46, 1);
       pt(W*0.86, heroY + 30);
       // hook down under the first product's right edge
       pt(t[0].right - 25, t[0].top + t[0].h*0.35);
@@ -220,10 +224,9 @@
       mark((W*0.07 + t[2].left)/2 + 30, t[2].top + 110);
       pt(t[2].left + 25, t[2].top + 155);
       pt(t[2].cx + 40, t[2].bottom - 15);
-      pt(t[2].right + 60, t[2].bottom + 55);
       // Artisans carries on out to a curl at the right margin
-      mark((t[2].right + W*0.88)/2, t[2].bottom + 105);
-      coil(W*0.86, t[2].bottom + 190, 48, 1);
+      mark((t[2].right + W*0.84)/2, t[2].bottom + 100);
+      coil(W*0.88, t[2].bottom + 210, 42, 1);
       // wavy double-coil return across the page to product 4
       coil(W*0.55, (t[2].bottom + 190 + t[3].top)/2 + 20, 55, -1);
       coil(W*0.33, (t[2].bottom + 190 + t[3].top)/2 + 70, 48, -1);
@@ -236,11 +239,11 @@
       // curl below product 5's caption, sweep under product 4's caption
       coil(t[4].left + 40, t[4].bottom + 115, 42, -1);
       pt(W*0.45, t[3].bottom + 130);
-      // stacked double curl in the left margin
-      coil(W*0.0625, t[5].top - 75, 40, -1);
-      coil(W*0.0625, t[5].top + 35, 38, -1);
+      // double curl trailing off to the left margin
+      coil(W*0.155, t[5].top - 25, 38, -1);
+      coil(W*0.075, t[5].top + 25, 32, -1);
       // Contact Us rides the run in to product 6
-      mark((W*0.0625 + t[5].left)/2 + 20, t[5].top + 55);
+      mark((W*0.075 + t[5].left)/2 + 20, t[5].top + 55);
       pt(t[5].left + 25, t[5].top + t[5].h*0.45);
       pt(t[5].cx + 30, t[5].bottom - 15);
       pt(t[5].right + 60, t[5].bottom + 50);

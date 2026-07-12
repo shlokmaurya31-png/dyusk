@@ -359,7 +359,7 @@ html[data-theme="red"] .cta-band .btn.solid:hover{ background:transparent; color
   font-size:clamp(2rem,4.5vw,4rem); font-weight:900; letter-spacing:-.045em; line-height:.95;
 }
 .nl-copy p{ margin-top:1rem; max-width:46ch; }
-.nl-art{ width:min(100%,400px); height:auto; justify-self:end; }
+.nl-art{ width:min(100%,600px); height:auto; justify-self:end; }
 .nl-form{ display:flex; gap:0; border:2px solid var(--fg); margin-top:2.5rem; max-width:560px; }
 .nl-form input{
   flex:1; min-width:0; padding:.9em 1.2em;
