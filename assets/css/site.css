@@ -97,7 +97,8 @@ body.no-scroll{ overflow:hidden; }
   position:fixed; top:0; left:0; right:0; z-index:60;
   display:flex; align-items:center; justify-content:space-between;
   padding:26px var(--gut);
-  color:#fff; mix-blend-mode:difference;
+  background:#fff; color:#000;
+  border-bottom:1px solid rgba(0,0,0,.08);
   transition:transform .5s var(--ease-out);
 }
 /* logo mark lives OUTSIDE the blend-mode header so it never color-shifts
@@ -108,11 +109,9 @@ body.no-scroll{ overflow:hidden; }
 }
 .brand-mark img{
   height:42px; width:auto;
-  filter:brightness(0); /* white source -> ink on cream */
+  filter:brightness(0); /* white source -> ink; header bar is always white */
   transition:filter .4s ease;
 }
-html[data-theme="dark"] .brand-mark img,
-html[data-theme="red"] .brand-mark img{ filter:none; }
 #siteHeader .logo{ display:flex; align-items:center; gap:10px; margin-left:44px; }
 #siteHeader .logo .brand{
   font-size:1.4rem; font-weight:900; letter-spacing:-.04em; line-height:1;
@@ -137,13 +136,13 @@ html[data-theme="red"] .brand-mark img{ filter:none; }
   #siteHeader nav a,#siteHeader nav ul.nav-links button{ font-size:1.2rem; }
 }
 
-/* hamburger toggle — white bars ride the header's difference blend */
+/* hamburger toggle — black bars on the white header bar */
 .nav-toggle{
   display:flex; flex-direction:column; justify-content:center; align-items:flex-end;
   gap:6px; width:34px; height:34px; padding:0; margin-right:18px;
 }
 .nav-toggle span{
-  display:block; height:2px; width:27px; background:#fff; border-radius:2px;
+  display:block; height:2px; width:27px; background:#000; border-radius:2px;
   transition:transform .3s var(--ease-out), opacity .2s ease, width .3s var(--ease-out);
 }
 .nav-toggle span:nth-child(2){ width:20px; }
