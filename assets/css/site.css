@@ -809,3 +809,6 @@ footer#footer{ position:relative; overflow:hidden; padding-bottom:clamp(7rem,20v
   position:absolute; right:0; bottom:0; z-index:0; pointer-events:none;
   width:min(52vw,430px); height:auto;
 }
+
+/* Devanagari text (kahani) */
+[lang="hi"]{ font-family:'Noto Sans Devanagari',var(--font); letter-spacing:0; }
