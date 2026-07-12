@@ -892,6 +892,15 @@ html[data-theme="red"]{
   --thread-ply:rgba(255,255,255,.26);
   --thread-sh:rgba(0,0,0,.3);
 }
+/* left-hand block-print border rail — generated lattice, tiles vertically */
+#sideBorder{
+  position:absolute; top:0; left:0; width:48px;
+  z-index:-1; pointer-events:none; display:none;
+  background-repeat:repeat-y; background-size:48px auto;
+}
+@media (min-width:900px){ #sideBorder{ display:block; } }
+html[data-theme="dark"] #sideBorder{ filter:invert(1); }
+
 #threadLayer{
   position:absolute; top:0; left:0; width:100%;
   z-index:-1; pointer-events:none; display:none;
@@ -901,3 +910,8 @@ html[data-theme="red"]{
 #threadLayer .thread-shadow{ stroke:var(--thread-sh); }
 #threadLayer .thread-core{ stroke:var(--thread); transition:stroke .4s ease; }
 #threadLayer .thread-ply{ stroke:var(--thread-ply); transition:stroke .4s ease; }
+
+/* when the left rail is on the page, push the content gutter clear of it */
+@media (min-width:900px){
+  body.has-rail{ --gut:64px; }
+}

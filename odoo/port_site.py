@@ -60,7 +60,8 @@ def upload_images(o):
     """Upload every png under assets/, return {site_relative_path: /web/image/<id>}."""
     Att = o.env["ir.attachment"]
     files = ["assets/mark-white.png", "assets/wordmark-cream.png",
-             "assets/ornament-corner.png", "assets/machine-sketch.png"]
+             "assets/ornament-corner.png", "assets/machine-sketch.png",
+             "assets/border-side.png"]
     prod_dir = os.path.join(SITE, "assets", "products")
     for fn in sorted(os.listdir(prod_dir)):
         if fn.endswith(".png"):

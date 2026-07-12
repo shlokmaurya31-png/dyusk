@@ -19,6 +19,9 @@
     setTimeout(function(){ pre.classList.add('done'); }, 4000);
   }
 
+  // the left border rail needs the content gutter pushed clear of it
+  if(document.getElementById('sideBorder')) document.body.classList.add('has-rail');
+
   // theme switcher — cream (default) / dark / red
   function applyTheme(t){
     if(t === 'dark' || t === 'red'){
@@ -138,7 +141,8 @@
     var maskEl = svg.querySelector('mask');
     var maskPath = document.getElementById('threadMaskPath');
     var ropePaths = svg.querySelectorAll('g path');
-    var len = 0, startY = 0, endY = 1, built = false;
+    var len = 0, built = false;
+    var sampleY = null, sampleMaxY = 0;
     var cur = 0, targetP = 0;
     var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -181,55 +185,43 @@
       var W = document.documentElement.clientWidth;
       var P = [];
       function pt(x, y){ P.push([x, y]); }
-      function loop(cx, cy, r, dir, turns){
-        turns = turns || 1;
-        var steps = 6 * turns;
-        for(var k = 0; k <= steps; k++){
-          var a = -Math.PI/2 + dir * (k/steps) * Math.PI * 2 * turns;
-          pt(cx + Math.cos(a)*r + (turns > 1 ? k*1.2 : 0), cy + Math.sin(a)*r*0.8);
-        }
-      }
 
-      // off the needle of the sewing machine
-      pt(m.left + m.w*0.86, m.top + m.h*0.16);
-      pt(m.right + 30, m.top + m.h*0.52);
-      // lasso around the WHY? block
-      pt(why.left - 50, why.bottom + 20);
-      pt(why.left - 75, why.top - 5);
-      pt(why.cx - 40, why.top - 45);
-      pt(why.right + 70, why.top + why.h*0.25);
-      pt(why.cx + 60, why.bottom + 55);
-      pt(why.left + 30, why.bottom + 25);
-      // sweep right under the © 2026, dive into the scatter
-      pt(W*0.72, why.bottom + 150);
-      pt(W*0.9, t[0].top - 60);
-      // tuck under the first tile's right edge
-      pt(t[0].right - 28, t[0].top + t[0].h*0.22);
-      pt(t[0].right + 70, t[0].top + t[0].h*0.5);
-      // loop in the blank between t1 and t2
-      loop((t[0].right + t[1].left)/2, t[0].bottom - t[0].h*0.15, 62, 1);
-      // under t2's left edge, out its bottom
-      pt(t[1].left + 30, t[1].cy - 30);
-      pt(t[1].cx - 30, t[1].bottom - 18);
-      pt(t[1].cx - 90, t[1].bottom + 70);
+      // one continuous serpentine: uniform, generous curves, no
+      // self-crossings — always descending so the tip can track scroll
+      // out of the actual needle tip of the sewing machine
+      pt(m.left + m.w*0.81, m.top + m.h*0.74);
+      pt(m.right + 60, m.bottom + 40);
+      // wide sweep right through the blank band under the WHY? text,
+      // then back down under the first tile's top edge — never crossing itself
+      pt(why.cx + 80, Math.max(why.bottom + 90, m.bottom + 80));
+      pt(W*0.62, (Math.max(why.bottom + 120, m.bottom + 130) + t[0].top)/2);
+      pt(t[0].cx + 60, t[0].top + 25);
+      pt(t[0].right - 25, t[0].top + t[0].h*0.4);
+      pt(t[0].right + 70, t[0].top + t[0].h*0.62);
+      // gentle wave through the blank middle, under t2's left edge
+      pt((t[0].right + t[1].left)/2, t[0].bottom - 40);
+      pt(t[1].left + 30, t[1].cy);
+      pt(t[1].cx, t[1].bottom - 20);
+      pt(t[1].cx - 70, t[1].bottom + 90);
       // across to t3: under its top-right corner, out the left side
-      pt(t[2].right - 35, t[2].top + 22);
-      pt(t[2].left + 25, t[2].cy - 20);
-      pt(t[2].left - 90, t[2].cy + 50);
-      // loop-de-loop in the blank before t4
-      loop(W*0.30, (t[2].bottom + t[3].top)/2 + 20, 68, -1);
+      pt(t[2].right - 35, t[2].top + 25);
+      pt(t[2].left + 25, t[2].cy);
+      pt(t[2].left - 80, t[2].cy + 70);
+      // wide sweep to the left margin, then into t4
+      pt(W*0.15, (t[2].bottom + t[3].top)/2 + 30);
       // t4: in the top, out the right edge — everything after stays BELOW
       // the Philanthropy word so the thread never crosses it
       var dipY = Math.max(t[3].bottom, w4.bottom) + 60;
-      pt(t[3].cx - 40, t[3].top + 20);
+      pt(t[3].cx - 40, t[3].top + 25);
       pt(t[3].right - 18, Math.min(t[3].bottom - 50, Math.max(t[3].cy + 20, w4.bottom + 35)));
       pt(t[3].right + 80, Math.max(t[3].cy + 140, w4.bottom + 70));
       pt((t[3].right + t[4].left)/2, dipY);
       pt(t[4].left + 28, Math.max(t[4].bottom - t[4].h*0.25, w4.bottom + 30));
       pt(t[4].cx, t[4].bottom - 22);
-      pt(t[4].cx - 20, t[4].bottom + 80);
-      // loop in the blank right of t6, then in its right edge, out bottom-left
-      loop(Math.min(t[5].right + 150, W - 90), t[5].top + 30, 58, 1);
+      pt(t[4].cx - 30, t[4].bottom + 90);
+      // wide swing out to the right margin, then under t6's right edge
+      pt(Math.min(t[5].right + 140, W - 80),
+         (t[4].bottom + 90 + t[5].top + t[5].h*0.3)/2);
       pt(t[5].right - 30, t[5].top + t[5].h*0.3);
       pt(t[5].left + 35, t[5].bottom - 20);
       pt(t[5].left - 90, t[5].bottom + 60);
@@ -243,11 +235,11 @@
       pt(W - 60, (art.bottom + nl.top)/2 + 40);
       pt(W*0.56, nl.cy);
       pt(W*0.52, nl.bottom + 50);
-      // drop through the blank corridor left of the ©26, tie off in a knot
+      // drop through the blank corridor left of the ©26 and end beneath it
       pt(fy.left - 70, (nl.bottom + fy.top)/2 + 30);
       pt(fy.left - 85, fy.cy);
-      loop(fy.cx - 40, fy.bottom + 55, 26, 1, 2);
-      pt(fy.cx - 12, fy.bottom + 6);
+      pt(fy.cx - 60, fy.bottom + 45);
+      pt(fy.cx - 8, fy.bottom + 14);
 
       var d = spline(P);
       for(var j = 0; j < ropePaths.length; j++) ropePaths[j].setAttribute('d', d);
@@ -260,17 +252,30 @@
       svg.setAttribute('width', String(W));
       svg.setAttribute('height', String(H));
       layer.style.height = H + 'px';
+      var sb = document.getElementById('sideBorder');
+      if(sb) sb.style.height = H + 'px';
       maskEl.setAttribute('x', '0'); maskEl.setAttribute('y', '0');
       maskEl.setAttribute('width', String(W)); maskEl.setAttribute('height', String(H));
-      startY = m.top;
-      endY = fy.bottom + 140;
+      // arc-length -> page-Y lookup, so the drawn tip can track the
+      // middle of the viewport no matter how much the path meanders
+      var N = Math.min(400, Math.max(150, Math.round(len/50)));
+      sampleY = new Array(N + 1);
+      sampleMaxY = 0;
+      for(var k = 0; k <= N; k++){
+        sampleY[k] = maskPath.getPointAtLength(len * k / N).y;
+        if(sampleY[k] > sampleMaxY) sampleMaxY = sampleY[k];
+      }
       built = true;
     }
 
     function computeTarget(){
-      if(!built || !len) return;
-      var p = (window.pageYOffset + window.innerHeight*0.85 - startY) / ((endY - startY) || 1);
-      targetP = Math.max(0, Math.min(1, p));
+      if(!built || !len || !sampleY) return;
+      var tipY = window.pageYOffset + window.innerHeight * 0.5;
+      if(tipY <= sampleY[0]){ targetP = 0; return; }
+      if(tipY >= sampleMaxY - 4){ targetP = 1; return; }
+      var k = 0;
+      while(k < sampleY.length - 1 && sampleY[k] < tipY) k++;
+      targetP = k / (sampleY.length - 1);
     }
 
     (function frame(){
