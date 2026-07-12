@@ -173,66 +173,72 @@
 
     function build(){
       if(window.innerWidth < 900){ built = false; return; }
-      var m = rect('.hg-brand img'), why = rect('.hg-why'),
-          quote = rect('.script-quote'), art = rect('.art-band'),
-          nl = rect('.newsletter'), fy = rect('.f-year'),
-          w4 = rect('.sc-link.w4');
+      var quote = rect('.script-quote'), art = rect('.art-band'),
+          nl = rect('.newsletter'), fy = rect('.f-year');
       var t = [];
       for(var i = 1; i <= 6; i++) t.push(rect('.sc-item.t' + i + ' .media'));
-      if(!m || !why || !quote || !art || !nl || !fy || !w4 ||
-         t.some(function(x){ return !x || !x.h; }) || m.h < 40) return;
+      if(!quote || !art || !nl || !fy ||
+         t.some(function(x){ return !x || !x.h; })) return;
 
       var W = document.documentElement.clientWidth;
       var P = [];
       function pt(x, y){ P.push([x, y]); }
+      // one clean full circle; enters and leaves at the top so the path
+      // keeps flowing. dir=1 for rightward travel, dir=-1 for leftward.
+      function coil(cx, cy, r, dir){
+        for(var k = 0; k <= 8; k++){
+          var a = -Math.PI/2 + dir * (k/8) * Math.PI * 2;
+          pt(cx + Math.cos(a)*r, cy + Math.sin(a)*r);
+        }
+      }
+      var A = []; // label anchors — one per page word, in markup order
+      function mark(x, y){ A.push([x, y]); pt(x, y); }
 
-      // one continuous serpentine: uniform, generous curves, no
-      // self-crossings — always descending so the tip can track scroll
-      // out of the actual needle tip of the sewing machine
-      pt(m.left + m.w*0.81, m.top + m.h*0.74);
-      pt(m.right + 60, m.bottom + 40);
-      // wide sweep right through the blank band under the WHY? text,
-      // then back down under the first tile's top edge — never crossing itself
-      pt(why.cx + 80, Math.max(why.bottom + 90, m.bottom + 80));
-      pt(W*0.62, (Math.max(why.bottom + 120, m.bottom + 130) + t[0].top)/2);
-      pt(t[0].cx + 60, t[0].top + 25);
-      pt(t[0].right - 25, t[0].top + t[0].h*0.4);
-      pt(t[0].right + 70, t[0].top + t[0].h*0.62);
-      // gentle wave through the blank middle, under t2's left edge
-      pt((t[0].right + t[1].left)/2, t[0].bottom - 40);
-      pt(t[1].left + 30, t[1].cy);
-      pt(t[1].cx, t[1].bottom - 20);
-      pt(t[1].cx - 70, t[1].bottom + 90);
-      // across to t3: under its top-right corner, out the left side
-      pt(t[2].right - 35, t[2].top + 25);
-      pt(t[2].left + 25, t[2].cy);
-      pt(t[2].left - 80, t[2].cy + 70);
-      // wide sweep to the left margin, then into t4
-      pt(W*0.15, (t[2].bottom + t[3].top)/2 + 30);
-      // t4: in the top, out the right edge — everything after stays BELOW
-      // the Philanthropy word so the thread never crosses it
-      var dipY = Math.max(t[3].bottom, w4.bottom) + 60;
-      pt(t[3].cx - 40, t[3].top + 25);
-      pt(t[3].right - 18, Math.min(t[3].bottom - 50, Math.max(t[3].cy + 20, w4.bottom + 35)));
-      pt(t[3].right + 80, Math.max(t[3].cy + 140, w4.bottom + 70));
-      pt((t[3].right + t[4].left)/2, dipY);
-      pt(t[4].left + 28, Math.max(t[4].bottom - t[4].h*0.25, w4.bottom + 30));
-      pt(t[4].cx, t[4].bottom - 22);
-      pt(t[4].cx - 30, t[4].bottom + 90);
-      // wide swing out to the right margin, then under t6's right edge
-      pt(Math.min(t[5].right + 140, W - 80),
-         (t[4].bottom + 90 + t[5].top + t[5].h*0.3)/2);
-      pt(t[5].right - 30, t[5].top + t[5].h*0.3);
-      pt(t[5].left + 35, t[5].bottom - 20);
-      pt(t[5].left - 90, t[5].bottom + 60);
-      // hug the far-left margin past the quote, smile under it
-      pt(W*0.12, quote.top - 20);
-      pt(W*0.15, quote.bottom + 50);
+      // out of the top product, then down through all six in order
+      pt(t[0].cx + 30, t[0].cy);
+      pt(t[0].right - 20, t[0].top + t[0].h*0.35);
+      pt(t[0].right + 80, t[0].top + t[0].h*0.5);
+      // कहानी rides the arc across to product 2
+      mark((t[0].right + t[1].left)/2 + 20, t[0].top + t[0].h*0.6);
+      pt(t[1].left + 25, t[1].cy - 40);
+      pt(t[1].cx - 40, t[1].bottom - 15);
+      pt(t[1].left - 60, t[1].bottom + 80);
+      // swing back with a full coil, out to the left margin
+      coil(W*0.36, (t[1].bottom + t[2].top)/2 + 30, 55, -1);
+      pt(W*0.09, t[2].top + 30);
+      // About Us rides the descending run back in to product 3
+      mark((W*0.09 + t[2].left)/2 + 20, t[2].top + 85);
+      pt(t[2].left + 25, t[2].top + 130);
+      pt(t[2].cx + 40, t[2].bottom - 15);
+      pt(t[2].right + 60, t[2].bottom + 55);
+      // Artisans carries on out to the right margin
+      mark((t[2].right + W*0.88)/2, t[2].bottom + 105);
+      pt(W*0.88, t[2].bottom + 160);
+      // coil on the way back down to product 4
+      coil(W*0.52, (t[2].bottom + 160 + t[3].top)/2 + 20, 55, -1);
+      pt(t[3].cx - 30, t[3].top + 20);
+      pt(t[3].right - 18, t[3].cy + 10);
+      // Philanthropy rides a gentle sag across to product 5
+      mark((t[3].right + t[4].left)/2, t[3].cy + 100);
+      pt(t[4].left + 25, t[4].bottom - t[4].h*0.32);
+      pt(t[4].cx, t[4].bottom - 20);
+      pt(t[4].cx - 80, t[4].bottom + 80);
+      // sweep below product 4's caption to a coil in the left margin
+      pt(W*0.45, t[3].bottom + 130);
+      coil(W*0.07, t[5].top - 30, 45, -1);
+      // Contact Us rides the run in to product 6
+      mark((W*0.07 + t[5].left)/2, t[5].top + 30);
+      pt(t[5].left + 25, t[5].top + t[5].h*0.4);
+      pt(t[5].cx + 30, t[5].bottom - 15);
+      pt(t[5].right + 60, t[5].bottom + 60);
+      // wide rounded run: down the right margin, smile under the quote
+      pt(W*0.88, (t[5].bottom + quote.top)/2 + 20);
+      pt(W*0.85, quote.bottom + 30);
       pt(quote.cx, quote.bottom + 75);
-      pt(W*0.82, (quote.bottom + art.top)/2 + 20);
-      pt(W - 70, art.top + art.h*0.45);
-      // slide down the right edge, cut through the newsletter's column gap
-      pt(W - 60, (art.bottom + nl.top)/2 + 40);
+      pt(W*0.14, (quote.bottom + art.top)/2 + 10);
+      pt(W*0.5, art.top + art.h*0.55);
+      pt(W - 70, (art.bottom + nl.top)/2 + 20);
+      // cut through the newsletter's column gap
       pt(W*0.56, nl.cy);
       pt(W*0.52, nl.bottom + 50);
       // drop through the blank corridor left of the ©26 and end beneath it
@@ -254,16 +260,43 @@
       layer.style.height = H + 'px';
       var sb = document.getElementById('sideBorder');
       if(sb) sb.style.height = H + 'px';
+      var lbl = document.getElementById('threadLabels');
+      var lblPath = document.getElementById('labelPath');
+      if(lbl && lblPath){
+        lblPath.setAttribute('d', d);
+        lbl.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+        lbl.setAttribute('width', String(W));
+        lbl.setAttribute('height', String(H));
+        lbl.style.height = H + 'px';
+      }
       maskEl.setAttribute('x', '0'); maskEl.setAttribute('y', '0');
       maskEl.setAttribute('width', String(W)); maskEl.setAttribute('height', String(H));
-      // arc-length -> page-Y lookup, so the drawn tip can track the
-      // middle of the viewport no matter how much the path meanders
+      // arc-length -> page-XY lookup: lets the drawn tip track the middle
+      // of the viewport, and pins each page word to its spot on the thread
       var N = Math.min(400, Math.max(150, Math.round(len/50)));
       sampleY = new Array(N + 1);
+      var sampleX = new Array(N + 1);
       sampleMaxY = 0;
       for(var k = 0; k <= N; k++){
-        sampleY[k] = maskPath.getPointAtLength(len * k / N).y;
+        var sp = maskPath.getPointAtLength(len * k / N);
+        sampleX[k] = sp.x; sampleY[k] = sp.y;
         if(sampleY[k] > sampleMaxY) sampleMaxY = sampleY[k];
+      }
+      if(lbl){
+        var tps = lbl.querySelectorAll('textPath');
+        var texts = lbl.querySelectorAll('text');
+        var SIZES = [84, 40, 58, 72, 46];
+        var fscale = Math.max(0.7, W/1600);
+        for(var q = 0; q < tps.length && q < A.length; q++){
+          var best = 0, bd = Infinity;
+          for(var k2 = 0; k2 <= N; k2++){
+            var dx = sampleX[k2] - A[q][0], dy2 = sampleY[k2] - A[q][1];
+            var dd = dx*dx + dy2*dy2;
+            if(dd < bd){ bd = dd; best = k2; }
+          }
+          tps[q].setAttribute('startOffset', (best / N * 100).toFixed(2) + '%');
+          texts[q].setAttribute('font-size', String(Math.round(SIZES[q] * fscale)));
+        }
       }
       built = true;
     }

@@ -915,3 +915,22 @@ html[data-theme="dark"] #sideBorder{ filter:invert(1); }
 @media (min-width:900px){
   body.has-rail{ --gut:64px; }
 }
+
+/* page-word labels that ride the thread (text-on-path); the HTML
+   scatter words take over below 900px where the thread is hidden */
+#threadLabels{
+  position:absolute; top:0; left:0; width:100%;
+  z-index:2; pointer-events:none; display:none; overflow:visible;
+}
+@media (min-width:900px){
+  #threadLabels{ display:block; }
+  .scatter .sc-link{ display:none; }
+}
+#threadLabels a{ pointer-events:auto; }
+#threadLabels .tlabel{
+  font-family:var(--font); font-weight:900; letter-spacing:-.02em;
+  fill:var(--fg); transition:fill .25s ease;
+}
+#threadLabels .tlabel[lang="hi"]{ font-family:'Noto Sans Devanagari',var(--font); }
+#threadLabels a:hover .tlabel,
+#threadLabels a:focus-visible .tlabel{ fill:var(--accent); }
