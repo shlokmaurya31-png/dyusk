@@ -909,6 +909,131 @@ html[data-theme="red"] .f-col .f-mark{ filter:none; }
 .miles.flat .mile-t{ text-align:left; padding:0; font-size:clamp(1.4rem,3vw,2.2rem); }
 .miles.flat .mile-y{ position:static; transform:none; color:var(--accent); }
 
+/* ============================================================
+   KAHANI — vintage newspaper front page ("The DYUSK Gazette").
+   Theme-aware: paper = --bg, ink = --fg, red = --accent.
+   ============================================================ */
+.gazette{
+  max-width:1120px; margin:0 auto var(--gap-sec); padding:7.5rem var(--gut) 0;
+  color:var(--fg); font-family:Georgia,'Times New Roman',serif;
+}
+.gz-ink{ filter:brightness(0); transition:filter .4s ease; }
+html[data-theme="dark"] .gz-ink,
+html[data-theme="red"] .gz-ink{ filter:none; }
+.gz-photo{ filter:grayscale(1) contrast(1.06); }
+
+/* ---- masthead ---- */
+.gz-mast{ border-bottom:5px double var(--fg); padding-bottom:.9rem; margin-bottom:1.4rem; }
+.gz-top{
+  display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap;
+  font-family:var(--font); font-size:.66rem; font-weight:700; letter-spacing:.14em;
+  text-transform:uppercase; padding-bottom:.55rem; margin-bottom:1rem;
+  border-bottom:1px solid var(--fg);
+}
+.gz-top .gz-ed{ color:var(--accent); letter-spacing:.1em; }
+.gz-top .hi,.gz-ed .hi{ font-family:'Noto Sans Devanagari',var(--font); }
+.gz-title{ display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:1rem; }
+.gz-emblem{ justify-self:start; }
+.gz-emblem img{ height:46px; width:auto; display:block; }
+.gz-name{
+  font-family:'Playfair Display',Georgia,serif; font-weight:900; text-align:center;
+  font-size:clamp(1.9rem,6vw,4.6rem); line-height:.92; letter-spacing:-.01em; text-wrap:balance;
+}
+.gz-name .hi{ font-family:'Noto Sans Devanagari',serif; font-weight:900; color:var(--accent); }
+.gz-price{
+  justify-self:end; text-align:center; font-family:var(--font); font-size:.62rem;
+  font-weight:700; text-transform:uppercase; letter-spacing:.06em; line-height:1.2;
+  border:2px solid var(--accent); color:var(--accent); border-radius:50%;
+  width:58px; height:58px; display:flex; flex-direction:column; justify-content:center; align-items:center;
+}
+.gz-price b{ font-size:.58rem; }
+.gz-strap{
+  text-align:center; font-family:var(--font); font-weight:700; font-size:.72rem;
+  letter-spacing:.14em; text-transform:uppercase; margin-top:.9rem;
+  border-top:1px solid var(--fg); border-bottom:1px solid var(--fg); padding:.45rem 0;
+}
+
+/* ---- lead headline ---- */
+.gz-lead{ text-align:center; margin-bottom:1.4rem; }
+.gz-head{
+  font-family:'Playfair Display',Georgia,serif; font-weight:900; text-transform:uppercase;
+  font-size:clamp(3.2rem,15vw,9.5rem); line-height:.82; letter-spacing:-.02em; text-wrap:balance;
+}
+.gz-head .red{ color:var(--accent); }
+.gz-head .it{ font-style:italic; }
+.gz-deck{
+  max-width:60ch; margin:1rem auto 0; font-style:italic;
+  font-size:clamp(1.02rem,1.7vw,1.3rem); line-height:1.4; text-wrap:balance;
+}
+
+/* ---- section bar (inverted chip + rule) ---- */
+.gz-secbar{ display:flex; align-items:center; gap:.9rem; margin:2.4rem 0 1.3rem; }
+.gz-secbar::after{ content:''; flex:1; border-top:3px double var(--fg); }
+.gz-secbar h2{
+  background:var(--fg); color:var(--bg); font-family:'Playfair Display',serif;
+  font-weight:900; font-style:italic; font-size:clamp(1.3rem,3vw,2rem);
+  padding:.08em .5em; letter-spacing:.01em;
+}
+.gz-secbar.alt h2{ background:var(--accent); color:#fff; }
+
+/* ---- article columns ---- */
+.gz-cols{ column-gap:2.2rem; }
+@media (min-width:600px){ .gz-cols{ column-count:2; } }
+@media (min-width:960px){ .gz-cols{ column-count:3; } }
+.gz-cols p{
+  font-size:.95rem; line-height:1.58; text-align:justify; hyphens:auto;
+  margin-bottom:.75rem;
+}
+.gz-cols h3{
+  font-family:'Playfair Display',serif; font-weight:900; font-size:1.12rem;
+  line-height:1.05; margin:.5rem 0 .45rem; break-after:avoid; text-transform:uppercase; letter-spacing:.005em;
+}
+.gz-first::first-letter{
+  float:left; font-family:'Playfair Display',serif; font-weight:900; color:var(--accent);
+  font-size:3.4em; line-height:.66; padding:.06em .1em 0 0;
+}
+.gz-pull{
+  break-inside:avoid; text-align:center !important; font-family:'Playfair Display',serif;
+  font-style:italic; font-weight:900; font-size:1.35rem; line-height:1.15;
+  border-top:2px solid var(--fg); border-bottom:2px solid var(--fg); padding:.7rem .2rem; margin:.7rem 0;
+  hyphens:none;
+}
+
+/* ---- figures / photos ---- */
+.gz-fig{
+  break-inside:avoid; margin:.2rem 0 1rem; border:1px solid var(--fg);
+  background:var(--tile);
+}
+.gz-fig img{ display:block; width:100%; height:auto; }
+.gz-fig.print img,.gz-fig .gz-sketch{ padding:.6rem; }
+.gz-sketch{ background:transparent; }
+.gz-fig figcaption{
+  font-style:italic; font-size:.76rem; line-height:1.3; padding:.4rem .5rem;
+  border-top:1px solid var(--fg);
+}
+
+/* ---- "now showing" ad box ---- */
+.gz-ad{
+  break-inside:avoid; border:2px solid var(--fg); padding:.8rem; margin:.4rem 0 1rem;
+  text-align:center;
+}
+.gz-ad-tag{
+  display:inline-block; background:var(--accent); color:#fff; font-family:var(--font);
+  font-weight:900; text-transform:uppercase; letter-spacing:.1em; font-size:.62rem;
+  padding:.2em .6em; margin-bottom:.6rem;
+}
+.gz-ad .gz-photo{ width:70%; margin:0 auto .5rem; display:block; background:var(--tile); }
+.gz-ad p{ text-align:center !important; font-size:.9rem; line-height:1.35; margin-bottom:.5rem; }
+.gz-ad-cta{
+  font-family:var(--font); font-weight:900; text-transform:uppercase; letter-spacing:.04em;
+  font-size:.8rem; border-bottom:2px solid var(--accent); color:var(--fg);
+}
+.gz-ad-cta:hover{ color:var(--accent); }
+
+/* ---- closing ornament ---- */
+.gz-rule-end{ border-top:5px double var(--fg); margin-top:1.6rem; padding-top:1rem; text-align:center; }
+.gz-rule-end img{ height:60px; width:auto; opacity:.9; }
+
 .founder{ padding:0 var(--gut); margin-bottom:5rem; }
 .f-quote{
   font-size:clamp(1.8rem,4.5vw,3.8rem); font-weight:900;
@@ -1059,7 +1184,8 @@ html[data-theme="dark"] #sideBorder{ filter:invert(1); }
 #threadLayer svg{ display:block; width:100%; height:100%; overflow:visible; }
 #threadLayer .thread-shadow{ stroke:var(--thread-sh); }
 #threadLayer .thread-core{ stroke:var(--thread); transition:stroke .4s ease; }
-#threadLayer .thread-ply{ stroke:var(--thread-ply); transition:stroke .4s ease; }
+/* dashed "stitch" strand hidden — the thread now reads as one clean line */
+#threadLayer .thread-ply{ display:none; }
 
 /* when the left rail is on the page, push the content gutter clear of it */
 @media (min-width:900px){

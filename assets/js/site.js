@@ -190,11 +190,10 @@
       var CURL = [[-1.9,0.3],[-0.5,0.0],[0.55,-0.25],[0.95,-0.85],
                   [0.35,-1.75],[-0.75,-1.45],[-0.95,-0.55],[-0.2,0.18],
                   [0.9,0.35],[2.0,0.45]];
-      function coil(cx, cy, r, dir){
-        for(var k = 0; k < CURL.length; k++){
-          pt(cx + dir * CURL[k][0] * r, cy + (CURL[k][1] + 0.65) * r);
-        }
-      }
+      // loops/knots removed — the thread now just flows through the layout
+      // as one smooth curve. coil() drops a single gentle waypoint at its
+      // centre so the route still weaves, without the rope curls.
+      function coil(cx, cy, r, dir){ pt(cx, cy + r * 0.65); }
       var A = []; // label anchors — one per page word, in markup order
       function mark(x, y){ A.push([x, y]); pt(x, y); }
 
