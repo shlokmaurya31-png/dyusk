@@ -51,6 +51,38 @@
     revealEls.forEach(function(el){ el.classList.add('in'); });
   }
 
+  // art marquee — infinite scroll; eases to 90% speed while hovered
+  (function(){
+    var wrap = document.getElementById('artMarquee');
+    if(!wrap) return;
+    var track = wrap.querySelector('.art-track');
+    if(!track || !track.children.length) return;
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    // duplicate the set once so the loop is seamless
+    Array.prototype.slice.call(track.children).forEach(function(node){
+      var c = node.cloneNode(true);
+      c.setAttribute('aria-hidden', 'true');
+      track.appendChild(c);
+    });
+    var x = 0, mult = 1, target = 1;
+    var BASE = 60; // px per second
+    wrap.addEventListener('mouseenter', function(){ target = 0.9; });
+    wrap.addEventListener('mouseleave', function(){ target = 1; });
+    var last = null;
+    function frame(ts){
+      if(last === null) last = ts;
+      var dt = Math.min((ts - last) / 1000, 0.05);
+      last = ts;
+      mult += (target - mult) * 0.06;
+      x -= BASE * mult * dt;
+      var half = track.scrollWidth / 2;
+      if(half > 0 && -x >= half) x += half;
+      track.style.transform = 'translate3d(' + x + 'px,0,0)';
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  })();
+
   // header hides on scroll down, returns on scroll up
   var header = document.getElementById('siteHeader');
   if(header){

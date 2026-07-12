@@ -276,12 +276,31 @@ html[data-theme="red"] .theme-dot[data-set="red"]{ box-shadow:inset 0 0 0 1.5px 
   letter-spacing:-.05em; line-height:.95; margin-bottom:2rem; text-wrap:balance;
 }
 .cta-band .dim{ color:var(--accent); }
+html[data-theme="red"] .cta-band .dim{ color:#000; }
 .cta-band .btn.solid{
   background:var(--accent); border-color:var(--accent); color:#fff;
 }
 .cta-band .btn.solid:hover{ background:transparent; color:var(--accent); }
 html[data-theme="red"] .cta-band .btn.solid{ color:var(--red); }
 html[data-theme="red"] .cta-band .btn.solid:hover{ background:transparent; color:#fff; }
+
+/* ---------- art marquee (infinite scroll) ---------- */
+.art-band{ margin-bottom:8.5rem; }
+.art-marquee{
+  overflow:hidden;
+  border-top:2px solid currentColor; border-bottom:2px solid currentColor;
+  padding:1.5rem 0;
+}
+.art-track{
+  display:flex; gap:1.5rem; width:max-content; will-change:transform;
+}
+.art-track img{
+  height:min(52vw,340px); width:auto; aspect-ratio:3/4;
+  object-fit:cover; background:var(--tile); flex:none;
+}
+@media (prefers-reduced-motion:reduce){
+  .art-marquee{ overflow-x:auto; }
+}
 
 /* ---------- trust band ---------- */
 .trust-band{

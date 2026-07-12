@@ -56,6 +56,12 @@ def upload_images(o):
     for fn in sorted(os.listdir(prod_dir)):
         if fn.endswith(".png"):
             files.append(f"assets/products/{fn}")
+    # art marquee panels — swap the files in assets/art/ and re-run to change them
+    art_dir = os.path.join(SITE, "assets", "art")
+    if os.path.isdir(art_dir):
+        for fn in sorted(os.listdir(art_dir)):
+            if fn.endswith(".png"):
+                files.append(f"assets/art/{fn}")
 
     url_map = {}
     for rel in files:
