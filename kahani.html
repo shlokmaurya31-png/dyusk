@@ -7,7 +7,7 @@
 <script>
 (function(){
   try{
-    var t = localStorage.getItem('dyusk-theme');
+    var t = localStorage.getItem('dyusk-theme') || 'dark';
     if(t === 'dark' || t === 'red'){
       document.documentElement.setAttribute('data-theme', t);
     }
@@ -94,6 +94,32 @@
     <div class="sr-body">
       <h2>Compression System 02 is in the lab.</h2>
       <p>New colourways, a bottoms programme, and a recovery layer are all in wear-testing right now &#8212; on real lifters, not mannequins. The list hears about it first; the homepage hears about it second.</p>
+    </div>
+  </div>
+</section>
+
+<section class="miles" id="miles" aria-label="DYUSK milestones">
+  <div class="miles-track">
+    <div class="miles-inner">
+      <div class="miles-lead">
+        <h2>The journey, one pressure at a time.</h2>
+        <span class="section-tag">Milestones</span>
+      </div>
+      <div class="miles-reel">
+        <span class="miles-line" aria-hidden="true"></span>
+        <span class="miles-plus" aria-hidden="true">
+          <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M29.2969 29.5156V45.6094H19.0234V29.5156H3.00781V19.3203H19.0234V3.30469H29.2969V19.3203H45.3125V29.5156H29.2969Z"></path></svg>
+        </span>
+        <ul class="miles-list">
+          <li class="mile"><span class="mile-y">2021</span><span class="mile-t">The gym-floor complaint</span></li>
+          <li class="mile"><span class="mile-y">2022</span><span class="mile-t">DYUSK finds its name</span></li>
+          <li class="mile"><span class="mile-y">2023</span><span class="mile-t">The first pressure prototype</span></li>
+          <li class="mile"><span class="mile-y">2023</span><span class="mile-t">Compression System 01 ships</span></li>
+          <li class="mile"><span class="mile-y">2024</span><span class="mile-t">Six graded zones, mapped</span></li>
+          <li class="mile"><span class="mile-y">2025</span><span class="mile-t">Built alongside artisans</span></li>
+          <li class="mile"><span class="mile-y">2026</span><span class="mile-t">Compression System 02 in the lab</span></li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>

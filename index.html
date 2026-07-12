@@ -7,7 +7,7 @@
 <script>
 (function(){
   try{
-    var t = localStorage.getItem('dyusk-theme');
+    var t = localStorage.getItem('dyusk-theme') || 'dark';
     if(t === 'dark' || t === 'red'){
       document.documentElement.setAttribute('data-theme', t);
     }
@@ -93,6 +93,11 @@
   <a href="artisans.html"><text class="tlabel" text-anchor="middle"><textPath href="#labelPath" startOffset="38%">ARTISANS</textPath></text></a>
   <a href="philanthropy.html"><text class="tlabel" text-anchor="middle"><textPath href="#labelPath" startOffset="55%">PHILANTHROPY</textPath></text></a>
   <a href="contact.html"><text class="tlabel" text-anchor="middle"><textPath href="#labelPath" startOffset="70%">CONTACT US</textPath></text></a>
+  <text class="tcap" text-anchor="middle"><textPath href="#labelPath" startOffset="5%">Where DYUSK began</textPath></text>
+  <text class="tcap" text-anchor="middle"><textPath href="#labelPath" startOffset="24%">The minds behind the brand</textPath></text>
+  <text class="tcap" text-anchor="middle"><textPath href="#labelPath" startOffset="38%">Made by hand</textPath></text>
+  <text class="tcap" text-anchor="middle"><textPath href="#labelPath" startOffset="55%">Work that gives back</textPath></text>
+  <text class="tcap" text-anchor="middle"><textPath href="#labelPath" startOffset="70%">Come say hello</textPath></text>
 </svg>
 
 <section class="hero-brand" id="top">

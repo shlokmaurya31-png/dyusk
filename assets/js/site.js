@@ -32,7 +32,7 @@
   }
   var saved = null;
   try{ saved = localStorage.getItem('dyusk-theme'); }catch(e){}
-  if(saved) applyTheme(saved);
+  applyTheme(saved || 'dark');
   document.querySelectorAll('.theme-dot').forEach(function(dot){
     dot.addEventListener('click', function(){
       var t = dot.getAttribute('data-set');
@@ -358,19 +358,31 @@
         if(sampleY[k] > sampleMaxY) sampleMaxY = sampleY[k];
       }
       if(lbl){
-        var tps = lbl.querySelectorAll('textPath');
-        var texts = lbl.querySelectorAll('text');
+        var hText = lbl.querySelectorAll('text.tlabel');
+        var cText = lbl.querySelectorAll('text.tcap');
         var SIZES = [84, 40, 58, 72, 46];
         var fscale = Math.max(0.7, W/1600);
-        for(var q = 0; q < tps.length && q < A.length; q++){
+        var capSize = Math.max(12, Math.round(19 * fscale));
+        for(var q = 0; q < hText.length && q < A.length; q++){
           var best = 0, bd = Infinity;
           for(var k2 = 0; k2 <= N; k2++){
             var dx = sampleX[k2] - A[q][0], dy2 = sampleY[k2] - A[q][1];
             var dd = dx*dx + dy2*dy2;
             if(dd < bd){ bd = dd; best = k2; }
           }
-          tps[q].setAttribute('startOffset', (best / N * 100).toFixed(2) + '%');
-          texts[q].setAttribute('font-size', String(Math.round(SIZES[q] * fscale)));
+          var off = (best / N * 100).toFixed(2) + '%';
+          var htp = hText[q].querySelector('textPath');
+          if(htp) htp.setAttribute('startOffset', off);
+          hText[q].setAttribute('font-size', String(Math.round(SIZES[q] * fscale)));
+          if(cText[q]){
+            var ctp = cText[q].querySelector('textPath');
+            // caption rides the same thread at the same offset, pushed just
+            // below the line via dy (perpendicular to the path) so it reads
+            // like a newspaper deck tucked under the word
+            if(ctp) ctp.setAttribute('startOffset', off);
+            cText[q].setAttribute('font-size', String(capSize));
+            cText[q].setAttribute('dy', String(capSize + 16));
+          }
         }
       }
       built = true;
@@ -404,6 +416,57 @@
       clearTimeout(rT);
       rT = setTimeout(rebuild, 200);
     });
+  })();
+
+  // milestones reel — a pinned 3D cylinder that turns as you scroll the
+  // section past. Each milestone sits on the wall of the cylinder; the one
+  // facing front is the "active" year. Reduced-motion falls back to a list.
+  (function(){
+    var sec = document.getElementById('miles');
+    if(!sec) return;
+    var reel = sec.querySelector('.miles-reel');
+    var items = Array.prototype.slice.call(sec.querySelectorAll('.mile'));
+    if(!reel || !items.length) return;
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      sec.classList.add('flat'); return;
+    }
+    var STEP = 20;              // degrees between milestones on the wheel
+    var R = 300;                // cylinder radius (matches .miles-list translateZ)
+    var N = items.length;
+    var ready = false, ticking = false;
+
+    function render(){
+      ticking = false;
+      var rect = sec.getBoundingClientRect();
+      var vh = window.innerHeight;
+      var span = rect.height - vh;
+      var p = span > 0 ? (-rect.top) / span : 0;
+      if(p < 0) p = 0; else if(p > 1) p = 1;
+      var rot = -p * (N - 1) * STEP;          // active item's net angle -> 0
+      for(var i = 0; i < N; i++){
+        var deg = i * STEP + rot;
+        var rad = deg * Math.PI / 180;
+        var y = R * Math.sin(rad);
+        var z = R * Math.cos(rad);
+        var el = items[i];
+        el.style.transform = 'translate(-50%,-50%) translate3d(0,' +
+          y.toFixed(1) + 'px,' + z.toFixed(1) + 'px) rotateX(' + (-deg).toFixed(1) + 'deg)';
+        var ad = Math.abs(deg);
+        el.style.opacity = Math.max(0, 1 - ad / 74).toFixed(3);
+        el.style.zIndex = String(Math.round(1000 - ad));
+        var on = ad < STEP / 2;
+        if(on !== el.classList.contains('on')) el.classList.toggle('on', on);
+      }
+      if(!ready){ ready = true; sec.classList.add('ready'); }
+    }
+    function onScroll(){
+      if(ticking) return;
+      ticking = true;
+      requestAnimationFrame(render);
+    }
+    render();
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', onScroll, {passive:true});
   })();
 
   // header hides on scroll down, returns on scroll up

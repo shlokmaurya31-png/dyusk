@@ -7,7 +7,7 @@
 <script>
 (function(){
   try{
-    var t = localStorage.getItem('dyusk-theme');
+    var t = localStorage.getItem('dyusk-theme') || 'dark';
     if(t === 'dark' || t === 'red'){
       document.documentElement.setAttribute('data-theme', t);
     }
