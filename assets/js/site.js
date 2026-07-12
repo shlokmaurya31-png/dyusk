@@ -172,7 +172,6 @@
     }
 
     function build(){
-      if(window.innerWidth < 900){ built = false; return; }
       var m = rect('.hg-brand img'), why = rect('.hg-why'),
           quote = rect('.script-quote'), art = rect('.art-band'),
           nl = rect('.newsletter'), fy = rect('.f-year');
@@ -198,6 +197,61 @@
       }
       var A = []; // label anchors — one per page word, in markup order
       function mark(x, y){ A.push([x, y]); pt(x, y); }
+
+      if(W < 900){
+        // ---- phone: weave down the stacked tiles, dodging the HTML
+        // words (which stay visible and tappable on small screens) ----
+        var wd = [];
+        for(var iw = 1; iw <= 5; iw++) wd.push(rect('.sc-link.w' + iw));
+        if(wd.some(function(x){ return !x || !x.h; })) return;
+
+        // start under the top product, out of its right edge
+        pt(t[0].cx, t[0].cy);
+        pt(t[0].right - 15, t[0].top + t[0].h*0.55);
+        pt(Math.min((t[0].right + W)/2, W - 20), t[0].top + t[0].h*0.85);
+        // slip past कहानी on its free side, curl, tuck under product 2
+        pt(wd[0].left - 22, wd[0].cy);
+        coil(W*0.30, (wd[0].bottom + t[1].top)/2 + 6, 20, -1);
+        pt(t[1].left + 16, t[1].top + t[1].h*0.35);
+        pt(t[1].cx - 15, t[1].bottom - 12);
+        // past About Us, curl, under product 3
+        pt(wd[1].right + 22, wd[1].cy);
+        coil(W*0.66, (wd[1].bottom + t[2].top)/2 + 6, 20, 1);
+        pt(t[2].right - 16, t[2].top + t[2].h*0.35);
+        pt(t[2].cx + 15, t[2].bottom - 12);
+        // past Artisans, curl, under product 4
+        pt(wd[2].left - 22, wd[2].cy);
+        coil(W*0.30, (wd[2].bottom + t[3].top)/2 + 6, 20, -1);
+        pt(t[3].left + 16, t[3].top + t[3].h*0.35);
+        pt(t[3].cx - 15, t[3].bottom - 12);
+        // past Philanthropy, curl, under product 5
+        pt(wd[3].right + 20, wd[3].cy);
+        coil(W*0.68, (wd[3].bottom + t[4].top)/2 + 6, 20, 1);
+        pt(t[4].right - 16, t[4].top + t[4].h*0.35);
+        pt(t[4].cx + 15, t[4].bottom - 12);
+        // past Contact Us, curl, under product 6
+        pt(Math.max(wd[4].left - 22, 20), wd[4].cy);
+        coil(W*0.5, (wd[4].bottom + t[5].top)/2 + 6, 20, 1);
+        pt(t[5].left + 16, t[5].top + t[5].h*0.35);
+        pt(t[5].cx, t[5].bottom - 12);
+        // hug the left margin past the quote, smile under it
+        pt(W*0.10, (t[5].bottom + quote.top)/2 + 20);
+        pt(W*0.06, quote.cy);
+        pt(quote.cx, quote.bottom + 35);
+        pt(W - 9, (quote.bottom + art.top)/2 + 10);
+        pt(W - 9, art.cy);
+        // straight down the right margin past trust, newsletter and the
+        // footer statement (on phones the ©26 sits below the statement)
+        pt(W - 9, (art.bottom + nl.top)/2);
+        pt(W - 9, nl.bottom - 60);
+        pt(W - 9, fy.top - 30);
+        // the ©26 block stretches full width on phones — measure the
+        // actual glyphs off the font height, curl beside them, end beneath
+        var gw = fy.h * 1.8, gcx = fy.left + gw/2;
+        coil(Math.min(fy.left + gw + 130, W*0.66), fy.cy - 10, 18, -1);
+        pt(fy.left + gw + 35, fy.bottom - 12);
+        pt(gcx + 10, fy.bottom + 20);
+      } else {
 
       // out of the sewing machine, coiling loose across the top band
       pt(m.right - 30, m.top + m.h*0.55);
@@ -266,6 +320,7 @@
       pt(W - 52, fy.cy + 40);
       pt(fy.cx + 70, fy.bottom + 55);
       pt(fy.cx - 8, fy.bottom + 16);
+      }
 
       var d = spline(P);
       for(var j = 0; j < ropePaths.length; j++) ropePaths[j].setAttribute('d', d);

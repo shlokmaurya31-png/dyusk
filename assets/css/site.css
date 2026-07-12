@@ -904,9 +904,8 @@ html[data-theme="dark"] #sideBorder{ filter:invert(1); }
 
 #threadLayer{
   position:absolute; top:0; left:0; width:100%;
-  z-index:-1; pointer-events:none; display:none;
+  z-index:-1; pointer-events:none;
 }
-@media (min-width:900px){ #threadLayer{ display:block; } }
 #threadLayer svg{ display:block; width:100%; height:100%; overflow:visible; }
 #threadLayer .thread-shadow{ stroke:var(--thread-sh); }
 #threadLayer .thread-core{ stroke:var(--thread); transition:stroke .4s ease; }
