@@ -812,3 +812,60 @@ footer#footer{ position:relative; overflow:hidden; padding-bottom:clamp(7rem,20v
 
 /* Devanagari text (kahani) */
 [lang="hi"]{ font-family:'Noto Sans Devanagari',var(--font); letter-spacing:0; }
+
+
+/* ============================================================
+   SCATTER COLLAGE (products + page words) & SCRIPT QUOTE
+   ============================================================ */
+:root{ --script:'Great Vibes','Cinderela',cursive; }
+
+.scatter{
+  display:grid; grid-template-columns:repeat(8,1fr);
+  gap:3.5rem 1rem; padding:0 var(--gut); margin-bottom:8.5rem;
+  align-items:start;
+}
+.sc-link{
+  font-weight:900; text-transform:uppercase; letter-spacing:-.03em; line-height:1;
+  align-self:center; justify-self:start; transition:color .25s ease;
+  position:relative; z-index:2; white-space:nowrap;
+}
+.sc-link:hover{ color:var(--accent); }
+/* mobile: alternate sides, words between */
+.sc-item.t1{ grid-column:1/7; }
+.sc-item.t2{ grid-column:3/9; }
+.sc-item.t3{ grid-column:1/7; }
+.sc-item.t4{ grid-column:3/9; }
+.sc-item.t5{ grid-column:1/7; }
+.sc-item.t6{ grid-column:3/9; }
+.sc-link.w1{ grid-column:1/9; font-size:clamp(2.6rem,9vw,5.5rem); transform:rotate(-4deg); justify-self:end; }
+.sc-link.w2{ grid-column:1/9; font-size:clamp(1.5rem,5vw,2.4rem); transform:rotate(3deg); }
+.sc-link.w3{ grid-column:1/9; font-size:clamp(2rem,7vw,3.6rem); transform:rotate(-6deg); justify-self:end; }
+.sc-link.w4{ grid-column:1/9; font-size:clamp(2.2rem,8vw,5rem); transform:rotate(2deg); }
+.sc-link.w5{ grid-column:1/9; font-size:clamp(1.8rem,6vw,3rem); transform:rotate(-3deg); justify-self:center; }
+@media (min-width:900px){
+  .scatter{ grid-template-columns:repeat(16,1fr); gap:4.5rem 1.5rem; }
+  .sc-item.t1{ grid-column:1/6;  grid-row:1; }
+  .sc-link.w1{ grid-column:7/11; grid-row:1; margin-top:2rem; }
+  .sc-item.t2{ grid-column:12/17;grid-row:1; margin-top:7rem; }
+  .sc-link.w2{ grid-column:2/6;  grid-row:2; margin-top:-2rem; }
+  .sc-item.t3{ grid-column:7/11; grid-row:2; margin-top:-3rem; }
+  .sc-link.w3{ grid-column:12/16;grid-row:2; align-self:end; }
+  .sc-item.t4{ grid-column:2/6;  grid-row:3; }
+  .sc-link.w4{ grid-column:7/13; grid-row:3; justify-self:center; margin-top:3rem; }
+  .sc-item.t5{ grid-column:13/17;grid-row:3; margin-top:-4rem; }
+  .sc-link.w5{ grid-column:3/7;  grid-row:4; align-self:center; }
+  .sc-item.t6{ grid-column:8/13; grid-row:4; }
+}
+
+.quote-band{ padding:2rem var(--gut); margin-bottom:8.5rem; text-align:center; }
+.script-quote{
+  font-family:var(--script); font-weight:400;
+  font-size:clamp(3rem,8.5vw,8rem); line-height:1.1;
+  transform:rotate(-2deg); text-wrap:balance;
+}
+
+.more-to-come{
+  position:relative; z-index:1;
+  margin-top:5rem; text-align:center;
+  font-family:var(--script); font-size:clamp(2rem,4.5vw,3.4rem); line-height:1;
+}

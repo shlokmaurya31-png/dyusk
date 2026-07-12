@@ -28,7 +28,8 @@ from dotenv import load_dotenv
 SITE = r"D:\Dyusk\Dyusk j\website j\dyusk-website"
 FONT_IMPORT = ("@import url('https://fonts.googleapis.com/css2?"
                "family=Archivo:wght@400;500;700;900&"
-               "family=Noto+Sans+Devanagari:wght@700;900&display=swap');\n")
+               "family=Noto+Sans+Devanagari:wght@700;900&"
+               "family=Great+Vibes&display=swap');\n")
 
 PAGES = [
     {"src": "index.html", "url": "/dyusk", "key": "dyusk.home", "name": "DYUSK Home"},
