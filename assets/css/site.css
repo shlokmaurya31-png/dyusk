@@ -100,8 +100,19 @@ body.no-scroll{ overflow:hidden; }
   color:#fff; mix-blend-mode:difference;
   transition:transform .5s var(--ease-out);
 }
-#siteHeader .logo{ display:flex; align-items:center; gap:10px; }
-#siteHeader .logo .mark{ height:30px; width:auto; }
+/* logo mark lives OUTSIDE the blend-mode header so it never color-shifts
+   over page content — tinted per theme instead */
+.brand-mark{
+  position:fixed; top:21px; left:var(--gut); z-index:62; display:block;
+}
+.brand-mark img{
+  height:32px; width:auto;
+  filter:brightness(0); /* white source -> ink on cream */
+  transition:filter .4s ease;
+}
+html[data-theme="dark"] .brand-mark img,
+html[data-theme="red"] .brand-mark img{ filter:none; }
+#siteHeader .logo{ display:flex; align-items:center; gap:10px; margin-left:38px; }
 #siteHeader .logo .brand{
   font-size:1.4rem; font-weight:900; letter-spacing:-.04em; line-height:1;
 }
@@ -147,8 +158,6 @@ html[data-theme="red"] .theme-dot[data-set="red"]{ box-shadow:inset 0 0 0 1.5px 
   clip-path:inset(0 0 0 0);
 }
 #preloader.done{ clip-path:inset(0 0 100% 0); pointer-events:none; }
-#preloader{ flex-direction:column; gap:1.5rem; }
-#preloader .pre-mark{ height:clamp(64px,12vw,130px); width:auto; }
 #preloader .pre-word{
   font-size:clamp(3rem,14vw,11rem); font-weight:900; letter-spacing:-.05em; line-height:1;
 }

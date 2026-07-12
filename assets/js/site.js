@@ -64,10 +64,11 @@
       c.setAttribute('aria-hidden', 'true');
       track.appendChild(c);
     });
-    var x = 0, mult = 1, target = 1;
-    var BASE = 60; // px per second
-    wrap.addEventListener('mouseenter', function(){ target = 0.9; });
-    wrap.addEventListener('mouseleave', function(){ target = 1; });
+    // cruises at 1.5x, eases down to 1x while hovered
+    var x = 0, mult = 1.5, target = 1.5;
+    var BASE = 60; // px per second at 1x
+    wrap.addEventListener('mouseenter', function(){ target = 1; });
+    wrap.addEventListener('mouseleave', function(){ target = 1.5; });
     var last = null;
     function frame(ts){
       if(last === null) last = ts;
