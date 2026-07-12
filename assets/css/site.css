@@ -97,8 +97,7 @@ body.no-scroll{ overflow:hidden; }
   position:fixed; top:0; left:0; right:0; z-index:60;
   display:flex; align-items:center; justify-content:space-between;
   padding:26px var(--gut);
-  background:#fff; color:#000;
-  border-bottom:1px solid rgba(0,0,0,.08);
+  color:#000;
   transition:transform .5s var(--ease-out);
 }
 /* logo mark lives OUTSIDE the blend-mode header so it never color-shifts
