@@ -106,20 +106,21 @@ html[data-theme="red"] #siteHeader{ color:#fff; }
 /* logo mark lives OUTSIDE the blend-mode header so it never color-shifts
    over page content — tinted per theme instead */
 .brand-mark{
-  /* vertically centered on the header text line (text center sits ~37px down) */
-  position:fixed; top:16px; left:var(--gut); z-index:62; display:block;
+  /* centred on the wordmark line: wordmark centre sits ~40px down
+     (26px header pad-top + half the 1.6rem line box) */
+  position:fixed; top:25px; left:var(--gut); z-index:62; display:block;
 }
 .brand-mark img{
-  height:42px; width:auto;
+  height:30px; width:auto;
   filter:brightness(0); /* white source -> ink on the cream theme */
   transition:filter .4s ease;
 }
 /* keep the mark white (its source colour) on the dark + red themes */
 html[data-theme="dark"] .brand-mark img,
 html[data-theme="red"] .brand-mark img{ filter:none; }
-#siteHeader .logo{ display:flex; align-items:center; gap:10px; margin-left:44px; }
+#siteHeader .logo{ display:flex; align-items:center; gap:9px; margin-left:34px; }
 #siteHeader .logo .brand{
-  font-size:1.4rem; font-weight:900; letter-spacing:-.04em; line-height:1;
+  font-size:1.6rem; font-weight:900; letter-spacing:-.04em; line-height:1;
 }
 #siteHeader .logo .tagline{
   font-size:.625rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
