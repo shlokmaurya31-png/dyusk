@@ -49,6 +49,21 @@
   <button class="theme-dot" data-set="red" type="button" aria-label="Red theme"></button>
 </div>
 
+<div id="threadLayer" aria-hidden="true">
+  <svg id="threadSvg" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <mask id="threadMask" maskUnits="userSpaceOnUse">
+        <path id="threadMaskPath" fill="none" stroke="#fff" stroke-width="18" stroke-linecap="round"/>
+      </mask>
+    </defs>
+    <g mask="url(#threadMask)">
+      <path class="thread-shadow" fill="none" stroke-width="7" stroke-linecap="round" transform="translate(3,4)"/>
+      <path class="thread-core" fill="none" stroke-width="5" stroke-linecap="round"/>
+      <path class="thread-ply" fill="none" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="3 6"/>
+    </g>
+  </svg>
+</div>
+
 <section class="hero-brand" id="top">
   <div class="wordmark">DYUSK<sup>&#174;</sup></div>
   <div class="rule-5"></div>
@@ -126,7 +141,7 @@
 </section>
 
 <section class="quote-band reveal">
-  <p class="script-quote">When the gym empties,<br/>the work begins.</p>
+  <p class="script-quote">When the gym empties,<br/><span class="q-accent">the work begins.</span></p>
 </section>
 
 <section class="art-band">

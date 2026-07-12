@@ -128,6 +128,171 @@
     });
   })();
 
+  // sewing thread — spools out of the machine sketch, laces through the
+  // scattered products and ties off at the ©26 in the footer. The path is
+  // rebuilt from real element positions, so it survives any layout change.
+  (function(){
+    var layer = document.getElementById('threadLayer');
+    var svg = document.getElementById('threadSvg');
+    if(!layer || !svg) return;
+    var maskEl = svg.querySelector('mask');
+    var maskPath = document.getElementById('threadMaskPath');
+    var ropePaths = svg.querySelectorAll('g path');
+    var len = 0, startY = 0, endY = 1, built = false;
+    var cur = 0, targetP = 0;
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function rect(sel){
+      var el = document.querySelector(sel);
+      if(!el) return null;
+      var r = el.getBoundingClientRect();
+      var sx = window.pageXOffset, sy = window.pageYOffset;
+      return { left:r.left+sx, top:r.top+sy, right:r.right+sx, bottom:r.bottom+sy,
+               w:r.width, h:r.height,
+               cx:r.left+sx+r.width/2, cy:r.top+sy+r.height/2 };
+    }
+
+    // catmull-rom spline through the waypoints -> one smooth cubic path
+    function spline(pts){
+      var d = 'M' + pts[0][0].toFixed(1) + ' ' + pts[0][1].toFixed(1);
+      for(var i = 0; i < pts.length - 1; i++){
+        var p0 = pts[Math.max(i-1,0)], p1 = pts[i], p2 = pts[i+1],
+            p3 = pts[Math.min(i+2, pts.length-1)];
+        d += 'C' + [
+          p1[0]+(p2[0]-p0[0])/6, p1[1]+(p2[1]-p0[1])/6,
+          p2[0]-(p3[0]-p1[0])/6, p2[1]-(p3[1]-p1[1])/6,
+          p2[0], p2[1]
+        ].map(function(n){ return n.toFixed(1); }).join(' ');
+      }
+      return d;
+    }
+
+    function build(){
+      if(window.innerWidth < 900){ built = false; return; }
+      var m = rect('.hg-brand img'), why = rect('.hg-why'),
+          quote = rect('.script-quote'), art = rect('.art-band'),
+          nl = rect('.newsletter'), fy = rect('.f-year'),
+          w4 = rect('.sc-link.w4');
+      var t = [];
+      for(var i = 1; i <= 6; i++) t.push(rect('.sc-item.t' + i + ' .media'));
+      if(!m || !why || !quote || !art || !nl || !fy || !w4 ||
+         t.some(function(x){ return !x || !x.h; }) || m.h < 40) return;
+
+      var W = document.documentElement.clientWidth;
+      var P = [];
+      function pt(x, y){ P.push([x, y]); }
+      function loop(cx, cy, r, dir, turns){
+        turns = turns || 1;
+        var steps = 6 * turns;
+        for(var k = 0; k <= steps; k++){
+          var a = -Math.PI/2 + dir * (k/steps) * Math.PI * 2 * turns;
+          pt(cx + Math.cos(a)*r + (turns > 1 ? k*1.2 : 0), cy + Math.sin(a)*r*0.8);
+        }
+      }
+
+      // off the needle of the sewing machine
+      pt(m.left + m.w*0.86, m.top + m.h*0.16);
+      pt(m.right + 30, m.top + m.h*0.52);
+      // lasso around the WHY? block
+      pt(why.left - 50, why.bottom + 20);
+      pt(why.left - 75, why.top - 5);
+      pt(why.cx - 40, why.top - 45);
+      pt(why.right + 70, why.top + why.h*0.25);
+      pt(why.cx + 60, why.bottom + 55);
+      pt(why.left + 30, why.bottom + 25);
+      // sweep right under the © 2026, dive into the scatter
+      pt(W*0.72, why.bottom + 150);
+      pt(W*0.9, t[0].top - 60);
+      // tuck under the first tile's right edge
+      pt(t[0].right - 28, t[0].top + t[0].h*0.22);
+      pt(t[0].right + 70, t[0].top + t[0].h*0.5);
+      // loop in the blank between t1 and t2
+      loop((t[0].right + t[1].left)/2, t[0].bottom - t[0].h*0.15, 62, 1);
+      // under t2's left edge, out its bottom
+      pt(t[1].left + 30, t[1].cy - 30);
+      pt(t[1].cx - 30, t[1].bottom - 18);
+      pt(t[1].cx - 90, t[1].bottom + 70);
+      // across to t3: under its top-right corner, out the left side
+      pt(t[2].right - 35, t[2].top + 22);
+      pt(t[2].left + 25, t[2].cy - 20);
+      pt(t[2].left - 90, t[2].cy + 50);
+      // loop-de-loop in the blank before t4
+      loop(W*0.30, (t[2].bottom + t[3].top)/2 + 20, 68, -1);
+      // t4: in the top, out the right edge — everything after stays BELOW
+      // the Philanthropy word so the thread never crosses it
+      var dipY = Math.max(t[3].bottom, w4.bottom) + 60;
+      pt(t[3].cx - 40, t[3].top + 20);
+      pt(t[3].right - 18, Math.min(t[3].bottom - 50, Math.max(t[3].cy + 20, w4.bottom + 35)));
+      pt(t[3].right + 80, Math.max(t[3].cy + 140, w4.bottom + 70));
+      pt((t[3].right + t[4].left)/2, dipY);
+      pt(t[4].left + 28, Math.max(t[4].bottom - t[4].h*0.25, w4.bottom + 30));
+      pt(t[4].cx, t[4].bottom - 22);
+      pt(t[4].cx - 20, t[4].bottom + 80);
+      // loop in the blank right of t6, then in its right edge, out bottom-left
+      loop(Math.min(t[5].right + 150, W - 90), t[5].top + 30, 58, 1);
+      pt(t[5].right - 30, t[5].top + t[5].h*0.3);
+      pt(t[5].left + 35, t[5].bottom - 20);
+      pt(t[5].left - 90, t[5].bottom + 60);
+      // hug the far-left margin past the quote, smile under it
+      pt(W*0.12, quote.top - 20);
+      pt(W*0.15, quote.bottom + 50);
+      pt(quote.cx, quote.bottom + 75);
+      pt(W*0.82, (quote.bottom + art.top)/2 + 20);
+      pt(W - 70, art.top + art.h*0.45);
+      // slide down the right edge, cut through the newsletter's column gap
+      pt(W - 60, (art.bottom + nl.top)/2 + 40);
+      pt(W*0.56, nl.cy);
+      pt(W*0.52, nl.bottom + 50);
+      // drop through the blank corridor left of the ©26, tie off in a knot
+      pt(fy.left - 70, (nl.bottom + fy.top)/2 + 30);
+      pt(fy.left - 85, fy.cy);
+      loop(fy.cx - 40, fy.bottom + 55, 26, 1, 2);
+      pt(fy.cx - 12, fy.bottom + 6);
+
+      var d = spline(P);
+      for(var j = 0; j < ropePaths.length; j++) ropePaths[j].setAttribute('d', d);
+      maskPath.setAttribute('d', d);
+      len = maskPath.getTotalLength();
+      maskPath.setAttribute('stroke-dasharray', String(len));
+      maskPath.setAttribute('stroke-dashoffset', String(len * (1 - cur)));
+      var H = document.documentElement.scrollHeight;
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      svg.setAttribute('width', String(W));
+      svg.setAttribute('height', String(H));
+      layer.style.height = H + 'px';
+      maskEl.setAttribute('x', '0'); maskEl.setAttribute('y', '0');
+      maskEl.setAttribute('width', String(W)); maskEl.setAttribute('height', String(H));
+      startY = m.top;
+      endY = fy.bottom + 140;
+      built = true;
+    }
+
+    function computeTarget(){
+      if(!built || !len) return;
+      var p = (window.pageYOffset + window.innerHeight*0.85 - startY) / ((endY - startY) || 1);
+      targetP = Math.max(0, Math.min(1, p));
+    }
+
+    (function frame(){
+      if(built && len){
+        if(reduced){ cur = 1; }
+        else{ computeTarget(); cur += (targetP - cur) * 0.075; }
+        maskPath.setAttribute('stroke-dashoffset', String(len * (1 - cur)));
+      }
+      requestAnimationFrame(frame);
+    })();
+
+    function rebuild(){ build(); computeTarget(); }
+    rebuild();
+    window.addEventListener('load', rebuild);
+    if(document.fonts && document.fonts.ready) document.fonts.ready.then(rebuild);
+    var rT;
+    window.addEventListener('resize', function(){
+      clearTimeout(rT);
+      rT = setTimeout(rebuild, 200);
+    });
+  })();
+
   // header hides on scroll down, returns on scroll up
   var header = document.getElementById('siteHeader');
   if(header){

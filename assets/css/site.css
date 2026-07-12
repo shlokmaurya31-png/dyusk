@@ -861,11 +861,43 @@ footer#footer{ position:relative; overflow:hidden; padding-bottom:clamp(7rem,20v
 .script-quote{
   font-family:var(--script); font-weight:400;
   font-size:clamp(3rem,8.5vw,8rem); line-height:1.1;
-  transform:rotate(-2deg); text-wrap:balance;
+  text-wrap:balance;
 }
+.script-quote .q-accent{ color:var(--accent); }
 
 .more-to-come{
   position:relative; z-index:1;
   margin-top:5rem; text-align:center;
   font-family:var(--script); font-size:clamp(2rem,4.5vw,3.4rem); line-height:1;
 }
+
+/* ============================================================
+   SEWING THREAD — rope that spools from the machine sketch,
+   laces through the scattered products and ties off at the ©26.
+   Sits behind all content (z-index:-1) so it never covers
+   products, images or text. Path is built at runtime in site.js.
+   ============================================================ */
+:root{
+  --thread:var(--red);
+  --thread-ply:rgba(255,255,255,.55);
+  --thread-sh:rgba(0,0,0,.18);
+}
+html[data-theme="dark"]{
+  --thread:var(--cream);
+  --thread-ply:rgba(0,0,0,.42);
+  --thread-sh:rgba(255,255,255,.12);
+}
+html[data-theme="red"]{
+  --thread:#0a0a0a;
+  --thread-ply:rgba(255,255,255,.26);
+  --thread-sh:rgba(0,0,0,.3);
+}
+#threadLayer{
+  position:absolute; top:0; left:0; width:100%;
+  z-index:-1; pointer-events:none; display:none;
+}
+@media (min-width:900px){ #threadLayer{ display:block; } }
+#threadLayer svg{ display:block; width:100%; height:100%; overflow:visible; }
+#threadLayer .thread-shadow{ stroke:var(--thread-sh); }
+#threadLayer .thread-core{ stroke:var(--thread); transition:stroke .4s ease; }
+#threadLayer .thread-ply{ stroke:var(--thread-ply); transition:stroke .4s ease; }
