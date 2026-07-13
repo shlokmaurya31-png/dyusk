@@ -9,7 +9,7 @@
   try{
     var t = localStorage.getItem('dyusk-theme') || 'dark';
     if(t === 'dark' || t === 'red'){
-      document.documentElement.setAttribute('data-theme', t);
+      document.documentElement.setAttribute('data-theme', 'dark');
     }
   }catch(e){}
 })();
@@ -59,42 +59,50 @@
 <div id="theme-switcher" aria-label="Theme">
   <button class="theme-dot" data-set="dark" type="button" aria-label="Dark theme"></button>
   <button class="theme-dot" data-set="cream" type="button" aria-label="Cream theme"></button>
-  <button class="theme-dot" data-set="red" type="button" aria-label="Red theme"></button>
 </div>
 
-<section class="page-head">
-  <span class="section-tag">Give Back</span>
-  <h1>Philanthropy</h1>
-  <p>We call it Ground Up: one percent of every order goes to grassroots Indian athletes &#8212; as gear, not press releases.</p>
+<section class="philo-hero" id="philoHero">
+  <canvas id="lightningCanvas" aria-hidden="true"></canvas>
+  <div class="ph-sphere" aria-hidden="true"></div>
+  <div class="ph-content">
+    <span class="ph-kicker">Give Back &#183; Ground Up</span>
+    <h1 class="ph-stat">1<span class="pct">%</span></h1>
+    <p class="ph-lede">of every order &#8212; not profit, revenue &#8212; becomes equipment for grassroots Indian athletes. As gear, not press releases.</p>
+    <a href="#ledger" class="btn ph-cta">Read the ledger</a>
+  </div>
 </section>
-<section class="story">
-  <div class="story-row reveal">
-    <span class="sr-kicker">01 &#8212; The Problem</span>
-    <div class="sr-body">
-      <h2>Talent is everywhere. Kit is not.</h2>
+<section class="ledger" id="ledger">
+  <div class="ledger-head reveal">
+    <span class="section-tag">The Ledger</span>
+    <h2>Published every quarter. Small numbers included.</h2>
+  </div>
+  <div class="ledger-row reveal">
+    <span class="lr-no">01</span>
+    <div class="lr-body">
+      <h3>Talent is everywhere. Kit is not.</h3>
       <p>India does not lack athletes. It lacks basics at the bottom of the pyramid &#8212; shoes that fit, kit that survives a season, recovery that isn&#8217;t a luxury. Sponsors arrive after the podium. Nobody funds the years before it.</p>
     </div>
+    <span class="lr-tag">The Problem</span>
   </div>
-  <div class="story-row reveal">
-    <span class="sr-kicker">02 &#8212; The Programme</span>
-    <div class="sr-body">
-      <h2>One percent, every order, automatically.</h2>
+  <div class="ledger-row reveal">
+    <span class="lr-no">02</span>
+    <div class="lr-body">
+      <h3>One percent, every order, automatically.</h3>
       <p>Ground Up takes one percent of every DYUSK order &#8212; not profit, revenue &#8212; and converts it into equipment grants for district-level athletes and their coaches. No applications written in English required. Coaches nominate; we deliver kit.</p>
     </div>
+    <span class="lr-tag">The Programme</span>
   </div>
-  <div class="story-row reveal">
-    <span class="sr-kicker">03 &#8212; The Receipts</span>
-    <div class="sr-body">
-      <h2>We publish what we give.</h2>
+  <div class="ledger-row reveal">
+    <span class="lr-no">03</span>
+    <div class="lr-body">
+      <h3>We publish what we give.</h3>
       <p>Every quarter we publish the number: orders taken, amount pooled, kit delivered, and to whom (with their permission). If the number is small, we publish it small. Honesty scales better than marketing.</p>
     </div>
+    <span class="lr-tag">The Receipts</span>
   </div>
-  <div class="story-row reveal">
-    <span class="sr-kicker">04 &#8212; Get Involved</span>
-    <div class="sr-body">
-      <h2>Know a team that needs kit?</h2>
-      <p>If you coach or train with a grassroots squad that needs equipment, write to us &#8212; the contact page reaches a human. Nominations from the floor beat any spreadsheet we could build.</p>
-    </div>
+  <div class="ledger-total reveal">
+    <p>Know a team that needs kit? Nominations from the floor beat any spreadsheet we could build.</p>
+    <a class="btn solid" href="contact.html">Nominate them</a>
   </div>
 </section>
 
@@ -165,5 +173,84 @@
 
 <script src="assets/js/site.js"></script>
 <script src="assets/js/commerce.js"></script>
+<script>
+(function(){
+  var hero = document.getElementById('philoHero');
+  var canvas = document.getElementById('lightningCanvas');
+  if(!hero || !canvas) return;
+
+  // fixed chrome floats over the always-black hero — keep it white up there
+  function overHero(){
+    document.body.classList.toggle('over-hero', window.scrollY < hero.offsetHeight - 70);
+  }
+  overHero();
+  window.addEventListener('scroll', overHero, {passive:true});
+
+  var gl = canvas.getContext('webgl');
+  if(!gl) return;
+
+  var vsSrc = 'attribute vec2 aPosition;void main(){gl_Position=vec4(aPosition,0.0,1.0);}';
+  var fsSrc =
+    'precision mediump float;' +
+    'uniform vec2 iResolution;uniform float iTime;' +
+    '#define OCTAVE_COUNT 10\n' +
+    'vec3 hsv2rgb(vec3 c){vec3 rgb=clamp(abs(mod(c.x*6.0+vec3(0.0,4.0,2.0),6.0)-3.0)-1.0,0.0,1.0);return c.z*mix(vec3(1.0),rgb,c.y);}' +
+    'float hash11(float p){p=fract(p*.1031);p*=p+33.33;p*=p+p;return fract(p);}' +
+    'float hash12(vec2 p){vec3 p3=fract(vec3(p.xyx)*.1031);p3+=dot(p3,p3.yzx+33.33);return fract((p3.x+p3.y)*p3.z);}' +
+    'mat2 rotate2d(float t){float c=cos(t);float s=sin(t);return mat2(c,-s,s,c);}' +
+    'float noise(vec2 p){vec2 ip=floor(p);vec2 fp=fract(p);' +
+    'float a=hash12(ip);float b=hash12(ip+vec2(1.0,0.0));float c=hash12(ip+vec2(0.0,1.0));float d=hash12(ip+vec2(1.0,1.0));' +
+    'vec2 t=smoothstep(0.0,1.0,fp);return mix(mix(a,b,t.x),mix(c,d,t.x),t.y);}' +
+    'float fbm(vec2 p){float v=0.0;float amp=0.5;' +
+    'for(int i=0;i<OCTAVE_COUNT;++i){v+=amp*noise(p);p*=rotate2d(0.45);p*=2.0;amp*=0.5;}return v;}' +
+    'void main(){' +
+    'vec2 uv=gl_FragCoord.xy/iResolution.xy;uv=2.0*uv-1.0;uv.x*=iResolution.x/iResolution.y;' +
+    'uv+=2.0*fbm(uv*1.8+0.8*iTime*1.2)-1.0;' +
+    'float dist=abs(uv.x);' +
+    'vec3 baseColor=hsv2rgb(vec3(0.0,0.9,0.8));' + // DYUSK red lightning
+    'vec3 col=baseColor*pow(mix(0.0,0.07,hash11(iTime*1.2))/dist,1.0)*0.7;' +
+    'gl_FragColor=vec4(col,1.0);}';
+
+  function compile(src, type){
+    var sh = gl.createShader(type);
+    gl.shaderSource(sh, src); gl.compileShader(sh);
+    if(!gl.getShaderParameter(sh, gl.COMPILE_STATUS)){ gl.deleteShader(sh); return null; }
+    return sh;
+  }
+  var vs = compile(vsSrc, gl.VERTEX_SHADER), fs = compile(fsSrc, gl.FRAGMENT_SHADER);
+  if(!vs || !fs) return;
+  var prog = gl.createProgram();
+  gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
+  if(!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+  gl.useProgram(prog);
+
+  var buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]), gl.STATIC_DRAW);
+  var aPos = gl.getAttribLocation(prog, 'aPosition');
+  gl.enableVertexAttribArray(aPos);
+  gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+  var uRes = gl.getUniformLocation(prog, 'iResolution');
+  var uTime = gl.getUniformLocation(prog, 'iTime');
+
+  function resize(){
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  var t0 = performance.now();
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function frame(){
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.uniform2f(uRes, canvas.width, canvas.height);
+    gl.uniform1f(uTime, (performance.now() - t0) / 1000);
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+    if(!reduce) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
 </body>
 </html>

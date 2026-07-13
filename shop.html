@@ -9,7 +9,7 @@
   try{
     var t = localStorage.getItem('dyusk-theme') || 'dark';
     if(t === 'dark' || t === 'red'){
-      document.documentElement.setAttribute('data-theme', t);
+      document.documentElement.setAttribute('data-theme', 'dark');
     }
   }catch(e){}
 })();
@@ -59,41 +59,45 @@
 <div id="theme-switcher" aria-label="Theme">
   <button class="theme-dot" data-set="dark" type="button" aria-label="Dark theme"></button>
   <button class="theme-dot" data-set="cream" type="button" aria-label="Cream theme"></button>
-  <button class="theme-dot" data-set="red" type="button" aria-label="Red theme"></button>
 </div>
 
-<section class="shop-head">
+<section class="shop-hero">
   <span class="section-tag">Compression System 01</span>
   <h1>Shop All</h1>
   <p>Two silhouettes, three colourways. Every piece graded for the pressure your body actually loads under motion — engineered, not decorative.</p>
 </section>
 
-<div class="shop-bar">
-  <div class="shop-filters">
-    <div class="filter-group" role="group" aria-label="Filter by fit">
-      <button class="filter-chip active" data-filter="fit" data-value="all">All</button>
-      <button class="filter-chip" data-filter="fit" data-value="full">Full Sleeve</button>
-      <button class="filter-chip" data-filter="fit" data-value="half">Half Sleeve</button>
+<div class="shop-layout">
+  <aside class="shop-rail" aria-label="Shop filters">
+    <div class="rail-group">
+      <span class="rail-title">Fit</span>
+      <div class="filter-group" role="group" aria-label="Filter by fit">
+        <button class="filter-chip active" data-filter="fit" data-value="all">All</button>
+        <button class="filter-chip" data-filter="fit" data-value="full">Full Sleeve</button>
+        <button class="filter-chip" data-filter="fit" data-value="half">Half Sleeve</button>
+      </div>
     </div>
-    <div class="filter-group" role="group" aria-label="Filter by colour">
-      <button class="filter-chip active" data-filter="color" data-value="all">All Colours</button>
-      <button class="filter-chip" data-filter="color" data-value="black">Onyx</button>
-      <button class="filter-chip" data-filter="color" data-value="steel">Steel</button>
-      <button class="filter-chip" data-filter="color" data-value="white">Arctic</button>
+    <div class="rail-group">
+      <span class="rail-title">Colour</span>
+      <div class="filter-group" role="group" aria-label="Filter by colour">
+        <button class="filter-chip active" data-filter="color" data-value="all">All Colours</button>
+        <button class="filter-chip" data-filter="color" data-value="black">Onyx</button>
+        <button class="filter-chip" data-filter="color" data-value="steel">Steel</button>
+        <button class="filter-chip" data-filter="color" data-value="white">Arctic</button>
+      </div>
     </div>
-  </div>
-  <div class="shop-sort">
-    <span class="shop-count" id="shopCount">6 styles</span>
-    <label for="shopSort">Sort</label>
-    <select id="shopSort">
-      <option value="featured">Featured</option>
-      <option value="price-asc">Price: Low to High</option>
-      <option value="price-desc">Price: High to Low</option>
-    </select>
-  </div>
-</div>
+    <div class="rail-group">
+      <label class="rail-title" for="shopSort">Sort</label>
+      <select id="shopSort">
+        <option value="featured">Featured</option>
+        <option value="price-asc">Price: Low to High</option>
+        <option value="price-desc">Price: High to Low</option>
+      </select>
+      <span class="shop-count" id="shopCount">6 styles</span>
+    </div>
+  </aside>
 
-<section class="shop-grid" id="shopGrid" style="padding:0;">
+  <section class="shop-grid" id="shopGrid">
   <article class="shop-tile" data-fit="full" data-color="black" data-sleeve="full" data-price="2499" data-order="1">
     <div class="st-media">
       <img class="st-front" src="assets/products/full-front-black.png" alt="DYUSK Full Sleeve compression shirt, Onyx, front view">
@@ -177,7 +181,8 @@
       <span class="st-rate"><span class="stars">★★★★★</span> 4.9</span>
     </a>
   </article>
-</section>
+  </section>
+</div>
 
 <section class="trust-band">
   <div class="tb-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><path d="M16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg><span>Free shipping over ₹2,999</span></div>

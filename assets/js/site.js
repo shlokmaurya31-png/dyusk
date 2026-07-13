@@ -22,10 +22,10 @@
   // the left border rail needs the content gutter pushed clear of it
   if(document.getElementById('sideBorder')) document.body.classList.add('has-rail');
 
-  // theme switcher — cream (default) / dark / red
+  // theme switcher — cream (default) / dark
   function applyTheme(t){
     if(t === 'dark' || t === 'red'){
-      document.documentElement.setAttribute('data-theme', t);
+      document.documentElement.setAttribute('data-theme', 'dark');
     } else {
       document.documentElement.removeAttribute('data-theme');
     }

@@ -9,7 +9,7 @@
   try{
     var t = localStorage.getItem('dyusk-theme') || 'dark';
     if(t === 'dark' || t === 'red'){
-      document.documentElement.setAttribute('data-theme', t);
+      document.documentElement.setAttribute('data-theme', 'dark');
     }
   }catch(e){}
 })();
@@ -59,53 +59,52 @@
 <div id="theme-switcher" aria-label="Theme">
   <button class="theme-dot" data-set="dark" type="button" aria-label="Dark theme"></button>
   <button class="theme-dot" data-set="cream" type="button" aria-label="Cream theme"></button>
-  <button class="theme-dot" data-set="red" type="button" aria-label="Red theme"></button>
 </div>
 
-<section class="page-head">
+<section class="contact-hero">
   <span class="section-tag">Contact Us</span>
   <h1>Talk to us.</h1>
   <p>Orders, sizing, wholesale, Ground Up nominations, or just an opinion on the fit &#8212; it all lands with a human.</p>
 </section>
-<section class="contact-grid">
-  <form class="contact-form" id="contactForm" novalidate="novalidate">
-    <div class="cf-field">
-      <label for="cfName">Name</label>
-      <input id="cfName" name="contact_name" type="text" required="required" autocomplete="name"/>
-    </div>
-    <div class="cf-field">
-      <label for="cfEmail">Email</label>
-      <input id="cfEmail" name="email_from" type="email" required="required" autocomplete="email"/>
-    </div>
-    <div class="cf-field">
-      <label for="cfPhone">Phone <span class="opt">(optional)</span></label>
-      <input id="cfPhone" name="phone" type="tel" autocomplete="tel"/>
-    </div>
-    <div class="cf-field">
-      <label for="cfMsg">Message</label>
-      <textarea id="cfMsg" name="description" rows="6" required="required"></textarea>
-    </div>
-    <button class="btn solid" type="submit">Send Message</button>
-    <p class="cf-hint" aria-live="polite"></p>
-  </form>
-  <div class="contact-side">
-    <div class="cs-block">
+<section class="contact-xl">
+  <div class="cx-meta">
+    <div class="cx-cell">
       <span class="kicker">Email</span>
       <a class="link-hover" href="mailto:shlok@dyusk.com">shlok@dyusk.com</a>
     </div>
-    <div class="cs-block">
+    <div class="cx-cell">
       <span class="kicker">Hours</span>
       <p>Mon&#8211;Sat, 10:00&#8211;19:00 IST<br/>We reply within 24 hours.</p>
     </div>
-    <div class="cs-block">
+    <div class="cx-cell">
       <span class="kicker">Studio</span>
       <p>Engineered in India<br/>Compression System 01</p>
     </div>
-    <div class="cs-block">
+    <div class="cx-cell">
       <span class="kicker">Follow</span>
       <p><a class="link-hover" href="#">Instagram</a><br/><a class="link-hover" href="#">Strava</a></p>
     </div>
   </div>
+  <form class="cx-form" id="contactForm" novalidate="novalidate">
+    <div class="cx-field">
+      <label for="cfName">01 / Name</label>
+      <input id="cfName" name="contact_name" type="text" required="required" autocomplete="name" placeholder="Your full name"/>
+    </div>
+    <div class="cx-field">
+      <label for="cfEmail">02 / Email</label>
+      <input id="cfEmail" name="email_from" type="email" required="required" autocomplete="email" placeholder="you@email.com"/>
+    </div>
+    <div class="cx-field">
+      <label for="cfPhone">03 / Phone <span class="opt">(optional)</span></label>
+      <input id="cfPhone" name="phone" type="tel" autocomplete="tel" placeholder="+91"/>
+    </div>
+    <div class="cx-field">
+      <label for="cfMsg">04 / Message</label>
+      <textarea id="cfMsg" name="description" rows="4" required="required" placeholder="Tell us what&#8217;s on your mind."></textarea>
+    </div>
+    <button class="btn solid" type="submit">Send Message</button>
+    <p class="cf-hint" aria-live="polite"></p>
+  </form>
 </section>
 
 <footer id="footer">
