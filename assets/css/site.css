@@ -1204,8 +1204,8 @@ html[data-theme="dark"] #sideBorder{ filter:invert(1); }
 }
 #threadLabels a{ pointer-events:auto; }
 
-/* the auto rickshaw that drives along the thread-track as you scroll,
-   spooling the thread out behind it, with the section written under it */
+/* the sewing needle that rides the thread-track as you scroll, spooling
+   the thread out behind it, with the section written under it */
 #threadAuto{
   position:absolute; top:0; left:0; z-index:3; display:none;
   pointer-events:none; opacity:0; transition:opacity .4s ease; will-change:transform;
@@ -1213,7 +1213,7 @@ html[data-theme="dark"] #sideBorder{ filter:invert(1); }
 @media (min-width:900px){ #threadAuto{ display:block; } }
 #threadAuto.on{ opacity:1; }
 #threadAuto img{
-  display:block; width:96px; height:auto; margin:0 auto;
+  display:block; width:80px; height:auto; margin:0 auto;
   filter:brightness(0); transition:filter .4s ease;
 }
 html[data-theme="dark"] #threadAuto img,

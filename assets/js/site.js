@@ -408,7 +408,7 @@
         if(reduced){ cur = 1; }
         else{ computeTarget(); cur += (targetP - cur) * 0.075; }
         maskPath.setAttribute('stroke-dashoffset', String(len * (1 - cur)));
-        // the auto sits at the drawing tip, so the thread spools out behind it
+        // the needle sits at the drawing tip, so the thread spools out behind it
         if(autoEl){
           var al = len * cur;
           var ap0 = maskPath.getPointAtLength(al);
