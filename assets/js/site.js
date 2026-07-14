@@ -490,6 +490,42 @@
     window.addEventListener('resize', onScroll, {passive:true});
   })();
 
+  // cinematic product showcase (shop.html) — each pinned panel reveals its
+  // colour image via clip-path as you scroll through it, copy cascades in
+  // behind data-progress thresholds. Below 900px / reduced-motion, CSS
+  // shows the colour image outright and .reveal handles the copy instead.
+  (function(){
+    var panels = Array.prototype.slice.call(document.querySelectorAll('[data-cine]'));
+    if(!panels.length) return;
+    if(!window.matchMedia('(min-width:900px)').matches) return;
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var ticking = false;
+    function render(){
+      ticking = false;
+      var vh = window.innerHeight;
+      panels.forEach(function(panel){
+        var rect = panel.getBoundingClientRect();
+        var span = rect.height - vh;
+        var p = span > 0 ? (-rect.top) / span : 0;
+        if(p < 0) p = 0; else if(p > 1) p = 1;
+        var reveal = panel.querySelector('.cine-reveal');
+        if(reveal) reveal.style.clipPath = 'inset(0 0 ' + (100 - p * 100).toFixed(1) + '% 0)';
+        panel.querySelectorAll('.cine-step').forEach(function(step){
+          var th = parseFloat(step.getAttribute('data-progress')) || 0;
+          step.classList.toggle('on', p > th);
+        });
+      });
+    }
+    function onScroll(){
+      if(ticking) return;
+      ticking = true;
+      requestAnimationFrame(render);
+    }
+    render();
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', onScroll, {passive:true});
+  })();
+
   // header hides on scroll down, returns on scroll up
   var header = document.getElementById('siteHeader');
   if(header){

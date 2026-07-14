@@ -893,6 +893,39 @@ html[data-theme="dark"] .f-col .f-mark{ filter:none; }
   .shop-layout .shop-grid{ grid-template-columns:repeat(3,1fr); gap:2.5rem 1.5rem; }
 }
 
+/* ---------- cinematic scroll showcase (shop.html) — grayscale-to-colour
+   reveal pinned to scroll progress, copy steps cascade in behind it ---------- */
+.cine{ margin-bottom:5rem; }
+.cine-panel{ margin-bottom:4rem; }
+.cine-pin{ display:grid; gap:2rem; padding:0 var(--gut); }
+.cine-media{
+  position:relative; aspect-ratio:3/4; max-width:480px; margin:0 auto;
+  overflow:hidden; background:var(--tile); order:1;
+}
+.cine-img{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; filter:grayscale(1) contrast(1.05) brightness(1.05); }
+.cine-reveal{ position:absolute; inset:0; clip-path:inset(0 0 100% 0); will-change:clip-path; }
+.cine-reveal .cine-img{ filter:none; }
+@media (max-width:899px){ .cine-reveal{ clip-path:inset(0 0 0 0) !important; } }
+.cine-copy{ order:2; display:flex; flex-direction:column; gap:1.6rem; }
+.cine-copy h2{ font-size:clamp(2rem,4.5vw,3.5rem); font-weight:900; letter-spacing:-.04em; line-height:1; margin:.5rem 0; text-wrap:balance; }
+.cine-price{ font-size:1.1rem; font-weight:700; letter-spacing:-.01em; }
+.cine-copy p{ max-width:48ch; letter-spacing:-.01em; padding-top:1.4rem; border-top:1px solid currentColor; }
+.cine-label{ display:block; font-size:.6875rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin-bottom:.7rem; }
+.cine-swatches{ display:flex; gap:.6rem; }
+.cine-swatches span{ width:28px; height:28px; border-radius:50%; box-shadow:inset 0 0 0 1px rgba(0,0,0,.25),0 0 0 1px currentColor; display:block; }
+.cine-step{ opacity:0; transform:translateY(28px); transition:opacity .8s ease,transform .8s cubic-bezier(.16,1,.3,1); }
+@media (max-width:899px){ .cine-step.in{ opacity:1; transform:none; } }
+@media (min-width:900px){
+  .cine{ margin-bottom:var(--gap-sec); }
+  .cine-panel{ position:relative; height:220vh; margin-bottom:0; }
+  .cine-pin{ position:sticky; top:0; height:100vh; grid-template-columns:1fr 1fr; align-items:center; gap:5rem; padding:0 var(--gut); }
+  .cine-media{ max-width:none; height:66vh; aspect-ratio:auto; margin:0; }
+  .cine-copy{ max-width:460px; }
+  .cine-panel.reversed .cine-media{ order:2; }
+  .cine-panel.reversed .cine-copy{ order:1; }
+  .cine-step.on{ opacity:1; transform:none; }
+}
+
 /* ---------- philanthropy — ground up hero + ledger (philanthropy.html) ---------- */
 .philo-hero{
   position:relative; min-height:100svh; margin-bottom:var(--gap-sec);
