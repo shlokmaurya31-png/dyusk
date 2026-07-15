@@ -1,22 +1,9 @@
 (function(){
-  // preloader — counts up, then wipes away
+  // preloader — shop shutter rolls open over a fixed 4s
   var pre = document.getElementById('preloader');
   if(pre){
-    var countEl = pre.querySelector('.pre-count');
-    var n = 0;
-    var tick = setInterval(function(){
-      n = Math.min(100, n + Math.ceil(Math.random() * 18));
-      if(countEl) countEl.textContent = ('00' + n).slice(-3);
-      if(n >= 100) clearInterval(tick);
-    }, 90);
-    window.addEventListener('load', function(){
-      setTimeout(function(){
-        if(countEl) countEl.textContent = '100';
-        pre.classList.add('done');
-      }, 900);
-    });
-    // failsafe — never trap the page behind the loader
-    setTimeout(function(){ pre.classList.add('done'); }, 4000);
+    var DURATION = 4000;
+    setTimeout(function(){ pre.classList.add('done'); }, DURATION);
   }
 
   // the left border rail needs the content gutter pushed clear of it
