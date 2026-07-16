@@ -49,8 +49,17 @@ function currentTheme(){
 
   function build(){
     if(globe) globe.destroy();
-    width = canvas.offsetWidth;
+    // measure the wrapper, not the canvas itself: cobe sets the canvas's
+    // width/height HTML attributes to its own draw-buffer resolution, and
+    // if any external stylesheet (e.g. a framework's canvas/img reset)
+    // wins over our width:100%/height:100% rule, offsetWidth on the
+    // canvas would read that buffer size instead of the intended display
+    // size — sizing from the parent and forcing inline styles avoids that.
+    width = canvas.parentElement.offsetWidth;
     if(width === 0) return;
+    canvas.style.display = "block";
+    canvas.style.width = width + "px";
+    canvas.style.height = width + "px";
 
     const pal = PALETTES[currentTheme()];
     try{
@@ -98,7 +107,7 @@ function currentTheme(){
   window.addEventListener("pointerup", onPointerUp, { passive: true });
   window.addEventListener("pointermove", onPointerMove, { passive: true });
 
-  if(canvas.offsetWidth > 0){
+  if(canvas.parentElement.offsetWidth > 0){
     build();
   } else {
     const ro = new ResizeObserver(function(entries){
@@ -107,7 +116,7 @@ function currentTheme(){
         build();
       }
     });
-    ro.observe(canvas);
+    ro.observe(canvas.parentElement);
   }
 
   // re-render in the new palette when the cream/dark theme is switched

@@ -856,23 +856,38 @@ html[data-theme="dark"] .f-col .f-mark{ filter:none; }
 .bt-date{ font-size:.75rem; opacity:.55; }
 .bt-card p{ max-width:46ch; letter-spacing:-.01em; font-size:.95rem; }
 
-/* ---------- heritage globe (artisans.html) ---------- */
+/* ---------- heritage globe + heritage regions (artisans.html) ---------- */
 .heritage-globe-wrap{
+  margin:0 var(--gut) 3.5rem; display:flex; justify-content:center;
+}
+.hg-globe{ position:relative; width:100%; max-width:480px; aspect-ratio:1/1; background:var(--tile); border-radius:50%; }
+.hg-globe canvas{ cursor:grab; touch-action:none; }
+
+.heritage-list{
   margin:0 var(--gut) var(--gap-sec);
-  display:grid; gap:2.5rem; align-items:center; justify-items:center;
+  display:grid; gap:2px; background:currentColor;
+  border:2px solid currentColor;
 }
-@media (min-width:800px){
-  .heritage-globe-wrap{ grid-template-columns:1fr 1fr; justify-items:stretch; }
+@media (min-width:768px){ .heritage-list{ grid-template-columns:repeat(2,1fr); } }
+.hl-card{
+  background:var(--bg); padding:0 0 2.4rem;
+  display:flex; flex-direction:column; gap:1.1rem;
 }
-.hg-globe{ position:relative; width:100%; max-width:480px; aspect-ratio:1/1; margin:0 auto; background:var(--tile); border-radius:50%; }
-.hg-globe canvas{ width:100%; height:100%; cursor:grab; touch-action:none; }
-.hg-legend{
-  list-style:none; display:flex; flex-direction:column; gap:1rem;
-  font-size:.95rem; letter-spacing:-.01em; max-width:36ch; margin:0 auto;
+.hl-card > *:not(.hl-photo){ padding-left:1.8rem; padding-right:1.8rem; }
+.hl-photo{
+  display:block; width:100%; aspect-ratio:16/9; object-fit:cover;
+  filter:grayscale(1) contrast(1.06); margin-bottom:.5rem;
 }
-@media (min-width:800px){ .hg-legend{ margin:0; } }
-.hg-legend li{ display:flex; align-items:center; gap:.7rem; }
-.hg-dot{ width:8px; height:8px; border-radius:50%; background:var(--accent); flex:none; }
+.hl-num{
+  font-size:.6875rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+  opacity:.55;
+}
+.hl-card h2{
+  font-size:clamp(1.3rem,2.6vw,1.9rem); font-weight:900;
+  letter-spacing:-.03em; line-height:1.05; text-wrap:balance;
+}
+.hl-card h2 .hl-craft{ color:var(--accent); }
+.hl-card p{ max-width:46ch; letter-spacing:-.01em; }
 
 /* ---------- about — hero + sticky split (about.html) ---------- */
 .about-hero{ padding:8.5rem var(--gut) 0; margin-bottom:3.5rem; }
