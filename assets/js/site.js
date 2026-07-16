@@ -1,4 +1,10 @@
 (function(){
+  // reload should always land at the top, not wherever the browser
+  // remembers scrolling to last time (bfcache + native scroll restoration)
+  if('scrollRestoration' in history){ history.scrollRestoration = 'manual'; }
+  window.scrollTo(0, 0);
+  window.addEventListener('pageshow', function(){ window.scrollTo(0, 0); });
+
   // preloader — shop shutter rolls open over a fixed 4s
   var pre = document.getElementById('preloader');
   if(pre){
