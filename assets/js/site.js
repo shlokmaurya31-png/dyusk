@@ -139,7 +139,6 @@
     var cur = 0, targetP = 0;
     var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var autoEl = document.getElementById('threadAuto');
-    var autoImg = autoEl ? autoEl.querySelector('img') : null;
     var autoLabel = autoEl ? autoEl.querySelector('.ta-label') : null;
     var WORDSTOPS = [];   // {p, name} — where each page-word sits along the track
 
@@ -401,15 +400,12 @@
         if(reduced){ cur = 1; }
         else{ computeTarget(); cur += (targetP - cur) * 0.075; }
         maskPath.setAttribute('stroke-dashoffset', String(len * (1 - cur)));
-        // the needle sits at the drawing tip, so the thread spools out behind it
+        // the label sits at the drawing tip, riding the thread as it spools out
         if(autoEl){
           var al = len * cur;
           var ap0 = maskPath.getPointAtLength(al);
-          var ap1 = maskPath.getPointAtLength(Math.min(len, al + 8));
           autoEl.style.transform = 'translate(' + ap0.x.toFixed(1) + 'px,' + ap0.y.toFixed(1) +
             'px) translate(-50%,-55%)';
-          // face the way it's driving; flip only the art so the label stays legible
-          if(autoImg) autoImg.style.transform = 'scaleX(' + ((ap1.x - ap0.x) < 0 ? -1 : 1) + ')';
           if(!autoEl.classList.contains('on')) autoEl.classList.add('on');
           if(autoLabel && WORDSTOPS.length){
             var nm = WORDSTOPS[0].name;

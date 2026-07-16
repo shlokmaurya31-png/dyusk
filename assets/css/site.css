@@ -1370,11 +1370,6 @@ html[data-theme="dark"] #sideBorder{ filter:invert(1); }
 }
 @media (min-width:900px){ #threadAuto{ display:block; } }
 #threadAuto.on{ opacity:1; }
-#threadAuto img{
-  display:block; width:80px; height:auto; margin:0 auto;
-  filter:brightness(0); transition:filter .4s ease;
-}
-html[data-theme="dark"] #threadAuto img{ filter:none; }
 #threadAuto .ta-label{
   display:block; margin-top:3px; text-align:center; white-space:nowrap;
   font-family:'Archivo','Noto Sans Devanagari',sans-serif; font-weight:900;
