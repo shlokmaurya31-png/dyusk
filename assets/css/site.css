@@ -858,31 +858,32 @@ html[data-theme="dark"] .f-col .f-mark{ filter:none; }
 
 /* ---------- heritage globe + clickable region pins (artisans.html) ----------
    Pure-CSS rotating sphere: no canvas/WebGL, so no sizing math that can
-   drift from its box — guaranteed to render at the size it's given. */
+   drift from its box — guaranteed to render at the size it's given.
+   Texture: assets/world-map.svg (Wikimedia "BlankMap-World6", public
+   domain, no attribution required — self-hosted, not hotlinked). */
 .heritage-globe-wrap{ margin:0 var(--gut) 3.5rem; display:flex; justify-content:center; }
 .hg-globe-css{
   width:100%; max-width:420px; aspect-ratio:1/1; border-radius:50%;
-  background:
-    radial-gradient(circle at 32% 28%, rgba(255,255,255,.4), transparent 45%),
-    repeating-linear-gradient(90deg, transparent 0 22px, rgba(0,0,0,.07) 22px 23px),
+  overflow:hidden;
+  background-color: var(--tile);
+  background-image:
+    radial-gradient(circle at 32% 28%, rgba(255,255,255,.45), transparent 45%),
+    url('../world-map.svg'),
     radial-gradient(circle at 50% 50%, var(--tile) 0%, var(--fg) 160%);
-  background-size: 100% 100%, 44px 100%, 100% 100%;
+  background-repeat: no-repeat, repeat-x, no-repeat;
+  background-size: 100% 100%, auto 100%, 100% 100%;
+  background-position: 0 0, 0 center, 0 0;
+  background-blend-mode: normal, multiply, normal;
   box-shadow:
     inset -22px -14px 46px rgba(0,0,0,.35),
     inset 14px 14px 34px rgba(255,255,255,.2),
     0 24px 60px rgba(0,0,0,.22);
-  animation: hgSpin 26s linear infinite;
+  animation: hgSpin 34s linear infinite;
 }
-html[data-theme="dark"] .hg-globe-css{
-  background:
-    radial-gradient(circle at 32% 28%, rgba(255,255,255,.15), transparent 45%),
-    repeating-linear-gradient(90deg, transparent 0 22px, rgba(255,255,255,.06) 22px 23px),
-    radial-gradient(circle at 50% 50%, var(--tile) 0%, #000 160%);
-  background-size: 100% 100%, 44px 100%, 100% 100%;
-}
+html[data-theme="dark"] .hg-globe-css{ filter: invert(1); }
 @keyframes hgSpin{
-  from{ background-position: 0 0, 0 0, 0 0; }
-  to{ background-position: 0 0, -440px 0, 0 0; }
+  from{ background-position: 0 0, 0 center, 0 0; }
+  to{ background-position: 0 0, -840px center, 0 0; }
 }
 
 .heritage-regions{

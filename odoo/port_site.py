@@ -99,7 +99,10 @@ def upload_images(o):
 def upload_binaries(o):
     """Upload non-image binary assets (e.g. .glb) via /web/content, not /web/image
     (which applies image-specific processing and would mangle a model file)."""
-    files = [("assets/3d/dyusk-showcase.glb", "model/gltf-binary")]
+    files = [
+        ("assets/3d/dyusk-showcase.glb", "model/gltf-binary"),
+        ("assets/world-map.svg", "image/svg+xml"),
+    ]
     Att = o.env["ir.attachment"]
     url_map = {}
     for rel, mimetype in files:
@@ -186,9 +189,16 @@ def build_js(url_map, variants=None):
     return table + prefix + js + "\n;\n" + cjs + "\n;\n" + hgjs
 
 
-def build_css():
+def build_css(url_map=None):
     with open(os.path.join(SITE, "assets", "css", "site.css"), encoding="utf-8") as fh:
-        return FONT_IMPORT + fh.read()
+        css = fh.read()
+    # the world-map texture is referenced as a relative path from site.css
+    # (../world-map.svg -> assets/world-map.svg), which only resolves on
+    # the static site; Odoo pages have no such path, so point it at the
+    # uploaded attachment instead.
+    if url_map and "assets/world-map.svg" in url_map:
+        css = css.replace("../world-map.svg", url_map["assets/world-map.svg"])
+    return FONT_IMPORT + css
 
 
 NAMED = {"&larr;": "&#8592;", "&rarr;": "&#8594;", "&hellip;": "&#8230;",
@@ -274,7 +284,7 @@ def main():
     url_map.update(upload_binaries(o))
     print("Mapping product variants...")
     variants = fetch_variants(o)
-    css = build_css()
+    css = build_css(url_map)
     js = build_js(url_map, variants)
     print("\nBuilding pages...")
     for page in PAGES:
