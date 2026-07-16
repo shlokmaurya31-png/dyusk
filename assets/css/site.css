@@ -312,8 +312,10 @@ html[data-theme="dark"] .theme-dot[data-set="dark"]{ box-shadow:inset 0 0 0 1.5p
   .g-b{ grid-column:11 / span 5; align-self:end; }
 }
 
-/* product tile — front photo, hover wipes in the back view */
-.pcard{ display:block; }
+/* product tile — front photo, hover wipes in the back view.
+   Positioned above #threadLabels (z-index:2) so the curved thread
+   text passes behind product photos instead of cutting across them. */
+.pcard{ display:block; position:relative; z-index:3; }
 .pcard .media{
   position:relative; overflow:hidden;
   background:var(--tile); aspect-ratio:9/12;
@@ -841,8 +843,13 @@ html[data-theme="dark"] .f-col .f-mark{ filter:none; }
 }
 @media (min-width:768px){ .artisan-grid{ grid-template-columns:repeat(2,1fr); } }
 .ag-card{
-  background:var(--bg); padding:3rem 1.8rem 2.4rem;
+  background:var(--bg); padding:0 0 2.4rem;
   display:flex; flex-direction:column; gap:1.1rem;
+}
+.ag-card > *:not(.ag-photo){ padding-left:1.8rem; padding-right:1.8rem; }
+.ag-photo{
+  display:block; width:100%; aspect-ratio:16/9; object-fit:cover;
+  filter:grayscale(1) contrast(1.06); margin-bottom:.5rem;
 }
 .ag-num{
   font-size:.6875rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
@@ -855,6 +862,27 @@ html[data-theme="dark"] .f-col .f-mark{ filter:none; }
   letter-spacing:-.04em; line-height:1; text-wrap:balance;
 }
 .ag-card p{ max-width:46ch; letter-spacing:-.01em; }
+
+/* ---------- blog grid (blog.html) ---------- */
+.blog-grid{
+  margin:0 var(--gut) var(--gap-sec);
+  display:grid; gap:2.5rem 1.8rem; grid-template-columns:1fr;
+}
+@media (min-width:700px){ .blog-grid{ grid-template-columns:repeat(2,1fr); } }
+@media (min-width:1100px){ .blog-grid{ grid-template-columns:repeat(3,1fr); } }
+.bt-card{ display:flex; flex-direction:column; gap:.6rem; }
+.bt-media{ background:var(--tile); aspect-ratio:4/3; overflow:hidden; margin-bottom:.4rem; }
+.bt-media img{ display:block; width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(1.06); }
+.bt-tag{
+  font-size:.6875rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em;
+  color:var(--accent);
+}
+.bt-card h2{
+  font-size:clamp(1.2rem,2.4vw,1.5rem); font-weight:900;
+  letter-spacing:-.03em; line-height:1.05; text-wrap:balance;
+}
+.bt-date{ font-size:.75rem; opacity:.55; }
+.bt-card p{ max-width:46ch; letter-spacing:-.01em; font-size:.95rem; }
 
 /* ---------- about — hero + sticky split (about.html) ---------- */
 .about-hero{ padding:8.5rem var(--gut) 0; margin-bottom:3.5rem; }
@@ -1341,7 +1369,7 @@ html[data-theme="dark"] #sideBorder{ filter:invert(1); }
 }
 #threadLayer svg{ display:block; width:100%; height:100%; overflow:visible; }
 #threadLayer .thread-shadow{ stroke:var(--thread-sh); }
-#threadLayer .thread-core{ stroke:var(--thread); transition:stroke .4s ease; }
+#threadLayer .thread-core{ stroke:var(--thread); opacity:.6; transition:stroke .4s ease; }
 /* dashed "stitch" strand hidden — the thread now reads as one clean line */
 #threadLayer .thread-ply{ display:none; }
 
@@ -1361,20 +1389,6 @@ html[data-theme="dark"] #sideBorder{ filter:invert(1); }
   .scatter .sc-link{ display:none; }
 }
 #threadLabels a{ pointer-events:auto; }
-
-/* the sewing needle that rides the thread-track as you scroll, spooling
-   the thread out behind it, with the section written under it */
-#threadAuto{
-  position:absolute; top:0; left:0; z-index:3; display:none;
-  pointer-events:none; opacity:0; transition:opacity .4s ease; will-change:transform;
-}
-@media (min-width:900px){ #threadAuto{ display:block; } }
-#threadAuto.on{ opacity:1; }
-#threadAuto .ta-label{
-  display:block; margin-top:3px; text-align:center; white-space:nowrap;
-  font-family:'Archivo','Noto Sans Devanagari',sans-serif; font-weight:900;
-  text-transform:uppercase; letter-spacing:.06em; font-size:.72rem; color:var(--accent);
-}
 #threadLabels .tlabel{
   font-family:var(--font); font-weight:900; letter-spacing:-.02em;
   fill:var(--fg); transition:fill .25s ease;

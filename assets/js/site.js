@@ -138,9 +138,6 @@
     var sampleY = null, sampleMaxY = 0;
     var cur = 0, targetP = 0;
     var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var autoEl = document.getElementById('threadAuto');
-    var autoLabel = autoEl ? autoEl.querySelector('.ta-label') : null;
-    var WORDSTOPS = [];   // {p, name} — where each page-word sits along the track
 
     function rect(sel){
       var el = document.querySelector(sel);
@@ -358,7 +355,6 @@
         var SIZES = [84, 40, 58, 72, 46];
         var fscale = Math.max(0.7, W/1600);
         var capSize = Math.max(12, Math.round(19 * fscale));
-        WORDSTOPS = [];
         for(var q = 0; q < hText.length && q < A.length; q++){
           var best = 0, bd = Infinity;
           for(var k2 = 0; k2 <= N; k2++){
@@ -366,7 +362,6 @@
             var dd = dx*dx + dy2*dy2;
             if(dd < bd){ bd = dd; best = k2; }
           }
-          WORDSTOPS.push({ p: best / N, name: (hText[q].textContent || '').trim() });
           var off = (best / N * 100).toFixed(2) + '%';
           var htp = hText[q].querySelector('textPath');
           if(htp) htp.setAttribute('startOffset', off);
@@ -398,21 +393,8 @@
     (function frame(){
       if(built && len){
         if(reduced){ cur = 1; }
-        else{ computeTarget(); cur += (targetP - cur) * 0.075; }
+        else{ computeTarget(); cur += (targetP - cur) * 0.05; }
         maskPath.setAttribute('stroke-dashoffset', String(len * (1 - cur)));
-        // the label sits at the drawing tip, riding the thread as it spools out
-        if(autoEl){
-          var al = len * cur;
-          var ap0 = maskPath.getPointAtLength(al);
-          autoEl.style.transform = 'translate(' + ap0.x.toFixed(1) + 'px,' + ap0.y.toFixed(1) +
-            'px) translate(-50%,-55%)';
-          if(!autoEl.classList.contains('on')) autoEl.classList.add('on');
-          if(autoLabel && WORDSTOPS.length){
-            var nm = WORDSTOPS[0].name;
-            for(var ws = 0; ws < WORDSTOPS.length; ws++){ if(WORDSTOPS[ws].p <= cur + 0.015) nm = WORDSTOPS[ws].name; }
-            if(autoLabel.textContent !== nm) autoLabel.textContent = nm;
-          }
-        }
       }
       requestAnimationFrame(frame);
     })();

@@ -43,6 +43,7 @@ PAGES = [
     {"src": "artisans.html", "url": "/artisans", "key": "dyusk.artisans", "name": "DYUSK Artisans"},
     {"src": "philanthropy.html", "url": "/philanthropy",
      "key": "dyusk.philanthropy", "name": "DYUSK Philanthropy"},
+    {"src": "blog.html", "url": "/blog", "key": "dyusk.blog", "name": "DYUSK Blog"},
     {"src": "contact.html", "url": "/contact-us", "key": "dyusk.contact", "name": "DYUSK Contact"},
 ]
 
@@ -209,6 +210,7 @@ def clean_body(html, url_map):
     body = body.replace("about.html", "/about-us")
     body = body.replace("artisans.html", "/artisans")
     body = body.replace("philanthropy.html", "/philanthropy")
+    body = body.replace("blog.html", "/blog")
     body = body.replace("contact.html", "/contact-us")
 
     # named entities -> numeric (before generic & escaping)
