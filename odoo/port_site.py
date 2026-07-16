@@ -226,8 +226,22 @@ def clean_body(html, url_map):
     return body.strip()
 
 
-def make_arch(page, css, js, body):
+# page-specific <script type="module" src="assets/js/...">  tags that clean_body()
+# strips from the body (it only knows how to inline site.js/commerce.js as one
+# classic script) — inlined here separately, still as type="module", so the
+# import()/ESM syntax inside them keeps working on the Odoo-hosted page.
+PAGE_EXTRA_JS = {
+    "artisans.html": ["assets/js/heritage-globe.js"],
+}
+
+
+def make_arch(page, css, js, body, extra_js_files=None):
     head_extra = ""
+    extra_scripts = ""
+    for rel in (extra_js_files or []):
+        with open(os.path.join(SITE, *rel.split("/")), encoding="utf-8") as fh:
+            extra_scripts += (
+                f'      <script type="module"><![CDATA[\n{fh.read()}\n]]></script>\n')
     return (
         f'<t name="{page["name"]}" t-name="{page["key"]}">\n'
         f'  <t t-call="website.layout">\n'
@@ -236,6 +250,7 @@ def make_arch(page, css, js, body):
         f'      <style type="text/css"><![CDATA[\n{css}\n]]></style>\n'
         f'{body}\n'
         f'      <script type="text/javascript"><![CDATA[\n{js}\n]]></script>\n'
+        f'{extra_scripts}'
         f'    </div>\n'
         f'  </t>\n'
         f'</t>'
@@ -276,7 +291,7 @@ def main():
         with open(os.path.join(SITE, page["src"]), encoding="utf-8") as fh:
             html = fh.read()
         body = clean_body(html, url_map)
-        arch = make_arch(page, css, js, body)
+        arch = make_arch(page, css, js, body, PAGE_EXTRA_JS.get(page["src"]))
         upsert_page(o, page, arch)
     print("\nDone. Preview:")
     print("  https://dyusk.odoo.com/dyusk")
