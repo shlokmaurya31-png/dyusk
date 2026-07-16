@@ -857,34 +857,40 @@ html[data-theme="dark"] .f-col .f-mark{ filter:none; }
 .bt-card p{ max-width:46ch; letter-spacing:-.01em; font-size:.95rem; }
 
 /* ---------- heritage globe + clickable region pins (artisans.html) ----------
-   Pure-CSS rotating sphere: no canvas/WebGL, so no sizing math that can
-   drift from its box — guaranteed to render at the size it's given.
-   Texture: assets/world-map.svg (Wikimedia "BlankMap-World6", public
-   domain, no attribution required — self-hosted, not hotlinked). */
-.heritage-globe-wrap{ margin:0 var(--gut) 3.5rem; display:flex; justify-content:center; }
-.hg-globe-css{
-  width:100%; max-width:420px; aspect-ratio:1/1; border-radius:50%;
-  overflow:hidden;
-  background-color: var(--tile);
-  background-image:
-    radial-gradient(circle at 32% 28%, rgba(255,255,255,.45), transparent 45%),
-    url('../world-map.svg'),
-    radial-gradient(circle at 50% 50%, var(--tile) 0%, var(--fg) 160%);
-  background-repeat: no-repeat, repeat-x, no-repeat;
-  background-size: 100% 100%, auto 100%, 100% 100%;
-  background-position: 0 0, 0 center, 0 0;
-  background-blend-mode: normal, multiply, normal;
-  box-shadow:
-    inset -22px -14px 46px rgba(0,0,0,.35),
-    inset 14px 14px 34px rgba(255,255,255,.2),
-    0 24px 60px rgba(0,0,0,.22);
-  animation: hgSpin 34s linear infinite;
+   Real interactive WebGL globe (cobe v2) — dot-matrix continents, drag to
+   rotate, gold-on-black to match the reference. Each marker gets a real
+   HTML label positioned via cobe's built-in CSS-anchor system (see
+   heritage-globe.js) so it can be clicked to jump to that craft's entry
+   in the region list below. Anchor positioning is a newer browser API
+   (broad Chromium support; still landing elsewhere) — labels degrade to
+   stacking near the globe's center on browsers without it, rather than
+   breaking, since it's just a CSS position fallback. */
+.heritage-globe-wrap{
+  margin:0 var(--gut) 1rem; display:flex; flex-direction:column; align-items:center;
 }
-html[data-theme="dark"] .hg-globe-css{ filter: invert(1); }
-@keyframes hgSpin{
-  from{ background-position: 0 0, 0 center, 0 0; }
-  to{ background-position: 0 0, -840px center, 0 0; }
+.hg-globe{
+  position:relative; width:100%; max-width:460px; aspect-ratio:1/1;
+  border-radius:50%; background:#0a0806; overflow:visible;
+  box-shadow: 0 24px 60px rgba(0,0,0,.3);
 }
+.hg-globe canvas{ width:100%; height:100%; cursor:grab; touch-action:none; display:block; }
+.hg-drag-caption{
+  margin-top:1.2rem; font-size:.7rem; font-weight:700; text-transform:uppercase;
+  letter-spacing:.14em; color:var(--muted); text-align:center;
+}
+.hg-marker-label{
+  position:absolute; transform:translate(-50%,-50%);
+  display:flex; align-items:center; gap:.35rem;
+  background:none; border:none; padding:.3rem; cursor:pointer;
+  color:#f1e9dc; font-family:var(--font); font-size:.72rem; font-weight:700;
+  white-space:nowrap; transition:opacity .3s ease;
+}
+.hg-marker-icon{ font-size:.85rem; line-height:1; }
+.hg-marker-name{
+  max-width:0; overflow:hidden; opacity:0; transition:max-width .25s ease,opacity .2s ease;
+}
+.hg-marker-label:hover .hg-marker-name,
+.hg-marker-label:focus-visible .hg-marker-name{ max-width:14rem; opacity:1; }
 
 .heritage-regions{
   margin:0 var(--gut) var(--gap-sec);
