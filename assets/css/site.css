@@ -864,11 +864,8 @@ html[data-theme="dark"] .f-col .f-mark{ filter:none; }
 @media (min-width:800px){
   .heritage-globe-wrap{ grid-template-columns:1fr 1fr; justify-items:stretch; }
 }
-.hg-globe{ position:relative; width:100%; max-width:480px; aspect-ratio:1/1; margin:0 auto; }
-.hg-globe canvas{
-  width:100%; height:100%; cursor:grab; opacity:0;
-  transition:opacity 1.2s ease; touch-action:none;
-}
+.hg-globe{ position:relative; width:100%; max-width:480px; aspect-ratio:1/1; margin:0 auto; background:var(--tile); border-radius:50%; }
+.hg-globe canvas{ width:100%; height:100%; cursor:grab; touch-action:none; }
 .hg-legend{
   list-style:none; display:flex; flex-direction:column; gap:1rem;
   font-size:.95rem; letter-spacing:-.01em; max-width:36ch; margin:0 auto;

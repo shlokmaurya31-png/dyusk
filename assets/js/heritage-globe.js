@@ -1,9 +1,10 @@
 // Rotating globe on the Artisans page, marking the Indian craft-heritage
 // regions DYUSK's pattern and print work draws inspiration from.
 // cobe (https://github.com/shuding/cobe) is a plain canvas library — no
-// React/build step needed, so it's imported straight from a CDN here to
-// match this site's plain HTML/CSS/JS stack.
-import createGlobe from "https://esm.sh/cobe@0.6.3";
+// React/build step needed, so it's loaded straight from a CDN here to
+// match this site's plain HTML/CSS/JS stack. Loaded via dynamic import()
+// inside a try/catch so a blocked/failed CDN fetch logs a clear console
+// error instead of leaving a silently blank canvas.
 
 const LOCATIONS = [
   { name: "Jaipur, Rajasthan", location: [26.9124, 75.7873] },
@@ -26,12 +27,20 @@ function currentTheme(){
   return document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
 }
 
-(function initHeritageGlobe(){
+(async function initHeritageGlobe(){
   const canvas = document.getElementById("heritageGlobe");
   if(!canvas) return;
 
+  let createGlobe;
+  try{
+    const mod = await import("https://esm.sh/cobe@0.6.3");
+    createGlobe = mod.default;
+  }catch(err){
+    console.error("[heritage-globe] failed to load cobe from CDN:", err);
+    return;
+  }
+
   let globe = null;
-  let animationId = null;
   let phi = 0;
   let width = 0;
   const pointerInteracting = { current: null };
@@ -39,32 +48,34 @@ function currentTheme(){
   let paused = false;
 
   function build(){
-    if(animationId) cancelAnimationFrame(animationId);
     if(globe) globe.destroy();
     width = canvas.offsetWidth;
     if(width === 0) return;
 
     const pal = PALETTES[currentTheme()];
-    globe = createGlobe(canvas, {
-      devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
-      width, height: width,
-      phi: 0, theta: 0.25, dark: pal.dark, diffuse: 1.3,
-      mapSamples: 16000, mapBrightness: 6,
-      baseColor: pal.baseColor,
-      markerColor: pal.markerColor,
-      glowColor: pal.glowColor,
-      markerElevation: 0,
-      opacity: 1,
-      markers: LOCATIONS.map(function(l){ return { location: l.location, size: 0.06 }; }),
-    });
-
-    function animate(){
-      if(!paused) phi += 0.0025;
-      globe.update({ phi: phi + pointerOffset.current, theta: 0.25 });
-      animationId = requestAnimationFrame(animate);
+    try{
+      globe = createGlobe(canvas, {
+        devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
+        width, height: width,
+        phi: 0, theta: 0.25, dark: pal.dark, diffuse: 1.3,
+        mapSamples: 16000, mapBrightness: 6,
+        baseColor: pal.baseColor,
+        markerColor: pal.markerColor,
+        glowColor: pal.glowColor,
+        markerElevation: 0,
+        opacity: 1,
+        markers: LOCATIONS.map(function(l){ return { location: l.location, size: 0.06 }; }),
+        onRender: function(state){
+          if(!paused) phi += 0.0025;
+          state.phi = phi + pointerOffset.current;
+          state.theta = 0.25;
+          state.width = width;
+          state.height = width;
+        },
+      });
+    }catch(err){
+      console.error("[heritage-globe] createGlobe failed:", err);
     }
-    animate();
-    setTimeout(function(){ canvas.style.opacity = "1"; });
   }
 
   function onPointerDown(e){
