@@ -62,11 +62,19 @@ function currentTheme(){
     canvas.style.width = width + "px";
     canvas.style.height = width + "px";
 
+    // cobe's width/height options are DEVICE pixels, not CSS pixels —
+    // its own docs example styles the canvas at 500x500 CSS px but
+    // passes width:1000,height:1000 alongside devicePixelRatio:2. We
+    // were passing the plain CSS width, which rendered the sphere at a
+    // fraction of the canvas instead of filling it.
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const bufferSize = width * dpr;
+
     const pal = PALETTES[currentTheme()];
     try{
       globe = createGlobe(canvas, {
-        devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
-        width, height: width,
+        devicePixelRatio: dpr,
+        width: bufferSize, height: bufferSize,
         phi: 0, theta: 0.25, dark: pal.dark, diffuse: 1.3,
         mapSamples: 20000, mapBrightness: 6,
         baseColor: pal.baseColor,
@@ -79,8 +87,8 @@ function currentTheme(){
           if(!paused) phi += 0.0025;
           state.phi = phi + pointerOffset.current;
           state.theta = 0.25;
-          state.width = width;
-          state.height = width;
+          state.width = bufferSize;
+          state.height = bufferSize;
         },
       });
     }catch(err){
