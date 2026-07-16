@@ -163,6 +163,11 @@ def build_js(url_map, variants=None):
         cjs = fh.read()
     cjs = cjs.replace('href="shop.html"', 'href="/shop-all"')
 
+    # artisans-page heritage pins — harmless no-op on every other page
+    # (querySelectorAll just finds nothing), so it's fine bundled globally
+    with open(os.path.join(SITE, "assets", "js", "heritage-globe.js"), encoding="utf-8") as fh:
+        hgjs = fh.read()
+
     # image lookup table (keys like full-front-black)
     entries = []
     for rel, url in url_map.items():
@@ -178,7 +183,7 @@ def build_js(url_map, variants=None):
     prefix = ("try{var _t=localStorage.getItem('dyusk-theme');"
               "if(_t==='dark'||_t==='red'){"
               "document.documentElement.setAttribute('data-theme',_t);}}catch(e){}\n")
-    return table + prefix + js + "\n;\n" + cjs
+    return table + prefix + js + "\n;\n" + cjs + "\n;\n" + hgjs
 
 
 def build_css():
@@ -226,22 +231,8 @@ def clean_body(html, url_map):
     return body.strip()
 
 
-# page-specific <script type="module" src="assets/js/...">  tags that clean_body()
-# strips from the body (it only knows how to inline site.js/commerce.js as one
-# classic script) — inlined here separately, still as type="module", so the
-# import()/ESM syntax inside them keeps working on the Odoo-hosted page.
-PAGE_EXTRA_JS = {
-    "artisans.html": ["assets/js/heritage-globe.js"],
-}
-
-
-def make_arch(page, css, js, body, extra_js_files=None):
+def make_arch(page, css, js, body):
     head_extra = ""
-    extra_scripts = ""
-    for rel in (extra_js_files or []):
-        with open(os.path.join(SITE, *rel.split("/")), encoding="utf-8") as fh:
-            extra_scripts += (
-                f'      <script type="module"><![CDATA[\n{fh.read()}\n]]></script>\n')
     return (
         f'<t name="{page["name"]}" t-name="{page["key"]}">\n'
         f'  <t t-call="website.layout">\n'
@@ -250,7 +241,6 @@ def make_arch(page, css, js, body, extra_js_files=None):
         f'      <style type="text/css"><![CDATA[\n{css}\n]]></style>\n'
         f'{body}\n'
         f'      <script type="text/javascript"><![CDATA[\n{js}\n]]></script>\n'
-        f'{extra_scripts}'
         f'    </div>\n'
         f'  </t>\n'
         f'</t>'
@@ -291,7 +281,7 @@ def main():
         with open(os.path.join(SITE, page["src"]), encoding="utf-8") as fh:
             html = fh.read()
         body = clean_body(html, url_map)
-        arch = make_arch(page, css, js, body, PAGE_EXTRA_JS.get(page["src"]))
+        arch = make_arch(page, css, js, body)
         upsert_page(o, page, arch)
     print("\nDone. Preview:")
     print("  https://dyusk.odoo.com/dyusk")

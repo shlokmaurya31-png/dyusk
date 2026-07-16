@@ -66,84 +66,68 @@
 <section class="page-head">
   <span class="section-tag">The Hands</span>
   <h1>Artisans</h1>
-  <p>Every DYUSK pattern draws on centuries of Indian craft. These are the heritage regions our ideas come from.</p>
+  <p>DYUSK's patterns draw on centuries of craft from around the world. These are the traditions our ideas come from.</p>
 </section>
 <section class="heritage-globe-wrap">
-  <div class="hg-globe">
-    <canvas id="heritageGlobe" aria-label="Rotating globe marking the Indian craft heritage regions that inspire DYUSK"></canvas>
+  <div class="hg-globe-css" aria-hidden="true"></div>
+</section>
+
+<section class="heritage-regions">
+  <div class="hg-region">
+    <h2 class="hg-region-title">Asia</h2>
+    <ul class="hg-pins">
+      <li class="hg-pin"><button class="hg-pin-btn" type="button" aria-expanded="false"><span class="hg-pin-dot"></span>Madhubani Painting</button><div class="hg-pin-panel" hidden="hidden"><p>Intricate geometric and nature-inspired paintings using vibrant natural colors.</p></div></li>
+      <li class="hg-pin"><button class="hg-pin-btn" type="button" aria-expanded="false"><span class="hg-pin-dot"></span>Warli Painting</button><div class="hg-pin-panel" hidden="hidden"><p>Minimalist white figures depicting everyday village life.</p></div></li>
+      <li class="hg-pin"><button class="hg-pin-btn" type="button" aria-expanded="false"><span class="hg-pin-dot"></span>Pattachitra</button><div class="hg-pin-panel" hidden="hidden"><p>Detailed mythological narratives with decorative borders.</p></div></li>
+      <li class="hg-pin"><button class="hg-pin-btn" type="button" aria-expanded="false"><span class="hg-pin-dot"></span>Ukiyo-e</button><div class="hg-pin-panel" hidden="hidden"><p>Famous for landscapes, actors, and scenes of daily life.</p></div></li>
+      <li class="hg-pin"><button class="hg-pin-btn" type="button" aria-expanded="false"><span class="hg-pin-dot"></span>Sumi-e</button><div class="hg-pin-panel" hidden="hidden"><p>Elegant monochrome paintings emphasizing simplicity.</p></div></li>
+      <li class="hg-pin"><button class="hg-pin-btn" type="button" aria-expanded="false"><span class="hg-pin-dot"></span>Chinese Ink Wash Painting</button><div class="hg-pin-panel" hidden="hidden"><p>Expressive brushwork capturing landscapes and philosophy.</p></div></li>
+      <li class="hg-pin"><button class="hg-pin-btn" type="button" aria-expanded="false"><span class="hg-pin-dot"></span>Iznik Ceramics</button><div class="hg-pin-panel" hidden="hidden"><p>Blue, turquoise, and red floral tile designs.</p></div></li>
+    </ul>
   </div>
-  <ul class="hg-pins" id="hgPins">
-    <li class="hg-pin">
-      <button class="hg-pin-btn" type="button" aria-expanded="false">
-        <span class="hg-pin-dot"></span>Jaipur, Rajasthan <span class="hg-pin-craft">Block Print</span>
-      </button>
-      <div class="hg-pin-panel" hidden="hidden">
-        <p class="hg-pin-short">Three centuries of hand-carved block printing.</p>
-        <p class="hg-pin-full" hidden="hidden">Jaipur's hand-carved wooden blocks have stamped cloth for over three hundred years. The same geometric discipline &#8212; repeat, register, hold the line &#8212; shows up in how we grade a compression panel.</p>
-        <button class="hg-readmore" type="button">Read more</button>
-      </div>
-    </li>
-    <li class="hg-pin">
-      <button class="hg-pin-btn" type="button" aria-expanded="false">
-        <span class="hg-pin-dot"></span>Bagru, Rajasthan <span class="hg-pin-craft">Hand Block Print</span>
-      </button>
-      <div class="hg-pin-panel" hidden="hidden">
-        <p class="hg-pin-short">A village built entirely around block printing.</p>
-        <p class="hg-pin-full" hidden="hidden">A village built entirely around block printing, still working in natural dyes and hand-carved teak blocks. We borrow its patience &#8212; nothing ships until the repeat is perfect.</p>
-        <button class="hg-readmore" type="button">Read more</button>
-      </div>
-    </li>
-    <li class="hg-pin">
-      <button class="hg-pin-btn" type="button" aria-expanded="false">
-        <span class="hg-pin-dot"></span>Kutch, Gujarat <span class="hg-pin-craft">Ajrakh &amp; Embroidery</span>
-      </button>
-      <div class="hg-pin-panel" hidden="hidden">
-        <p class="hg-pin-short">Ajrakh's sixteen-step resist-dye tradition.</p>
-        <p class="hg-pin-full" hidden="hidden">Ajrakh's resist-dye process runs up to sixteen steps before a single print is finished. It's the same standard we hold our own six-zone pressure map to &#8212; no step skipped.</p>
-        <button class="hg-readmore" type="button">Read more</button>
-      </div>
-    </li>
-    <li class="hg-pin">
-      <button class="hg-pin-btn" type="button" aria-expanded="false">
-        <span class="hg-pin-dot"></span>Varanasi, Uttar Pradesh <span class="hg-pin-craft">Banarasi Weave</span>
-      </button>
-      <div class="hg-pin-panel" hidden="hidden">
-        <p class="hg-pin-short">Banarasi brocade, woven over weeks by hand.</p>
-        <p class="hg-pin-full" hidden="hidden">Banarasi weavers can spend weeks on a single length of brocade. That obsession with a seam nobody else will notice is exactly the standard our flatlock operators work to.</p>
-        <button class="hg-readmore" type="button">Read more</button>
-      </div>
-    </li>
-    <li class="hg-pin">
-      <button class="hg-pin-btn" type="button" aria-expanded="false">
-        <span class="hg-pin-dot"></span>Kanchipuram, Tamil Nadu <span class="hg-pin-craft">Silk Weaving</span>
-      </button>
-      <div class="hg-pin-panel" hidden="hidden">
-        <p class="hg-pin-short">Silk woven with an almost invisible seam.</p>
-        <p class="hg-pin-full" hidden="hidden">Kanchipuram silk is woven with body, border and pallu dyed separately, then joined so precisely the seam nearly disappears &#8212; the same invisible-seam standard we hold flatlock work to.</p>
-        <button class="hg-readmore" type="button">Read more</button>
-      </div>
-    </li>
-    <li class="hg-pin">
-      <button class="hg-pin-btn" type="button" aria-expanded="false">
-        <span class="hg-pin-dot"></span>Chanderi, Madhya Pradesh <span class="hg-pin-craft">Handloom</span>
-      </button>
-      <div class="hg-pin-panel" hidden="hidden">
-        <p class="hg-pin-short">Handloom fine enough to feel translucent.</p>
-        <p class="hg-pin-full" hidden="hidden">Chanderi handloom is famous for a fabric light enough to feel translucent without losing structure. Compression asks the opposite question &#8212; how much can a panel hold &#8212; but the same precision applies.</p>
-        <button class="hg-readmore" type="button">Read more</button>
-      </div>
-    </li>
-    <li class="hg-pin">
-      <button class="hg-pin-btn" type="button" aria-expanded="false">
-        <span class="hg-pin-dot"></span>Srinagar, Kashmir <span class="hg-pin-craft">Pashmina &amp; Embroidery</span>
-      </button>
-      <div class="hg-pin-panel" hidden="hidden">
-        <p class="hg-pin-short">Kashmiri embroidery, worked entirely by hand.</p>
-        <p class="hg-pin-full" hidden="hidden">Kashmiri embroidery is worked entirely by hand, needle by needle, over months. It's a reminder that engineered doesn't have to mean machine-only &#8212; our own finishing is still done by hand too.</p>
-        <button class="hg-readmore" type="button">Read more</button>
-      </div>
-    </li>
-  </ul>
+  <div class="hg-region">
+    <h2 class="hg-region-title">Africa</h2>
+    <ul class="hg-pins">
+      <li class="hg-pin"><button class="hg-pin-btn" type="button" aria-expanded="false"><span class="hg-pin-dot"></span>Ndebele House Painting</button><div class="hg-pin-panel" hidden="hidden"><p>Bold geometric murals painted on homes.</p></div></li>
+      <li class="hg-pin"><button class="hg-pin-btn" type="button" aria-expanded="false"><span class="hg-pin-dot"></span>Kente Weaving</button><div class="hg-pin-panel" hidden="hidden"><p>Colorful woven cloth with symbolic patterns.</p></div></li>
+      <li class="hg-pin"><button class="hg-pin-btn" type="button" aria-expanded="false"><span class="hg-pin-dot"></span>Yoruba Beadwork</button><div class="hg-pin-panel" hidden="hidden"><p>Regal beadwork used in ceremonial objects.</p></div></li>
+      <li class="hg-pin"><button class="hg-pin-btn" type="button" aria-expanded="false"><span class="hg-pin-dot"></span>Tuareg Silverwork</button><div class="hg-pin-panel" hidden="hidden"><p>Intricate jewelry and symbolic ornaments.</p></div></li>
+    </ul>
+  </div>
+  <div class="hg-region">
+    <h2 class="hg-region-title">Europe</h2>
+    <ul class="hg-pins">
+      <li class="hg-pin"><button class="hg-pin-btn" type="button" aria-expanded="false"><span class="hg-pin-dot"></span>Rosemaling</button><div class="hg-pin-panel" hidden="hidden"><p>Flowing floral motifs painted on wood.</p></div></li>
+      <li class="hg-pin"><button class="hg-pin-btn" type="button" aria-expanded="false"><span class="hg-pin-dot"></span>Khokhloma</button><div class="hg-pin-panel" hidden="hidden"><p>Gold, red, and black floral patterns.</p></div></li>
+      <li class="hg-pin"><button class="hg-pin-btn" type="button" aria-expanded="false"><span class="hg-pin-dot"></span>Celtic Knotwork</button><div class="hg-pin-panel" hidden="hidden"><p>Endless interwoven patterns representing eternity.</p></div></li>
+      <li class="hg-pin"><button class="hg-pin-btn" type="button" aria-expanded="false"><span class="hg-pin-dot"></span>Byzantine Mosaics</button><div class="hg-pin-panel" hidden="hidden"><p>Gold-glass mosaics found in churches.</p></div></li>
+    </ul>
+  </div>
+  <div class="hg-region">
+    <h2 class="hg-region-title">Americas</h2>
+    <ul class="hg-pins">
+      <li class="hg-pin"><button class="hg-pin-btn" type="button" aria-expanded="false"><span class="hg-pin-dot"></span>Alebrijes</button><div class="hg-pin-panel" hidden="hidden"><p>Brightly painted fantastical animal sculptures.</p></div></li>
+      <li class="hg-pin"><button class="hg-pin-btn" type="button" aria-expanded="false"><span class="hg-pin-dot"></span>Huichol Yarn Art</button><div class="hg-pin-panel" hidden="hidden"><p>Sacred geometric compositions made with yarn and beads.</p></div></li>
+      <li class="hg-pin"><button class="hg-pin-btn" type="button" aria-expanded="false"><span class="hg-pin-dot"></span>Navajo Weaving</button><div class="hg-pin-panel" hidden="hidden"><p>Geometric blankets and rugs.</p></div></li>
+      <li class="hg-pin"><button class="hg-pin-btn" type="button" aria-expanded="false"><span class="hg-pin-dot"></span>Mola</button><div class="hg-pin-panel" hidden="hidden"><p>Layered appliqu&eacute; textiles with colorful motifs.</p></div></li>
+    </ul>
+  </div>
+  <div class="hg-region">
+    <h2 class="hg-region-title">Oceania</h2>
+    <ul class="hg-pins">
+      <li class="hg-pin"><button class="hg-pin-btn" type="button" aria-expanded="false"><span class="hg-pin-dot"></span>Australian Aboriginal Dot Painting</button><div class="hg-pin-panel" hidden="hidden"><p>Symbolic dot patterns telling Dreamtime stories.</p></div></li>
+      <li class="hg-pin"><button class="hg-pin-btn" type="button" aria-expanded="false"><span class="hg-pin-dot"></span>M&#257;ori Carving</button><div class="hg-pin-panel" hidden="hidden"><p>Spirals and ancestral motifs carved into wood and stone.</p></div></li>
+      <li class="hg-pin"><button class="hg-pin-btn" type="button" aria-expanded="false"><span class="hg-pin-dot"></span>Tapa Cloth</button><div class="hg-pin-panel" hidden="hidden"><p>Decorative cloth made from tree bark.</p></div></li>
+    </ul>
+  </div>
+  <div class="hg-region">
+    <h2 class="hg-region-title">Middle East &amp; North Africa</h2>
+    <ul class="hg-pins">
+      <li class="hg-pin"><button class="hg-pin-btn" type="button" aria-expanded="false"><span class="hg-pin-dot"></span>Islamic Geometric Art</button><div class="hg-pin-panel" hidden="hidden"><p>Complex repeating geometric and star patterns.</p></div></li>
+      <li class="hg-pin"><button class="hg-pin-btn" type="button" aria-expanded="false"><span class="hg-pin-dot"></span>Persian Miniature</button><div class="hg-pin-panel" hidden="hidden"><p>Richly detailed illustrations with vibrant colors.</p></div></li>
+      <li class="hg-pin"><button class="hg-pin-btn" type="button" aria-expanded="false"><span class="hg-pin-dot"></span>Zellige</button><div class="hg-pin-panel" hidden="hidden"><p>Hand-cut geometric tile patterns.</p></div></li>
+    </ul>
+  </div>
 </section>
 
 <footer id="footer">
@@ -214,6 +198,6 @@
 
 <script src="assets/js/site.js"></script>
 <script src="assets/js/commerce.js"></script>
-<script type="module" src="assets/js/heritage-globe.js?v=4"></script>
+<script src="assets/js/heritage-globe.js?v=5"></script>
 </body>
 </html>

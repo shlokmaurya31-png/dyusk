@@ -856,38 +856,58 @@ html[data-theme="dark"] .f-col .f-mark{ filter:none; }
 .bt-date{ font-size:.75rem; opacity:.55; }
 .bt-card p{ max-width:46ch; letter-spacing:-.01em; font-size:.95rem; }
 
-/* ---------- heritage globe + clickable region pins (artisans.html) ---------- */
-.heritage-globe-wrap{ margin:0 var(--gut) var(--gap-sec); }
-.hg-globe{
-  position:relative; width:100%; max-width:680px; aspect-ratio:1/1;
-  margin:0 auto 3rem; background:var(--tile); border-radius:50%;
+/* ---------- heritage globe + clickable region pins (artisans.html) ----------
+   Pure-CSS rotating sphere: no canvas/WebGL, so no sizing math that can
+   drift from its box — guaranteed to render at the size it's given. */
+.heritage-globe-wrap{ margin:0 var(--gut) 3.5rem; display:flex; justify-content:center; }
+.hg-globe-css{
+  width:100%; max-width:420px; aspect-ratio:1/1; border-radius:50%;
+  background:
+    radial-gradient(circle at 32% 28%, rgba(255,255,255,.4), transparent 45%),
+    repeating-linear-gradient(90deg, transparent 0 22px, rgba(0,0,0,.07) 22px 23px),
+    radial-gradient(circle at 50% 50%, var(--tile) 0%, var(--fg) 160%);
+  background-size: 100% 100%, 44px 100%, 100% 100%;
+  box-shadow:
+    inset -22px -14px 46px rgba(0,0,0,.35),
+    inset 14px 14px 34px rgba(255,255,255,.2),
+    0 24px 60px rgba(0,0,0,.22);
+  animation: hgSpin 26s linear infinite;
 }
-.hg-globe canvas{ cursor:grab; touch-action:none; }
+html[data-theme="dark"] .hg-globe-css{
+  background:
+    radial-gradient(circle at 32% 28%, rgba(255,255,255,.15), transparent 45%),
+    repeating-linear-gradient(90deg, transparent 0 22px, rgba(255,255,255,.06) 22px 23px),
+    radial-gradient(circle at 50% 50%, var(--tile) 0%, #000 160%);
+  background-size: 100% 100%, 44px 100%, 100% 100%;
+}
+@keyframes hgSpin{
+  from{ background-position: 0 0, 0 0, 0 0; }
+  to{ background-position: 0 0, -440px 0, 0 0; }
+}
 
+.heritage-regions{
+  margin:0 var(--gut) var(--gap-sec);
+  display:grid; gap:2.5rem 3rem; grid-template-columns:1fr;
+}
+@media (min-width:700px){ .heritage-regions{ grid-template-columns:repeat(2,1fr); } }
+@media (min-width:1100px){ .heritage-regions{ grid-template-columns:repeat(3,1fr); } }
+.hg-region-title{
+  font-size:1.1rem; font-weight:900; letter-spacing:-.02em; margin-bottom:.9rem;
+}
 .hg-pins{
-  list-style:none; max-width:640px; margin:0 auto;
-  display:flex; flex-direction:column; gap:2px; background:currentColor;
-  border:2px solid currentColor;
+  list-style:none; display:flex; flex-direction:column; gap:2px;
+  background:currentColor; border:2px solid currentColor;
 }
 .hg-pin{ background:var(--bg); }
 .hg-pin-btn{
   width:100%; display:flex; align-items:center; gap:.7rem;
-  padding:1.1rem 1.4rem; background:none; border:none; cursor:pointer;
-  font-family:var(--font); font-size:1rem; font-weight:700; letter-spacing:-.01em;
+  padding:.9rem 1.1rem; background:none; border:none; cursor:pointer;
+  font-family:var(--font); font-size:.9rem; font-weight:700; letter-spacing:-.01em;
   color:var(--fg); text-align:left;
 }
-.hg-pin-dot{ width:8px; height:8px; border-radius:50%; background:var(--accent); flex:none; }
-.hg-pin-craft{
-  margin-left:auto; font-size:.7rem; font-weight:700; text-transform:uppercase;
-  letter-spacing:.06em; color:var(--muted);
-}
-.hg-pin-panel{ padding:0 1.4rem 1.4rem 2.9rem; }
-.hg-pin-panel p{ max-width:52ch; letter-spacing:-.01em; margin-bottom:.8rem; }
-.hg-readmore{
-  background:none; border:none; padding:0; cursor:pointer;
-  font-family:var(--font); font-size:.75rem; font-weight:700; text-transform:uppercase;
-  letter-spacing:.06em; color:var(--accent);
-}
+.hg-pin-dot{ width:7px; height:7px; border-radius:50%; background:var(--accent); flex:none; }
+.hg-pin-panel{ padding:0 1.1rem 1.1rem 2.5rem; }
+.hg-pin-panel p{ max-width:44ch; letter-spacing:-.01em; font-size:.9rem; }
 
 /* ---------- about — hero + sticky split (about.html) ---------- */
 .about-hero{ padding:8.5rem var(--gut) 0; margin-bottom:3.5rem; }
